@@ -6,7 +6,7 @@ import { render } from 'react-dom';
 import css from './styles/style.scss';
 
 // Import components
-import Main from './components/Main';
+import App from './components/App';
 
 // Import react router deps
 import { Router, Route, IndexRoute, browserHistory} from 'react-router';
@@ -16,7 +16,7 @@ import store, { history } from './store';
 const router = (
 	<Provider store={store}>
 		<Router history={history}>
-			<Route path="/" component={Main}>
+			<Route path="/" component={App}>
 			</Route>
 		</Router>
 	</Provider>	
