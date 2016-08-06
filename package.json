@@ -52,10 +52,14 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "devDependencies": {
+    "css-loader": "^0.23.1",
     "expect": "^1.18.0",
     "expect-jsx": "^2.5.1",
+    "extract-text-webpack-plugin": "^1.0.1",
     "mocha": "^2.4.5",
-    "react-addons-test-utils": "^15.0.2"
+    "node-sass": "^3.8.0",
+    "react-addons-test-utils": "^15.0.2",
+    "sass-loader": "^4.0.0",
+    "style-loader": "^0.13.1"
   }
 }
-

@@ -1,0 +1,45 @@
+.grid-list{
+	.head-group{
+		display:table-header-group;
+	}
+	.item-group{
+		display:table-row-group;
+	}
+	.head, .item{
+		display: table-row;
+		padding:0;
+		margin:0;
+		list-style-type: none;
+
+		li, .cell{
+			display:table-cell;
+			padding: 3px 5px;
+
+			ul{
+				padding:0;
+			}
+		}
+	}
+	.head{
+		li{
+		    background: #eee;
+		    font-weight: 600;
+		    padding-top: 5px;
+		    padding-bottom: 5px;
+		}
+	}
+	.item{
+		li, .cell{
+			background:#f7f7f7;
+			border:1px solid #eee;
+		}
+	}
+
+	.hide{
+		display:none;
+
+		&.btn-pressed{
+			display:table-row;
+		}
+	}
+}
