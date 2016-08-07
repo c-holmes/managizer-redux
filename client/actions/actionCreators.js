@@ -7,10 +7,20 @@ export function addProject(index) {
 }
 
 //edit Project
-
+export function editProject(index) {
+	return {
+		type: 'EDIT_PROJECT',
+		index
+	}
+}
 
 //delete Project
-
+export function deleteProject(index) {
+	return{
+		type: 'DELETE_PROJECT',
+		index
+	}
+}
 
 //load Sample Projects
 

@@ -6,8 +6,8 @@ const Main = React.createClass({
 	render() {
 		return (
 			<div className="app">
-				<ProjectPanel />
-				<AdminPanel />
+				<ProjectPanel {...this.props} />
+				<AdminPanel {...this.props} />
 			</div>
 		)
 	}
