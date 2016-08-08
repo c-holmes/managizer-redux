@@ -7,10 +7,12 @@ export function addProject(index) {
 }
 
 //edit Project
-export function editProject(index) {
+export function editProject( projectValue, propertyValue, event ) {
 	return {
 		type: 'EDIT_PROJECT',
-		index
+		projectValue,
+		propertyValue,
+		event,
 	}
 }
 

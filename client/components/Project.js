@@ -55,7 +55,7 @@ const Project = React.createClass({
 
 		return(
 			<span key={key} className="cell">
-				<input type="text" value={this.props.details[propertyValue]} onChange={this.props.editProject} />
+				<input type="text" value={this.props.details[propertyValue]} onChange={this.props.editProject.bind(this, projectValue, propertyValue)} />
 			</span>
 		)
 	},

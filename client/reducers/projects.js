@@ -10,7 +10,16 @@ function projects(state = [], action) {
 					...state[i] = null
 				}
 			}
+		case 'EDIT_PROJECT':
+			var e = action.event;
+			var projectValue = action.projectValue;
+			var propertyValue = action.propertyValue;
+			var newState = Object.assign({}, state);
+			
+			newState[projectValue][propertyValue] = e.target.value;
 
+			return newState;
+			
 		default:
 			return state;
 	}
