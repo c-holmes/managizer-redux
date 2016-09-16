@@ -36,9 +36,21 @@ export function addProperty(index) {
 }
 
 //edit Property
-
+export function editProperty( propertyValue, fieldValue, event ) {
+	return {
+		type: 'EDIT_PROPERTY',
+		propertyValue,
+		fieldValue,
+		event
+	}
+}
 
 //delete Property
-
+export function deleteProperty(index) {
+	return {
+		type: 'DELETE_PROPERTY',
+		index
+	}
+}
 
 //load Sample Properties

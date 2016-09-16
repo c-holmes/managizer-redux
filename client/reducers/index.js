@@ -3,8 +3,8 @@ import { routerReducer } from 'react-router-redux';
 
 import projects from './projects';
 import properties from './properties';
-import propertyField from './propertyField';
+import propertyFields from './propertyFields';
 
-const rootReducer = combineReducers({ projects, properties, propertyField, routing:routerReducer });
+const rootReducer = combineReducers({ projects, properties, propertyFields, routing:routerReducer });
 
 export default rootReducer;

@@ -7,11 +7,15 @@ import rootReducer from './reducers/index'
 
 import projects from './data/projects';
 import properties from './data/properties';
+import propertyFields from './data/propertyFields';
+
+console.log(propertyFields);
 
 //create obj for default state
 const defaultState = {
 	projects,
-	properties
+	properties,
+	propertyFields
 };
 
 const store = createStore(rootReducer, defaultState);
