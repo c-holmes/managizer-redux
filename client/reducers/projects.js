@@ -19,6 +19,9 @@ function projects(state = [], action) {
 			newState[projectValue][propertyValue] = e.target.value;
 
 			return newState;
+		case 'ADD_PROPERTY':
+			console.log('adding property');
+
 			
 		default:
 			return state;

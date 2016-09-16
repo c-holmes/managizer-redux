@@ -20,7 +20,13 @@ function properties(state = [], action) {
 
 			newState[propertyValue][fieldValue] = e.target.value;
 
-			return newState
+			return newState;
+		case 'ADD_PROPERTY':
+			var propertyFieldArray = action.propertyFieldArray;
+			var timestamp = (new Date()).getTime();
+			var slug = propertyFieldArray.slug;
+			//WORK IN PROGRESS
+			console.log(propertyFieldArray);
 
 		default:
 			return state;
