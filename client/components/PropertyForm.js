@@ -1,19 +1,17 @@
 import React from 'react';
 
 const PropertyForm = React.createClass({
-	createProperty(event) {
+	createNewPropertyObj(event) {
 		event.preventDefault();
-		var propertyFieldArray = {};
+		var newPropertyFields = {};
 
-		//Assign value to propertyFieldArray
+		//populate new property fields obj
 		Object.keys(this.props.propertyFields).map(function(key){
-			propertyFieldArray[key] = this.refs[key].value;
+			newPropertyFields[key] = this.refs[key].value;
 		}.bind( this ))
 
-		//call property reducer
-		this.props.addProperty(propertyFieldArray);
-
-		//call project reducer
+		//call obj to reducer
+		this.props.addProperty(newPropertyFields);
 
 		//reset form
 		this.refs.propertyForm.reset();
@@ -23,7 +21,7 @@ const PropertyForm = React.createClass({
 		return(
 			<div>
 				<h3>Add a Property</h3>
-				<form ref="propertyForm" onSubmit={this.createProperty}>
+				<form ref="propertyForm" onSubmit={this.createNewPropertyObj}>
 					<input type="text" ref="name" placeholder="Name of Field" />
 					<input type="text" ref="slug" placeholder="Unique Name of Field" />
 					<input type="text" ref="type" placeholder="Type of Field" />

@@ -19,22 +19,25 @@ function projects(state = [], action) {
 			newState[projectValue][propertyValue] = e.target.value;
 
 			return newState;
+		case 'ADD_PROJECT':
+			var newProjectProperties = action.newProjectProperties;
+			var timestamp = (new Date()).getTime();
+			var newState = Object.assign({}, state);
+
+			newState['project-' + timestamp] = newProjectProperties;
+
+			return newState;
+
 		case 'ADD_PROPERTY':
-			//console.log('adding property');
-			//console.log(state);
+			//When property is added, project panel needs to be updated with the new property
 			var newPropertyFields = action.newPropertyFields;
 			var slug = newPropertyFields.slug;
 			var newState = Object.assign({}, state);
 			var newStateArray = Object.keys(newState);
 
-			//console.log(newState["project1"]);
-			// console.log(newStateArray);
-
 			for(var i = 0; i < newStateArray.length; i++ ){
 				newState[newStateArray[i]][slug] = "";
 			}
-
-			//console.log(newState);
 
 			return newState;
 			

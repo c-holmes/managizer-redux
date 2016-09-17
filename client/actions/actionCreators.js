@@ -1,8 +1,8 @@
 //add Project
-export function addProject(index) {
+export function addProject(newProjectProperties) {
 	return {
 		type: 'ADD_PROJECT',
-		index
+		newProjectProperties
 	}
 }
 

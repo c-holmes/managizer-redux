@@ -16,16 +16,14 @@ function properties(state = [], action) {
 			var fieldValue = action.fieldValue;
 			var newState = Object.assign({}, state);
 
-			console.log(propertyValue + " " + fieldValue);
-
 			newState[propertyValue][fieldValue] = e.target.value;
 
 			return newState;
 		case 'ADD_PROPERTY':
 			var newPropertyFields = action.newPropertyFields;
 			var timestamp = (new Date()).getTime();
+			var newState = Object.assign({}, state);
 
-			newState = Object.assign({}, state);
 			newState['property-' + timestamp] = newPropertyFields;
 
 			return newState;

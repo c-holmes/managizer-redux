@@ -5,11 +5,10 @@ import { browserHistory } from 'react-router';
 //import the root reducer
 import rootReducer from './reducers/index'
 
+//import test data
 import projects from './data/projects';
 import properties from './data/properties';
 import propertyFields from './data/propertyFields';
-
-console.log(propertyFields);
 
 //create obj for default state
 const defaultState = {
