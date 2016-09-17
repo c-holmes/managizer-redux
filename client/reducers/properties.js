@@ -22,11 +22,13 @@ function properties(state = [], action) {
 
 			return newState;
 		case 'ADD_PROPERTY':
-			var propertyFieldArray = action.propertyFieldArray;
+			var newPropertyFields = action.newPropertyFields;
 			var timestamp = (new Date()).getTime();
-			var slug = propertyFieldArray.slug;
-			//WORK IN PROGRESS
-			console.log(propertyFieldArray);
+
+			newState = Object.assign({}, state);
+			newState['property-' + timestamp] = newPropertyFields;
+
+			return newState;
 
 		default:
 			return state;

@@ -28,10 +28,10 @@ export function deleteProject(index) {
 
 
 //add a Property
-export function addProperty(propertyFieldArray) {
+export function addProperty(newPropertyFields) {
 	return {
 		type: 'ADD_PROPERTY',
-		propertyFieldArray,
+		newPropertyFields,
 	}
 }
 

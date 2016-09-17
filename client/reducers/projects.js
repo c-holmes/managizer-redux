@@ -20,8 +20,23 @@ function projects(state = [], action) {
 
 			return newState;
 		case 'ADD_PROPERTY':
-			console.log('adding property');
+			//console.log('adding property');
+			//console.log(state);
+			var newPropertyFields = action.newPropertyFields;
+			var slug = newPropertyFields.slug;
+			var newState = Object.assign({}, state);
+			var newStateArray = Object.keys(newState);
 
+			//console.log(newState["project1"]);
+			// console.log(newStateArray);
+
+			for(var i = 0; i < newStateArray.length; i++ ){
+				newState[newStateArray[i]][slug] = "";
+			}
+
+			//console.log(newState);
+
+			return newState;
 			
 		default:
 			return state;
