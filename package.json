@@ -33,6 +33,7 @@
     "eslint-plugin-babel": "^3.2.0",
     "eslint-plugin-react": "^5.0.1",
     "express": "^4.13.4",
+    "isomorphic-fetch": "^2.2.1",
     "raven-js": "^2.3.0",
     "react": "^15.0.2",
     "react-addons-css-transition-group": "^15.0.2",
@@ -44,6 +45,8 @@
     "react-transform-hmr": "^1.0.4",
     "redbox-react": "^1.2.3",
     "redux": "^3.5.2",
+    "redux-logger": "^2.7.0",
+    "redux-thunk": "^2.1.0",
     "rimraf": "^2.5.2",
     "style-loader": "^0.13.1",
     "stylus": "^0.54.5",
@@ -53,13 +56,15 @@
     "webpack-hot-middleware": "^2.10.0"
   },
   "devDependencies": {
+    "body-parser": "^1.15.2",
     "classnames": "^2.2.5",
     "css-loader": "^0.23.1",
     "expect": "^1.18.0",
     "expect-jsx": "^2.5.1",
     "extract-text-webpack-plugin": "^1.0.1",
     "mocha": "^2.4.5",
-    "node-sass": "^3.8.0",
+    "mongoose": "^4.6.4",
+    "node-sass": "^3.10.1",
     "react-addons-test-utils": "^15.0.2",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1"

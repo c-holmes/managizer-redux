@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 //add Project
 export function addProject(newProjectProperties) {
 	return {
@@ -24,7 +26,32 @@ export function deleteProject(index) {
 	}
 }
 
-//load Sample Projects
+//request Data
+export function requestData(apiRoute) {
+	return{
+		type: 'REQUEST_DATA',
+		apiRoute
+	}
+}
+
+export function receiveData(json,apiRoute) {
+	return{
+		type: 'RECEIVE_DATA',
+		route: apiRoute,
+		data: json,
+		receivedAt: Date.now()
+	}
+}
+
+export function fetchData(apiRoute) {
+  return function (dispatch) {
+    dispatch(requestData(apiRoute))
+
+    return fetch(`http://localhost:7770/api/${apiRoute}`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveData(json,apiRoute)))
+  }
+}
 
 
 //add a Property

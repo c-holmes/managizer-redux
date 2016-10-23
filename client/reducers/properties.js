@@ -28,6 +28,13 @@ function properties(state = [], action) {
 
 			return newState;
 
+		case 'RECEIVE_DATA':
+			if(action.route == 'properties'){
+				state = action.data;
+			}
+
+			return state;
+
 		default:
 			return state;
 	}

@@ -40,7 +40,14 @@ function projects(state = [], action) {
 			}
 
 			return newState;
-			
+
+		case 'RECEIVE_DATA':
+			if(action.route == 'projects'){
+				state = action.data;
+			}
+
+			return state;
+
 		default:
 			return state;
 	}
