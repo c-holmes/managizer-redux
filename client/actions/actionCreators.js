@@ -53,6 +53,14 @@ export function fetchData(apiRoute) {
   }
 }
 
+export function postData(apiRoute,formData) {
+	return {
+		type: 'POST_DATA',
+		apiRoute,
+		formData
+	}
+}
+
 
 //add a Property
 export function addProperty(newPropertyFields) {

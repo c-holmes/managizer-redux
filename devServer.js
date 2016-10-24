@@ -35,21 +35,21 @@ router.get('/', function(req, res) {
 router.route('/projects')
   
   //create a project - accessed at POST http:localhost:3000/api/projects/
-  // .post(function(req, res){
+  .post(function(req, res){
+    console.log(req.body);
+    var project = new Project();
+    project.name = req.body.name,
+    project.developer = req.body.developer;
+    project.dateStart = req.body.dateStart;
 
-  //   var project = new Project();
-  //   project.name = req.body.name,
-  //   project.developer = req.body.author;
-  //   project.dateStart = req.body.text;
+    project.save(function(err) {
+      if (err)
+        res.send(err);
 
-  //   project.save(function(err) {
-  //     if (err)
-  //       res.send(err);
+      res.json({ project: 'Project Created' });
+    });
 
-  //     res.json({ project: 'Project Created' });
-  //   });
-
-  // })
+  })
 
   //gall all the projects - accessed at GET http:localhost:3000/api/projects
   .get(function(req, res) {

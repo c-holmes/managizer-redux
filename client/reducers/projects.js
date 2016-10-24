@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 function projects(state = [], action) {
 	
 	switch(action.type){
@@ -37,7 +39,7 @@ function projects(state = [], action) {
 
 			for(var i = 0; i < newStateArray.length; i++ ){
 				newState[newStateArray[i]][slug] = "";
-			}
+			} 
 
 			return newState;
 
@@ -47,6 +49,39 @@ function projects(state = [], action) {
 			}
 
 			return state;
+
+		case 'POST_DATA':
+			var newProjectProperties = action.formData;
+			var timestamp = (new Date()).getTime();
+			var newState = Object.assign({}, state);
+			newState['project-' + timestamp] = newProjectProperties;
+
+			function serialize(obj) {
+			  var str = [];
+			  for(var p in obj)
+			    if (obj.hasOwnProperty(p)) {
+			      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			    }
+			  return str.join("&");
+			}
+
+			fetch(`http://localhost:7770/api/projects`, {
+					method: 'post',  
+					headers: {  
+					  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
+					},  
+					body: serialize(newProjectProperties)  
+				})
+				.then(response => response.json())  
+				.then(function (data) {  
+				  console.log('Request succeeded with JSON response', data);  
+				})  
+				.catch(function (error) {  
+				  console.log('Request failed', error);  
+				});
+			return newState;
+      // .then(response => response.json())
+      // .then(json => dispatch(receiveData(json,apiRoute)))
 
 		default:
 			return state;
