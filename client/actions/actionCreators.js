@@ -1,10 +1,10 @@
 import fetch from 'isomorphic-fetch';
 
 //add Project
-export function addProject(newProjectProperties) {
+export function addProject(formData) {
 	return {
 		type: 'ADD_PROJECT',
-		newProjectProperties
+		formData
 	}
 }
 
@@ -52,15 +52,6 @@ export function fetchData(apiRoute) {
       .then(json => dispatch(receiveData(json,apiRoute)))
   }
 }
-
-export function postData(apiRoute,formData) {
-	return {
-		type: 'POST_DATA',
-		apiRoute,
-		formData
-	}
-}
-
 
 //add a Property
 export function addProperty(newPropertyFields) {

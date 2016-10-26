@@ -22,12 +22,54 @@ function projects(state = [], action) {
 
 			return newState;
 		case 'ADD_PROJECT':
-			var newProjectProperties = action.newProjectProperties;
+			var newProjectProperties = action.formData;
 			var timestamp = (new Date()).getTime();
 			var newState = Object.assign({}, state);
+			//add publish date
+			newProjectProperties["published"] = timestamp;
+			newState[timestamp] = newProjectProperties;
 
-			newState['project-' + timestamp] = newProjectProperties;
+			function serialize(obj) {
+			  var str = [];
+			  for(var p in obj)
+			    if (obj.hasOwnProperty(p)) {
+			      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			    }
+			  return str.join("&");
+			}
 
+			fetch(`http://localhost:7770/api/projects`, {
+					method: 'post',  
+					headers: {  
+					  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
+					},  
+					body: serialize(newProjectProperties)  
+				})
+				.then(response => response.json())  
+				.then(function (data) {  
+				  	console.log('Request sucdsceeded with JSON response', data);  
+
+					//grab the mongo _id and save to state
+					fetch(`http://localhost:7770/api/projects`)
+						.then(  
+						    function(response) {  
+								if (response.status !== 200) {  
+									console.log('Looks like there was a problem. Status Code: ' +  
+									  	response.status);  
+									return;  
+								}
+
+								// Examine the text in the response  
+								response.json().then(function(data) {  
+									console.log(data);  
+								});  
+						    }  
+						)  
+					
+				})  
+				.catch(function (error) {  
+				  console.log('Request failed', error);  
+				});
 			return newState;
 
 		case 'ADD_PROPERTY':
@@ -49,39 +91,6 @@ function projects(state = [], action) {
 			}
 
 			return state;
-
-		case 'POST_DATA':
-			var newProjectProperties = action.formData;
-			var timestamp = (new Date()).getTime();
-			var newState = Object.assign({}, state);
-			newState['project-' + timestamp] = newProjectProperties;
-
-			function serialize(obj) {
-			  var str = [];
-			  for(var p in obj)
-			    if (obj.hasOwnProperty(p)) {
-			      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
-			    }
-			  return str.join("&");
-			}
-
-			fetch(`http://localhost:7770/api/projects`, {
-					method: 'post',  
-					headers: {  
-					  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
-					},  
-					body: serialize(newProjectProperties)  
-				})
-				.then(response => response.json())  
-				.then(function (data) {  
-				  console.log('Request succeeded with JSON response', data);  
-				})  
-				.catch(function (error) {  
-				  console.log('Request failed', error);  
-				});
-			return newState;
-      // .then(response => response.json())
-      // .then(json => dispatch(receiveData(json,apiRoute)))
 
 		default:
 			return state;

@@ -26,8 +26,7 @@ const ProjectForm = React.createClass({
 		}
 
 		//pass obj to reducer
-		// this.props.addProject(newProjectProperties);
-		this.props.postData('projects',newProjectProperties );
+		this.props.addProject(newProjectProperties);
 
 		//reset form
 		this.refs.projectForm.reset();

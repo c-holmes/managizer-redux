@@ -37,10 +37,10 @@ router.route('/projects')
   //create a project - accessed at POST http:localhost:3000/api/projects/
   .post(function(req, res){
     console.log(req.body);
-    var project = new Project();
-    project.name = req.body.name,
-    project.developer = req.body.developer;
-    project.dateStart = req.body.dateStart;
+    var project = new Project(req.body);
+    // project.name = req.body.name,
+    // project.developer = req.body.developer;
+    // project.dateStart = req.body.dateStart;
 
     project.save(function(err) {
       if (err)
