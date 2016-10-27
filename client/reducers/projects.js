@@ -29,6 +29,7 @@ function projects(state = [], action) {
 			newProjectProperties["published"] = timestamp;
 			newState[timestamp] = newProjectProperties;
 
+			//serialize data to send to Mongo 
 			function serialize(obj) {
 			  var str = [];
 			  for(var p in obj)
@@ -61,12 +62,18 @@ function projects(state = [], action) {
 
 								// Examine the text in the response  
 								response.json().then(function(data) {  
-									console.log(data);  
+									
+									//find the project with the same timestamp
+									var projWithId = data.filter(function (proj){
+										return proj.published == timestamp
+									});
+
+									newState[timestamp] = projWithId[0];
 								});  
 						    }  
 						)  
-					
 				})  
+				
 				.catch(function (error) {  
 				  console.log('Request failed', error);  
 				});
