@@ -33,25 +33,7 @@ router.get('/', function(req, res) {
 
 // ----------------------------------------------------
 router.route('/projects')
-  
-  //create a project - accessed at POST http:localhost:3000/api/projects/
-  .post(function(req, res){
-    console.log(req.body);
-    var project = new Project(req.body);
-    // project.name = req.body.name,
-    // project.developer = req.body.developer;
-    // project.dateStart = req.body.dateStart;
 
-    project.save(function(err) {
-      if (err)
-        res.send(err);
-
-      res.json({ project: 'Project Created' });
-    });
-
-  })
-
-  //gall all the projects - accessed at GET http:localhost:3000/api/projects
   .get(function(req, res) {
     Project.find(function(err, projects) {
       if (err)
@@ -59,7 +41,40 @@ router.route('/projects')
 
       res.json(projects);
     });
-  });
+  })
+  
+  .post(function(req, res){
+    var project = new Project(req.body);
+
+    project.save(function(err) {
+      if (err)
+        res.send(err);
+
+      res.json({ project: 'Project Created' });
+    });
+  })
+
+  // ----------------------------------------------------
+  router.route('/projects/:project_id')
+
+    .get(function(req, res) {
+      Project.findById(req.params.project_id, function(err, project){
+        if (err) 
+          res.send(err);
+        res.json(project);
+      });
+    })
+
+    .delete(function(req, res){
+      Project.remove({
+        _id: req.params.project_id
+      }, function(err, project) {
+        if (err)
+          res.send(err);
+          res.json({ message: 'Successfully Deleted' })
+      });
+    });
+
 
 // ----------------------------------------------------
 router.route('/properties')

@@ -19,10 +19,11 @@ export function editProject( projectValue, propertyValue, event ) {
 }
 
 //delete Project
-export function deleteProject(index) {
+export function deleteProject(index, id) {
 	return{
 		type: 'DELETE_PROJECT',
-		index
+		index,
+		id,
 	}
 }
 
@@ -34,6 +35,7 @@ export function requestData(apiRoute) {
 	}
 }
 
+//recieve Data
 export function receiveData(json,apiRoute) {
 	return{
 		type: 'RECEIVE_DATA',
@@ -43,6 +45,7 @@ export function receiveData(json,apiRoute) {
 	}
 }
 
+//thunk - return a function to grab data from db and load as state
 export function fetchData(apiRoute) {
   return function (dispatch) {
     dispatch(requestData(apiRoute))

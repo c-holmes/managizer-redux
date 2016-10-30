@@ -75,7 +75,7 @@ const Project = React.createClass({
 					<ul className="item">
 						<li className="options-block">
 							<ul>
-								<button onClick={this.props.deleteProject.bind(null, this.props.index)} className="delete" ref="delete">Delete</button>
+								<button onClick={this.props.deleteProject.bind(null, this.props.index, this.props.details._id)} className="delete" ref="delete">Delete</button>
 								<button onClick={this.toggleButton}>Edit</button>
 							</ul>
 						</li>

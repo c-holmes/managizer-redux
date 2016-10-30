@@ -5,11 +5,21 @@ function projects(state = [], action) {
 	switch(action.type){
 		case 'DELETE_PROJECT':
 			if(confirm("Are You Sure You Want To Remove This Item?")){
-				var i = action.index;
+				var index = action.index;
+				var id = action.id;
+				
+				fetch('http://localhost:7770/api/projects/' + id, {
+					method: 'delete'
+				})
+				.then(response => response.json())
+				.then(function(data) {
+					console.log(data);
+				})
 
+				//remove project from state
 				return {
 					...state,
-					...state[i] = null
+					...state[index] = null
 				}
 			}
 		case 'EDIT_PROJECT':
@@ -50,7 +60,7 @@ function projects(state = [], action) {
 				.then(function (data) {  
 				  	console.log('Request sucdsceeded with JSON response', data);  
 
-					//grab the mongo _id and save to state
+					//fetch the mongo _id from api and save to state
 					fetch(`http://localhost:7770/api/projects`)
 						.then(  
 						    function(response) {  
@@ -73,7 +83,7 @@ function projects(state = [], action) {
 						    }  
 						)  
 				})  
-				
+
 				.catch(function (error) {  
 				  console.log('Request failed', error);  
 				});
