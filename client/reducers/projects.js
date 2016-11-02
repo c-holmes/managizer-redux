@@ -23,12 +23,18 @@ function projects(state = [], action) {
 				}
 			}
 		case 'EDIT_PROJECT':
+			console.log(action);
 			var e = action.event;
+			var id = action.projectId;
 			var projectValue = action.projectValue;
 			var propertyValue = action.propertyValue;
 			var newState = Object.assign({}, state);
 			
 			newState[projectValue][propertyValue] = e.target.value;
+
+			// fetch('http://localhost:7770/api/projects/' + id, {
+			// 	method: 'put'
+			// })
 
 			return newState;
 		case 'ADD_PROJECT':

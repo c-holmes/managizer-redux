@@ -54,6 +54,7 @@ router.route('/projects')
     });
   })
 
+
   // ----------------------------------------------------
   router.route('/projects/:project_id')
 
@@ -71,8 +72,25 @@ router.route('/projects')
       }, function(err, project) {
         if (err)
           res.send(err);
-          res.json({ message: 'Successfully Deleted' })
+          res.json({ message: 'Successfully Deleted' });
       });
+    })
+
+    .put(function(req, res){
+      Project.findById(req.params.project_id, function(err, project) {
+        
+        if (err)
+          res.send(err);
+
+        project = req.body;
+
+        project.save(function(err) {
+          if(err)
+            res.send(err);
+
+          res.json({message: 'Project Updated'});
+        });
+      })
     });
 
 

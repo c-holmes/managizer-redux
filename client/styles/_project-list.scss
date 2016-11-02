@@ -2,9 +2,11 @@
 	.head-group{
 		display:table-header-group;
 	}
+
 	.item-group{
 		display:table-row-group;
 	}
+
 	.head, .item{
 		display: table-row;
 		padding:0;
@@ -20,6 +22,7 @@
 			}
 		}
 	}
+
 	.head{
 		li{
 		    background: #eee;
@@ -28,10 +31,31 @@
 		    padding-bottom: 5px;
 		}
 	}
+
 	.item{
 		li, .cell{
 			background:#f7f7f7;
 			border:1px solid #eee;
+		}
+
+		.options-block{
+			.edit-btn{
+				display:inline;
+			}
+
+			.back-btn{
+				display:none;
+			}
+
+			&.edit-active{
+				.edit-btn{
+					display:none;
+				}
+
+				.back-btn{
+					display:inline;
+				}
+			}
 		}
 	}
 

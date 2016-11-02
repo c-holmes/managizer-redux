@@ -9,12 +9,22 @@ export function addProject(formData) {
 }
 
 //edit Project
-export function editProject( projectValue, propertyValue, event ) {
+export function editProject( projectValue, propertyValue, projectId, event ) {
 	return {
 		type: 'EDIT_PROJECT',
 		projectValue,
 		propertyValue,
+		projectId,
 		event,
+	}
+}
+
+//save edited Project
+export function saveProject(project, event){
+	return {
+		type: 'SAVE_EDITED_PROJECT',
+		project,
+		event
 	}
 }
 
