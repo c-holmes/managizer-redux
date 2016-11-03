@@ -20,11 +20,10 @@ export function editProject( projectValue, propertyValue, projectId, event ) {
 }
 
 //save edited Project
-export function saveProject(project, event){
+export function saveProject(project){
 	return {
-		type: 'SAVE_EDITED_PROJECT',
-		project,
-		event
+		type: 'SAVE_PROJECT',
+		project
 	}
 }
 

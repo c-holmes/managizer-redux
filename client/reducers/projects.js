@@ -23,7 +23,6 @@ function projects(state = [], action) {
 				}
 			}
 		case 'EDIT_PROJECT':
-			console.log(action);
 			var e = action.event;
 			var id = action.projectId;
 			var projectValue = action.projectValue;
@@ -32,11 +31,35 @@ function projects(state = [], action) {
 			
 			newState[projectValue][propertyValue] = e.target.value;
 
-			// fetch('http://localhost:7770/api/projects/' + id, {
-			// 	method: 'put'
-			// })
-
 			return newState;
+
+		case 'SAVE_PROJECT':
+			var id = action.project._id;
+			var projectEdits = action.project;
+
+			console.log('yea');
+
+			//serialize data to send to Mongo 
+			function serialize(obj) {
+			  var str = [];
+			  for(var p in obj)
+			    if (obj.hasOwnProperty(p)) {
+			      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			    }
+			  return str.join("&");
+			}
+
+			fetch('http://localhost:7770/api/projects/' + id, {
+				method: 'put',
+				headers: {  
+				  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
+				},  
+				body: serialize(projectEdits) 
+			})
+
+			return state;
+
+
 		case 'ADD_PROJECT':
 			var newProjectProperties = action.formData;
 			var timestamp = (new Date()).getTime();

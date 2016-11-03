@@ -77,12 +77,17 @@ router.route('/projects')
     })
 
     .put(function(req, res){
+      //console.log(req.body)
       Project.findById(req.params.project_id, function(err, project) {
-        
+        console.log(project);
+        console.log(req.body);
         if (err)
           res.send(err);
 
-        project = req.body;
+        //no work
+        //project = req.body;
+
+        project.name = req.body.name;
 
         project.save(function(err) {
           if(err)

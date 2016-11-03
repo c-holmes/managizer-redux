@@ -9,7 +9,7 @@ const ProjectList = React.createClass ({
 	},
 
 	renderProject(key) {
-		return <Project key={key} index={key} details={this.props.projects[key]} properties={this.props.properties} editProject={this.props.editProject} deleteProject={this.props.deleteProject}/>
+		return <Project key={key} index={key} details={this.props.projects[key]} properties={this.props.properties} editProject={this.props.editProject} deleteProject={this.props.deleteProject} saveProject={this.props.saveProject} />
 	},
 
 	render(){

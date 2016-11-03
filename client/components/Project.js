@@ -62,39 +62,8 @@ const Project = React.createClass({
 	},
 
 	saveProjectObj(event){
-		console.log('project saved');
 		event.preventDefault();
-		var editedProjectProperties = {};
-
-		//create array of all property slugs
-		var propertyArray = Object.keys(this.props.properties).map(function(key){
-			if(this.props.properties[key].slug !== null) {
-				return this.props.properties[key].slug;
-			}
-		}.bind( this ));
-
-		//strip unwanted form refs from form data
-		var projectFormVals = [];
-		var stripValue = ["submit"];
-		for( var i = 0; i < this.refs.projectForm.length; i++ ){
-			if(stripValue.indexOf(this.refs.projectForm[i].type) > -1){
-				//do nothing
-			} else {
-				projectFormVals.push(this.refs.projectForm[i].value);
-			}
-		}
-
-		//use array to populate new project properties obj
-		for( var i = 0; i < propertyArray.length; i++){
-			editedProjectProperties[propertyArray[i]] = projectFormVals[i];
-		}
-
-		//pass obj to reducer
-		console.log(editedProjectProperties);
-
-		//TODO:(NEXT)update actionCreator & create reducer for Saving Edited Project To DB
-
-		//this.props.addProject(newProjectProperties);
+		this.props.saveProject(this.props.details);
 		this.toggleButton(event);
 	},
 
