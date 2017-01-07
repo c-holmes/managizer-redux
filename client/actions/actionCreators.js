@@ -84,10 +84,11 @@ export function editProperty( propertyValue, fieldValue, event ) {
 }
 
 //delete Property
-export function deleteProperty(index) {
+export function deleteProperty(index, id) {
 	return {
 		type: 'DELETE_PROPERTY',
-		index
+		index,
+		id
 	}
 }
 

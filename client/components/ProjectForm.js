@@ -2,7 +2,8 @@ import React from 'react';
 
 const ProjectForm = React.createClass({
 	renderField(key) {
-		if(this.props.properties !== null ){
+		console.log(this.props.properties);
+		if(this.props.properties[key] !== null ){
 			return <input className="test" key={key} type={this.props.properties[key].type} ref={this.props.properties[key].slug} placeholder={this.props.properties[key].placeholder}  />			
 		} else {
 			return null

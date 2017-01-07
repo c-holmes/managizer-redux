@@ -54,44 +54,64 @@ router.route('/projects')
     });
   })
 
+// ----------------------------------------------------
+router.route('/projects/:project_id')
 
-  // ----------------------------------------------------
-  router.route('/projects/:project_id')
-
-    .get(function(req, res) {
-      Project.findById(req.params.project_id, function(err, project){
-        if (err) 
-          res.send(err);
-        res.json(project);
-      });
-    })
-
-    .delete(function(req, res){
-      Project.remove({
-        _id: req.params.project_id
-      }, function(err, project) {
-        if (err)
-          res.send(err);
-          res.json({ message: 'Successfully Deleted' });
-      });
-    })
-
-    .put(function(req, res){
-      Project.findById(req.params.project_id, function(err, project) {
-
-        if (err)
-          res.send(err);
-
-        Object.assign(project,req.body);
-
-        project.save(function(err) {
-          if(err)
-            res.send(err);
-
-          res.json({message: 'Project Updated'});
-        });
-      })
+  .get(function(req, res) {
+    Project.findById(req.params.project_id, function(err, project){
+      if (err) 
+        res.send(err);
+      res.json(project);
     });
+  })
+
+  .delete(function(req, res){
+    Project.remove({
+      _id: req.params.project_id
+    }, function(err, project) {
+      if (err)
+        res.send(err);
+        res.json({ message: 'Successfully Deleted' });
+    });
+  })
+
+  .put(function(req, res){
+    Project.findById(req.params.project_id, function(err, project) {
+
+      if (err)
+        res.send(err);
+
+      Object.assign(project,req.body);
+
+      project.save(function(err) {
+        if(err)
+          res.send(err);
+
+        res.json({message: 'Project Updated'});
+      });
+    })
+  });
+
+// ----------------------------------------------------
+router.route('/properties/:property_id')
+
+  .get(function(req, res) {
+    Property.findById(req.params.property_id, function(err, property){
+      if(err)
+        res.send(err);
+      res.json(property);
+    });
+  })
+
+  .delete(function(req, res){
+    Property.remove({
+      _id: req.params.property_id
+    }, function(err, property) {
+      if (err)
+        res.send(err);
+        res.json({ message: 'Successfully Deleted' });
+    });
+  });
 
 
 // ----------------------------------------------------

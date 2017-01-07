@@ -3,7 +3,7 @@ function properties(state = [], action) {
 	switch(action.type){
 		case 'DELETE_PROPERTY':
 			if(confirm("Are You Sure You Want To Remove This Item?")){
-				var i = action.index;
+				var index = action.index;
 				var id = action.id;
 				
 				fetch('http://localhost:7770/api/properties/' + id, {
@@ -36,6 +36,7 @@ function properties(state = [], action) {
 			//add publish date
 			newPropertyFields["published"] = timestamp;
 			newState[timestamp] = newPropertyFields;
+			console.log(newPropertyFields);
 
 			//serialize data to send to Mongo 
 			function serialize(obj) {
