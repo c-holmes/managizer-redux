@@ -87,7 +87,7 @@ function projects(state = [], action) {
 				})
 				.then(response => response.json())  
 				.then(function (data) {  
-				  	console.log('Request sucdsceeded with JSON response', data);  
+				  	console.log('Request succeeded with JSON response', data);  
 
 					//fetch the mongo _id from api and save to state
 					fetch(`http://localhost:7770/api/projects`)
@@ -101,7 +101,6 @@ function projects(state = [], action) {
 
 								// Examine the text in the response  
 								response.json().then(function(data) {  
-									
 									//find the project with the same timestamp
 									var projWithId = data.filter(function (proj){
 										return proj.published == timestamp
@@ -120,7 +119,7 @@ function projects(state = [], action) {
 
 		case 'ADD_PROPERTY':
 			//When property is added, project panel needs to be updated with the new property
-			var newPropertyFields = action.newPropertyFields;
+			var newPropertyFields = action.formData;
 			var slug = newPropertyFields.slug;
 			var newState = Object.assign({}, state);
 			var newStateArray = Object.keys(newState);

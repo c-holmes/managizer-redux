@@ -104,6 +104,17 @@ router.route('/properties')
 
       res.json(properties);
     });
+  })
+
+  .post(function(req, res){
+    var property = new Property(req.body);
+
+    property.save(function(err) {
+      if (err)
+        res.send(err);
+
+      res.json({ property: 'Property Created' });
+    });
   });
 
 // REGISTER OUR ROUTES -------------------------------

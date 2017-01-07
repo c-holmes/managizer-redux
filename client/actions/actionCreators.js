@@ -66,10 +66,10 @@ export function fetchData(apiRoute) {
 }
 
 //add a Property
-export function addProperty(newPropertyFields) {
+export function addProperty(formData) {
 	return {
 		type: 'ADD_PROPERTY',
-		newPropertyFields,
+		formData,
 	}
 }
 

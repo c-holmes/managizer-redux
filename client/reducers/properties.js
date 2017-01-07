@@ -4,10 +4,20 @@ function properties(state = [], action) {
 		case 'DELETE_PROPERTY':
 			if(confirm("Are You Sure You Want To Remove This Item?")){
 				var i = action.index;
+				var id = action.id;
+				
+				fetch('http://localhost:7770/api/properties/' + id, {
+					method: 'delete'
+				})
+				.then(response => response.json())
+				.then(function(data) {
+					console.log(data);
+				})
 
+				//remove property from state
 				return {
 					...state,
-					...state[i] = null
+					...state[index] = null
 				}
 			}
 		case 'EDIT_PROPERTY':
@@ -20,12 +30,59 @@ function properties(state = [], action) {
 
 			return newState;
 		case 'ADD_PROPERTY':
-			var newPropertyFields = action.newPropertyFields;
+			var newPropertyFields = action.formData;
 			var timestamp = (new Date()).getTime();
 			var newState = Object.assign({}, state);
+			//add publish date
+			newPropertyFields["published"] = timestamp;
+			newState[timestamp] = newPropertyFields;
 
-			newState['property-' + timestamp] = newPropertyFields;
+			//serialize data to send to Mongo 
+			function serialize(obj) {
+			  var str = [];
+			  for(var p in obj)
+			    if (obj.hasOwnProperty(p)) {
+			      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			    }
+			  return str.join("&");
+			}
 
+			fetch(`http://localhost:7770/api/properties`, {
+					method: 'post',  
+					headers: {  
+					  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
+					},  
+					body: serialize(newPropertyFields)
+				})
+				.then(response => response.json())
+				.then(function (data) {
+					console.log('Request succeeded with JSON response', data);  
+
+					//fetch the mongo_id from api and save to state
+					fetch(`http://localhost:7770/api/properties`)
+						.then(
+							function(response) {
+								if (response.status !== 200) {
+									console.log('Looks like there was a problem. Status Code: ' + response.status);
+									return;
+								}
+
+								//Examine the text in the response
+								response.json().then(function(data) {
+									//find the property with the same timestamp
+									var propWithId = data.filter(function (prop){
+										return prop.published == timestamp
+									});
+
+									newState[timestamp] = propWithId[0];
+								});
+							}
+						)
+				})
+
+				.catch(function (error) {
+					console.log('Request failed', error);
+				});
 			return newState;
 
 		case 'RECEIVE_DATA':
