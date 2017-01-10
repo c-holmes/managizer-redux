@@ -42,6 +42,7 @@ const Property = React.createClass({
 				'hide':true,
 			  	'btn-pressed': this.state.isPressed
 			});
+
 			return(
 				<div className="item-group">
 					<ul className='item'>

@@ -1,3 +1,5 @@
+import fetch from 'isomorphic-fetch';
+
 function properties(state = [], action) {
 
 	switch(action.type){
@@ -5,6 +7,9 @@ function properties(state = [], action) {
 			if(confirm("Are You Sure You Want To Remove This Item?")){
 				var index = action.index;
 				var id = action.id;
+
+				console.log(action);
+				console.log(id);
 				
 				fetch('http://localhost:7770/api/properties/' + id, {
 					method: 'delete'
@@ -31,12 +36,11 @@ function properties(state = [], action) {
 			return newState;
 		case 'ADD_PROPERTY':
 			var newPropertyFields = action.formData;
-			var timestamp = (new Date()).getTime();
+			var timestamp = (new Date()).getTime().toString();
 			var newState = Object.assign({}, state);
 			//add publish date
-			newPropertyFields["published"] = timestamp;
+			newPropertyFields._id = timestamp;
 			newState[timestamp] = newPropertyFields;
-			console.log(newPropertyFields);
 
 			//serialize data to send to Mongo 
 			function serialize(obj) {
@@ -58,29 +62,7 @@ function properties(state = [], action) {
 				.then(response => response.json())
 				.then(function (data) {
 					console.log('Request succeeded with JSON response', data);  
-
-					//fetch the mongo_id from api and save to state
-					fetch(`http://localhost:7770/api/properties`)
-						.then(
-							function(response) {
-								if (response.status !== 200) {
-									console.log('Looks like there was a problem. Status Code: ' + response.status);
-									return;
-								}
-
-								//Examine the text in the response
-								response.json().then(function(data) {
-									//find the property with the same timestamp
-									var propWithId = data.filter(function (prop){
-										return prop.published == timestamp
-									});
-
-									newState[timestamp] = propWithId[0];
-								});
-							}
-						)
 				})
-
 				.catch(function (error) {
 					console.log('Request failed', error);
 				});
