@@ -65,7 +65,7 @@ function projects(state = [], action) {
 			var timestamp = (new Date()).getTime();
 			var newState = Object.assign({}, state);
 			//add publish date
-			newProjectProperties["published"] = timestamp;
+			newProjectProperties['_id'] = timestamp.toString();
 			newState[timestamp] = newProjectProperties;
 
 			//serialize data to send to Mongo 
@@ -88,30 +88,7 @@ function projects(state = [], action) {
 				.then(response => response.json())  
 				.then(function (data) {  
 				  	console.log('Request succeeded with JSON response', data);  
-
-					//fetch the mongo _id from api and save to state
-					fetch(`http://localhost:7770/api/projects`)
-						.then(  
-						    function(response) {  
-								if (response.status !== 200) {  
-									console.log('Looks like there was a problem. Status Code: ' +  
-									  	response.status);  
-									return;  
-								}
-
-								// Examine the text in the response  
-								response.json().then(function(data) {  
-									//find the project with the same timestamp
-									var projWithId = data.filter(function (proj){
-										return proj.published == timestamp
-									});
-
-									newState[timestamp] = projWithId[0];
-								});  
-						    }  
-						)  
 				})  
-
 				.catch(function (error) {  
 				  console.log('Request failed', error);  
 				});
