@@ -37,8 +37,6 @@ function projects(state = [], action) {
 			var id = action.project._id;
 			var projectEdits = action.project;
 
-			console.log('yea');
-
 			//serialize data to send to Mongo 
 			function serialize(obj) {
 			  var str = [];
@@ -58,7 +56,6 @@ function projects(state = [], action) {
 			})
 
 			return state;
-
 
 		case 'ADD_PROJECT':
 			var newProjectProperties = action.formData;

@@ -83,6 +83,14 @@ export function editProperty( propertyValue, fieldValue, event ) {
 	}
 }
 
+//save Property
+export function saveProperty(property){
+	return {
+		type: 'SAVE_PROPERTY',
+		property
+	}
+}
+
 //delete Property
 export function deleteProperty(index, id) {
 	return {

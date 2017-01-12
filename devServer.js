@@ -111,8 +111,23 @@ router.route('/properties/:property_id')
         res.send(err);
         res.json({ message: 'Successfully Deleted' });
     });
-  });
+  })
 
+  .put(function(req, res){
+    Property.findById(req.params.property_id, function(err, property) {
+
+      if (err)
+        res.send(err);
+      Object.assign(property,req.body);
+
+      property.save(function(err) {
+        if(err)
+          res.send(err);
+
+        res.json({message: 'Property Updated'});
+      })
+    })
+  });
 
 // ----------------------------------------------------
 router.route('/properties')

@@ -27,6 +27,7 @@ function properties(state = [], action) {
 			}
 		case 'EDIT_PROPERTY':
 			var e = action.event;
+			var id = action.projectId;
 			var propertyValue = action.propertyValue;
 			var fieldValue = action.fieldValue;
 			var newState = Object.assign({}, state);
@@ -34,6 +35,31 @@ function properties(state = [], action) {
 			newState[propertyValue][fieldValue] = e.target.value;
 
 			return newState;
+
+		case 'SAVE_PROPERTY':
+			var id = action.property._id;
+			var propertyEdits = action.property;
+
+			//serialize data to send to Mongo 
+			function serialize(obj) {
+			  var str = [];
+			  for(var p in obj)
+			    if (obj.hasOwnProperty(p)) {
+			      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			    }
+			  return str.join("&");
+			}
+
+			fetch('http://localhost:7770/api/properties/' + id, {
+				method: 'put',
+				headers: {  
+				  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
+				},  
+				body: serialize(propertyEdits) 
+			})
+
+			return state;
+
 		case 'ADD_PROPERTY':
 			var newPropertyFields = action.formData;
 			var timestamp = (new Date()).getTime().toString();

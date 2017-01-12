@@ -35,6 +35,13 @@ const Property = React.createClass({
 		)
 	},
 
+	savePropertyObj(event){
+		event.preventDefault();
+		console.log(this.props.details);
+		this.props.saveProperty(this.props.details);
+		this.toggleButton(event);
+	},
+
 	render(){
 		if(this.props.details !== null){ 
 			var btnClass = classNames({
@@ -49,13 +56,16 @@ const Property = React.createClass({
 						<li className="options-block">
 							<ul>
 								<button className="delete" ref="delete" onClick={this.props.deleteProperty.bind(null, this.props.index, this.props.details._id)}>Delete</button>
-								<button onClick={this.toggleButton}>Edit</button>
+								<button className="edit-btn" onClick={this.toggleButton}>Edit</button>
+								<button className="back-btn" onClick={this.toggleButton}>Back</button>
 							</ul>
 						</li>
 						{Object.keys(this.props.properties).map(this.renderPropertyField)}
 					</ul>
-					<form className={btnClass}>
-						<span className="cell"></span>
+					<form ref="propertyForm" className={btnClass} onSubmit={this.savePropertyObj}>
+						<span className="cell">
+							<button type="submit" className="save-btn">Save</button>
+						</span>
 						{Object.keys(this.props.properties).map(this.renderEditField)}
 					</form>
 				</div>	
