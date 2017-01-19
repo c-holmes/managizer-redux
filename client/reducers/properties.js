@@ -25,6 +25,8 @@ function properties(state = [], action) {
 					...state[index] = null
 				}
 			}
+			return state;
+
 		case 'EDIT_PROPERTY':
 			var e = action.event;
 			var id = action.projectId;

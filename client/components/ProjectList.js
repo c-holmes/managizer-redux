@@ -5,7 +5,7 @@ import Project from './Project';
 const ProjectList = React.createClass ({
 
 	renderProjectHeader(key) { 
-		return <ProjectHeader key={key} index={key} details={this.props.properties[key]} />
+		return <ProjectHeader key={key[0]} index={key[0]} details={this.props.properties[key[0]]} />
 	},
 
 	renderProject(key) {
@@ -14,14 +14,13 @@ const ProjectList = React.createClass ({
 
 	render(){
 		var propertyOrderArray = [];
-		var propertyOrderObject = {};
 		return(
 			<div className="grid-list">
 				<div className="head-group">
 					<ul className="head">
 						<li className="options-head"></li>
-						{this.props.sortProjectProperties(propertyOrderArray, propertyOrderObject)}		
-						{Object.keys(propertyOrderObject).map(this.renderProjectHeader)}
+						{this.props.sortProjectProperties(propertyOrderArray)}		
+						{propertyOrderArray.map(this.renderProjectHeader)}
 					</ul>
 				</div>
 				{Object.keys(this.props.projects).map(this.renderProject)}
