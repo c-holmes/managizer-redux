@@ -2,9 +2,6 @@ const propertyFields = {
 	name : {
 		type : "text"
 	},
-	slug : {
-		type : "text"
-	},
 	type : {
 		type : "text"
 	},

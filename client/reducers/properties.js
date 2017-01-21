@@ -66,8 +66,17 @@ function properties(state = [], action) {
 			var newPropertyFields = action.formData;
 			var timestamp = (new Date()).getTime().toString();
 			var newState = Object.assign({}, state);
+
+			function slugify(name){
+				var slug = name;
+				//replace1 removes special chars, replace2 removes front and back "-", todo understand regex
+				slug = slug.replace(/[^a-zA-Z0-9]+/ig, "-").replace(/^-+|-+$/g,'').toLowerCase();
+				return slug; 
+			}
+
 			//add publish date
 			newPropertyFields._id = timestamp;
+			newPropertyFields.slug = slugify(newPropertyFields.name);
 			newState[timestamp] = newPropertyFields;
 
 			//serialize data to send to Mongo 
