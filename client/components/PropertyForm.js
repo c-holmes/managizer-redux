@@ -6,7 +6,6 @@ const PropertyForm = React.createClass({
 		var newPropertyFields = {};
 
 		//populate new property fields obj
-		console.log(this.props.propertyFields);
 		Object.keys(this.props.propertyFields).map(function(key){
 			newPropertyFields[key] = this.refs[key].value;
 		}.bind( this ))

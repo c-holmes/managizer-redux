@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var app = express();
 var compiler = webpack(config);
+var Account = require('./client/models/account');
 var Project = require('./client/models/project');
 var Property = require('./client/models/property');
 
@@ -30,6 +31,29 @@ router.use(function(req, res, next) {
 router.get('/', function(req, res) {
     res.json({ message: 'hooray! welcome to our api!' });   
 });
+
+// ----------------------------------------------------
+router.route('/accounts')
+
+  .get(function(req, res) {
+    Account.find(function(err, accounts) {
+      if (err)
+        res.send(err);
+
+      res.json(accounts);
+    });
+  })
+  
+  .post(function(req, res){
+    var account = new Account(req.body);
+
+    account.save(function(err) {
+      if (err)
+        res.send(err);
+
+      res.json({ account: 'Account Created' });
+    });
+  })
 
 // ----------------------------------------------------
 router.route('/projects')

@@ -11,6 +11,7 @@ import rootReducer from './reducers/index'
 //import test data
 //import projects from './data/projects';
 //import properties from './data/properties';
+import accountFields from './data/accountFields';
 import propertyFields from './data/propertyFields';
 
 const loggerMiddleware = createLogger()
@@ -29,6 +30,7 @@ const loggerMiddleware = createLogger()
 const defaultState = {
 	//projects,
 	//properties,
+	accountFields,
 	propertyFields
 };
 
@@ -39,6 +41,10 @@ const store = createStore(
 	  thunkMiddleware, // lets us dispatch() functions
 	  loggerMiddleware // neat middleware that logs actions
 	)
+)
+
+store.dispatch(fetchData('accounts')).then(() =>
+  	console.log(store.getState())
 )
 
 store.dispatch(fetchData('projects')).then(() =>
