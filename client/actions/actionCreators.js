@@ -1,5 +1,12 @@
 import fetch from 'isomorphic-fetch';
 
+export function createAccount(formData) {
+	return {
+		type: 'CREATE_ACCOUNT',
+		formData
+	}
+}
+
 //add Project
 export function addProject(formData) {
 	return {

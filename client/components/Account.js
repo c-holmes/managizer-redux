@@ -1,14 +1,16 @@
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import * as actionCreators from '../actions/actionCreators';
-import Main from './Main';
+// import Main from './Main';
+import Login from './Login';
 
 function mapStateToProps(state) {
 	return{
 		accounts: state.accounts,
-		projects: state.projects,
-		properties: state.properties,
-		propertyFields: state.propertyFields,
+		accountFields: state.accountFields,
+		// projects: state.projects,
+		// properties: state.properties,
+		// propertyFields: state.propertyFields,
 	}
 }
 
@@ -16,6 +18,6 @@ function mapDispatchToProps(dispatch){
 	return bindActionCreators(actionCreators, dispatch);
 }
 
-const App = connect(mapStateToProps, mapDispatchToProps)(Main);
+const Account = connect(mapStateToProps, mapDispatchToProps)(Login);
 
-export default App;
+export default Account;

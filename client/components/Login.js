@@ -1,17 +1,23 @@
 import React from 'react';
+import { browserHistory } from 'react-router'
+
 
 const Login = React.createClass({
 	createAccount(event){
 		event.preventDefault();
+
+		const accountId = this.refs.name.value;
 		var newAccountFields = {};
 
 		Object.keys(this.props.accountFields).map(function(key){
 			newAccountFields[key] = this.refs[key].value;
 		}.bind( this ))
 
-		this.props.addAccount(newAccountFields);
+		this.props.createAccount(newAccountFields);
 
-		this.refs.accountForm.reset();
+		const path = `/account/${accountId}`
+		browserHistory.push(path)
+
 	},
 
 	render() {
