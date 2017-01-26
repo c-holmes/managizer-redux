@@ -55,6 +55,44 @@ router.route('/accounts')
     });
   })
 
+//-----------------------------------------------------
+router.route('/accounts/:account_id')
+
+  .get(function(req, res) {
+    Account.findById(req.params.account_id, function(err, account){
+      if (err) 
+        res.send(err);
+      res.json(account);
+    });
+  })
+
+  .delete(function(req, res){
+    Account.remove({
+      _id: req.params.account_id
+    }, function(err, account) {
+      if (err)
+        res.send(err);
+        res.json({ message: 'Successfully Deleted' });
+    });
+  })
+
+  .put(function(req, res){
+    Account.findById(req.params.account_id, function(err, account) {
+
+      if (err)
+        res.send(err);
+
+      Object.assign(account,req.body);
+
+      account.save(function(err) {
+        if(err)
+          res.send(err);
+
+        res.json({message: 'Account Updated'});
+      });
+    })
+  });
+
 // ----------------------------------------------------
 router.route('/projects')
 

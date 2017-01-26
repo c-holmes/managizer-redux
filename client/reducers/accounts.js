@@ -8,7 +8,15 @@ function accounts(state = [], action) {
 			var timestamp = (new Date()).getTime();
 			var newState = Object.assign({}, state);
 
+			function slugify(name){
+				var slug = name;
+				//replace1 removes special chars, replace2 removes front and back "-", todo understand regex
+				slug = slug.replace(/[^a-zA-Z0-9]+/ig, "-").replace(/^-+|-+$/g,'').toLowerCase();
+				return slug; 
+			}
+
 			newAccount['_id'] = timestamp.toString();
+			newAccount['slug'] = slugify(newAccount.name);
 			newAccount['projects'] = [];
 			newAccount['properties'] = [];
 			newState[newAccount.name] = newAccount;

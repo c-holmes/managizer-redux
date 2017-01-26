@@ -7,6 +7,13 @@ export function createAccount(formData) {
 	}
 }
 
+export function loginAccount(formData) {
+	return {
+		type: 'LOGIN_ACCOUNT',
+		formData
+	}
+}
+
 //add Project
 export function addProject(formData) {
 	return {
@@ -62,9 +69,22 @@ export function receiveData(json,apiRoute) {
 }
 
 //thunk - return a function to grab data from db and load as state
+export function fetchAccounts(apiRoute) {
+  return function (dispatch) {
+    dispatch(requestData('accounts'))
+
+    return fetch(`http://localhost:7770/api/accounts`)
+      .then(response => response.json())
+      .then(json => dispatch(receiveData(json,'accounts')))
+  }
+}
+
 export function fetchData(apiRoute) {
   return function (dispatch) {
-    dispatch(requestData(apiRoute))
+    // dispatch(requestData(apiRoute))
+
+    console.log('>>>>');
+    console.log(apiRoute);
 
     return fetch(`http://localhost:7770/api/${apiRoute}`)
       .then(response => response.json())

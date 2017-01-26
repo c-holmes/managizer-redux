@@ -47,13 +47,13 @@ store.dispatch(fetchData('accounts')).then(() =>
   	console.log(store.getState())
 )
 
-store.dispatch(fetchData('projects')).then(() =>
-  	console.log(store.getState())
-)
+// store.dispatch(fetchData('projects')).then(() =>
+//   	console.log(store.getState())
+// )
 
-store.dispatch(fetchData('properties')).then(() =>
-  	console.log(store.getState())
-)
+// store.dispatch(fetchData('properties')).then(() =>
+//   	console.log(store.getState())
+// )
 
 export const history = syncHistoryWithStore(browserHistory, store);
 
