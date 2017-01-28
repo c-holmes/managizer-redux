@@ -5,7 +5,7 @@ var AccountSchema = new Schema({
 	_id: String,
 	name: String,
 	slug: String,
-	user: String,
+	email: String,
 	projects: Array,
 	properties: Array
 }, { strict: false })

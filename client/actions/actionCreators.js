@@ -69,7 +69,7 @@ export function receiveData(json,apiRoute) {
 }
 
 //thunk - return a function to grab data from db and load as state
-export function fetchAccounts(apiRoute) {
+export function fetchAccounts() {
   return function (dispatch) {
     dispatch(requestData('accounts'))
 
@@ -79,17 +79,19 @@ export function fetchAccounts(apiRoute) {
   }
 }
 
-export function fetchData(apiRoute) {
-  return function (dispatch) {
-    // dispatch(requestData(apiRoute))
-
-    console.log('>>>>');
-    console.log(apiRoute);
-
-    return fetch(`http://localhost:7770/api/${apiRoute}`)
-      .then(response => response.json())
-      .then(json => dispatch(receiveData(json,apiRoute)))
-  }
+//thunk - load project & property state based on account id
+export function fetchAccountData(apiRoute,id) {
+	return function (dispatch) {
+		if(apiRoute == 'account'){
+			return fetch(`http://localhost:7770/api/accounts/${id}/`)
+			  .then(response => response.json())
+			  .then(json => dispatch(receiveData(json,apiRoute)))
+		} else {
+			return fetch(`http://localhost:7770/api/accounts/${id}/${apiRoute}/`)
+			  .then(response => response.json())
+			  .then(json => dispatch(receiveData(json,apiRoute)))
+		}
+	}
 }
 
 //add a Property

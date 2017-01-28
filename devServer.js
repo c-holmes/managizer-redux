@@ -94,14 +94,13 @@ router.route('/accounts/:account_id')
   });
 
 // ----------------------------------------------------
-router.route('/projects')
+router.route('/accounts/:account_id/projects')
 
   .get(function(req, res) {
-    Project.find(function(err, projects) {
-      if (err)
+    Account.findById(req.params.account_id, function(err, account){
+      if (err) 
         res.send(err);
-
-      res.json(projects);
+      res.json(account.projects);
     });
   })
   
@@ -117,7 +116,7 @@ router.route('/projects')
   })
 
 // ----------------------------------------------------
-router.route('/projects/:project_id')
+router.route('/accounts/:account_id/projects/:project_id')
 
   .get(function(req, res) {
     Project.findById(req.params.project_id, function(err, project){
@@ -155,7 +154,7 @@ router.route('/projects/:project_id')
   });
 
 // ----------------------------------------------------
-router.route('/properties/:property_id')
+router.route('/accounts/:account_id/properties/:property_id')
 
   .get(function(req, res) {
     Property.findById(req.params.property_id, function(err, property){
@@ -192,14 +191,13 @@ router.route('/properties/:property_id')
   });
 
 // ----------------------------------------------------
-router.route('/properties')
+router.route('/accounts/:account_id/properties')
   
   .get(function(req, res) {
-    Property.find(function(err, properties) {
-      if (err)
+    Account.findById(req.params.account_id, function(err, account){
+      if (err) 
         res.send(err);
-
-      res.json(properties);
+      res.json(account.properties);
     });
   })
 

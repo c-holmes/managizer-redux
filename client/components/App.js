@@ -5,6 +5,7 @@ import Main from './Main';
 
 function mapStateToProps(state) {
 	return{
+		account: state.account,
 		accounts: state.accounts,
 		projects: state.projects,
 		properties: state.properties,

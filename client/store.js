@@ -1,7 +1,7 @@
 import thunkMiddleware from 'redux-thunk';
 import createLogger from 'redux-logger';
 import { createStore, compse, applyMiddleware } from 'redux';
-import { fetchData } from './actions/actionCreators'
+import { fetchAccounts } from './actions/actionCreators'
 import { syncHistoryWithStore } from 'react-router-redux';
 import { browserHistory } from 'react-router';
 
@@ -43,17 +43,9 @@ const store = createStore(
 	)
 )
 
-store.dispatch(fetchData('accounts')).then(() =>
+store.dispatch(fetchAccounts()).then(() =>
   	console.log(store.getState())
 )
-
-// store.dispatch(fetchData('projects')).then(() =>
-//   	console.log(store.getState())
-// )
-
-// store.dispatch(fetchData('properties')).then(() =>
-//   	console.log(store.getState())
-// )
 
 export const history = syncHistoryWithStore(browserHistory, store);
 

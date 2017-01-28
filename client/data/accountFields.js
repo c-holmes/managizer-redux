@@ -2,7 +2,7 @@ const accountFields = {
 	name : {
 		type : "text"
 	},
-	user : {
+	email : {
 		type : "text"
 	}
 }
