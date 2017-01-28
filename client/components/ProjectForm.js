@@ -12,6 +12,7 @@ const ProjectForm = React.createClass({
 	createNewProjectObj(event) {
 		event.preventDefault();
 		var newProjectProperties = {};
+		var accountId = this.props.account._id;
 
 		//create array of all property slugs
 		var propertyArray = Object.keys(this.props.properties).map(function(key){
@@ -26,7 +27,7 @@ const ProjectForm = React.createClass({
 		}
 
 		//pass obj to reducer
-		this.props.addProject(newProjectProperties);
+		this.props.addProject(newProjectProperties,accountId);
 
 		//reset form
 		this.refs.projectForm.reset();

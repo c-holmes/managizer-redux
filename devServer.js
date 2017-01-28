@@ -105,15 +105,21 @@ router.route('/accounts/:account_id/projects')
   })
   
   .post(function(req, res){
-    var project = new Project(req.body);
-
-    project.save(function(err) {
+    Account.findById(req.params.account_id, function(err, account) {
       if (err)
         res.send(err);
 
-      res.json({ project: 'Project Created' });
-    });
-  })
+      var project = new Project(req.body);
+      account.projects.push(project);
+
+      account.save(function(err) {
+        if(err)
+          res.send(err);
+
+        res.json({message: 'Project Updated'});
+      });
+    })
+  });
 
 // ----------------------------------------------------
 router.route('/accounts/:account_id/projects/:project_id')

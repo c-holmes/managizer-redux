@@ -59,6 +59,7 @@ function projects(state = [], action) {
 
 		case 'ADD_PROJECT':
 			var newProjectProperties = action.formData;
+			var accountId = action.accountId;
 			var timestamp = (new Date()).getTime();
 			var newState = Object.assign({}, state);
 			//add publish date
@@ -75,7 +76,7 @@ function projects(state = [], action) {
 			  return str.join("&");
 			}
 
-			fetch(`http://localhost:7770/api/projects`, {
+			fetch(`http://localhost:7770/api/accounts/${accountId}/projects`, {
 					method: 'post',  
 					headers: {  
 					  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  

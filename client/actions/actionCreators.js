@@ -15,10 +15,11 @@ export function loginAccount(formData) {
 }
 
 //add Project
-export function addProject(formData) {
+export function addProject(formData, accountId) {
 	return {
 		type: 'ADD_PROJECT',
-		formData
+		formData,
+		accountId,
 	}
 }
 
