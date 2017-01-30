@@ -35,19 +35,21 @@ export function editProject( projectValue, propertyValue, projectId, event ) {
 }
 
 //save edited Project
-export function saveProject(project){
+export function saveProject(project, accountId ){
 	return {
 		type: 'SAVE_PROJECT',
-		project
+		project,
+		accountId
 	}
 }
 
 //delete Project
-export function deleteProject(index, id) {
+export function deleteProject(index, id, accountId) {
 	return{
 		type: 'DELETE_PROJECT',
 		index,
 		id,
+		accountId
 	}
 }
 

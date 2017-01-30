@@ -29,13 +29,13 @@ const Login = React.createClass({
 
 	loginAccount(event){
 		event.preventDefault();
-		const loginEmail = this.refs.email.value;
+		const loginEmail = this.refs.loginEmail.value;
 		const accountsArray = this.props.accounts;
 
 		//find account based off email provided
 		var currAccount = accountsArray.filter(function(obj){
 			return obj.email == loginEmail;
-		})
+		});
 
 		console.log(this.props);
 
@@ -60,7 +60,7 @@ const Login = React.createClass({
 				</form>
 				<h2>Login</h2>
 				<form ref="loginForm" className="login-panel" onSubmit={this.loginAccount} >
-					<input type="text" ref="email" placeholder="Enter Email" />
+					<input type="text" ref="loginEmail" placeholder="Enter Email" />
 					<button type="submit">Submit</button>
 				</form>
 			</div>

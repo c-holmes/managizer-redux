@@ -8,6 +8,8 @@ function accounts(state = [], action) {
 			var timestamp = (new Date()).getTime();
 			var newState = Object.assign({}, state);
 
+			console.log(newAccount);
+
 			function slugify(name){
 				var slug = name;
 				//replace1 removes special chars, replace2 removes front and back "-", todo understand regex
@@ -17,8 +19,6 @@ function accounts(state = [], action) {
 
 			newAccount['_id'] = timestamp.toString();
 			newAccount['slug'] = slugify(newAccount.name);
-			newAccount['projects'] = [];
-			newAccount['properties'] = [];
 			newState[newAccount.name] = newAccount;
 
 			//serialize data to send to Mongo 

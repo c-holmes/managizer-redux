@@ -63,7 +63,7 @@ const Project = React.createClass({
 
 	saveProjectObj(event){
 		event.preventDefault();
-		this.props.saveProject(this.props.details);
+		this.props.saveProject(this.props.details, this.props.accountId);
 		this.toggleButton(event);
 	},
 
@@ -85,7 +85,7 @@ const Project = React.createClass({
 				<div className="item-group">
 					<ul className="item">
 						<li className={editMode}>
-							<button onClick={this.props.deleteProject.bind(null, this.props.index, this.props.details._id)} className="delete" ref="delete">Delete</button>
+							<button onClick={this.props.deleteProject.bind(null, this.props.index, this.props.details._id, this.props.accountId)} className="delete" ref="delete">Delete</button>
 							<button className="edit-btn" onClick={this.toggleButton}>Edit</button>
 							<button className="back-btn" onClick={this.toggleButton}>Back</button>
 						</li>

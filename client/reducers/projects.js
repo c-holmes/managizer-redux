@@ -6,9 +6,10 @@ function projects(state = [], action) {
 		case 'DELETE_PROJECT':
 			if(confirm("Are You Sure You Want To Remove This Item?")){
 				var index = action.index;
-				var id = action.id;
+				var projId = action.id;
+				var accountId = action.accountId;
 				
-				fetch('http://localhost:7770/api/projects/' + id, {
+				fetch(`http://localhost:7770/api/accounts/${accountId}/projects/${projId}`, {
 					method: 'delete'
 				})
 				.then(response => response.json())
@@ -34,7 +35,8 @@ function projects(state = [], action) {
 			return newState;
 
 		case 'SAVE_PROJECT':
-			var id = action.project._id;
+			var projId = action.project._id;
+			var accountId = action.accountId;
 			var projectEdits = action.project;
 
 			//serialize data to send to Mongo 
@@ -47,7 +49,7 @@ function projects(state = [], action) {
 			  return str.join("&");
 			}
 
-			fetch('http://localhost:7770/api/projects/' + id, {
+			fetch(`http://localhost:7770/api/accounts/${accountId}/projects/${projId}`, {
 				method: 'put',
 				headers: {  
 				  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  

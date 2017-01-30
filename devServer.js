@@ -133,30 +133,32 @@ router.route('/accounts/:account_id/projects/:project_id')
   })
 
   .delete(function(req, res){
-    Project.remove({
-      _id: req.params.project_id
-    }, function(err, project) {
+    Account.findById(req.params.account_id, function(err,account){
       if (err)
         res.send(err);
-        res.json({ message: 'Successfully Deleted' });
-    });
+      account.projects.id(req.params.project_id).remove();
+      account.save(function(err) {
+        if(err)
+          res.send(err);
+        res.json({message: 'Project Deleted'});
+      });
+    })
   })
 
   .put(function(req, res){
-    Project.findById(req.params.project_id, function(err, project) {
-
+    Account.findById(req.params.account_id, function(err,account){
       if (err)
         res.send(err);
 
-      Object.assign(project,req.body);
+      Object.assign(account.projects.id(req.params.project_id),req.body);
 
-      project.save(function(err) {
+      account.save(function(err) {
         if(err)
           res.send(err);
-
         res.json({message: 'Project Updated'});
       });
     })
+
   });
 
 // ----------------------------------------------------
