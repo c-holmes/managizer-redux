@@ -11,7 +11,7 @@ const PropertyForm = React.createClass({
 		}.bind( this ))
 
 		//call obj to reducer
-		this.props.addProperty(newPropertyFields);
+		this.props.addProperty(newPropertyFields, this.props.account._id);
 
 		//reset form
 		this.refs.propertyForm.reset();

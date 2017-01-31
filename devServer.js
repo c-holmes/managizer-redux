@@ -158,7 +158,6 @@ router.route('/accounts/:account_id/projects/:project_id')
         res.json({message: 'Project Updated'});
       });
     })
-
   });
 
 // ----------------------------------------------------
@@ -173,26 +172,28 @@ router.route('/accounts/:account_id/properties/:property_id')
   })
 
   .delete(function(req, res){
-    Property.remove({
-      _id: req.params.property_id
-    }, function(err, property) {
+    Account.findById(req.params.account_id, function(err, account){
       if (err)
         res.send(err);
+      account.properties.id(req.params.property_id).remove();
+      account.save(function(err){
+        if(err)
+          res.send(err);
         res.json({ message: 'Successfully Deleted' });
-    });
+      })
+    })
   })
 
   .put(function(req, res){
-    Property.findById(req.params.property_id, function(err, property) {
-
+    Account.findById(req.params.account_id, function(err, account) {
       if (err)
         res.send(err);
-      Object.assign(property,req.body);
 
-      property.save(function(err) {
+      Object.assign(account.properties.id(req.params.property_id), req.body);
+
+      account.save(function(err) {
         if(err)
           res.send(err);
-
         res.json({message: 'Property Updated'});
       })
     })
@@ -210,14 +211,19 @@ router.route('/accounts/:account_id/properties')
   })
 
   .post(function(req, res){
-    var property = new Property(req.body);
-
-    property.save(function(err) {
+    Account.findById(req.params.account_id, function(err, account){
       if (err)
         res.send(err);
+      var property = new Property(req.body);
+      account.properties.push(property);
 
-      res.json({ property: 'Property Created' });
-    });
+      account.save(function(err) {
+        if (err)
+          res.send(err);
+
+        res.json({ property: 'Property Created'});
+      });
+    })
   });
 
 // REGISTER OUR ROUTES -------------------------------

@@ -98,10 +98,11 @@ export function fetchAccountData(apiRoute,id) {
 }
 
 //add a Property
-export function addProperty(formData) {
+export function addProperty(formData, accountId) {
 	return {
 		type: 'ADD_PROPERTY',
 		formData,
+		accountId,
 	}
 }
 
@@ -116,19 +117,21 @@ export function editProperty( propertyValue, fieldValue, event ) {
 }
 
 //save Property
-export function saveProperty(property){
+export function saveProperty(property, accountId){
 	return {
 		type: 'SAVE_PROPERTY',
-		property
+		property,
+		accountId
 	}
 }
 
 //delete Property
-export function deleteProperty(index, id) {
+export function deleteProperty(index, id, accountId) {
 	return {
 		type: 'DELETE_PROPERTY',
 		index,
-		id
+		id,
+		accountId
 	}
 }
 

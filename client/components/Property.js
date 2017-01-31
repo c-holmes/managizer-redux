@@ -37,8 +37,7 @@ const Property = React.createClass({
 
 	savePropertyObj(event){
 		event.preventDefault();
-		console.log(this.props.details);
-		this.props.saveProperty(this.props.details);
+		this.props.saveProperty(this.props.details, this.props.accountId);
 		this.toggleButton(event);
 	},
 
@@ -55,7 +54,7 @@ const Property = React.createClass({
 					<ul className='item'>
 						<li className="options-block">
 							<ul>
-								<button className="delete" ref="delete" onClick={this.props.deleteProperty.bind(null, this.props.index, this.props.details._id)}>Delete</button>
+								<button className="delete" ref="delete" onClick={this.props.deleteProperty.bind(null, this.props.index, this.props.details._id, this.props.accountId)}>Delete</button>
 								<button className="edit-btn" onClick={this.toggleButton}>Edit</button>
 								<button className="back-btn" onClick={this.toggleButton}>Back</button>
 							</ul>

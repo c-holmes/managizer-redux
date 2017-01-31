@@ -6,12 +6,10 @@ function properties(state = [], action) {
 		case 'DELETE_PROPERTY':
 			if(confirm("Are You Sure You Want To Remove This Item?")){
 				var index = action.index;
-				var id = action.id;
-
-				console.log(action);
-				console.log(id);
+				var propertyId = action.id;
+				var accountId = action.accountId;
 				
-				fetch('http://localhost:7770/api/properties/' + id, {
+				fetch(`http://localhost:7770/api/accounts/${accountId}/properties/${propertyId}`, {
 					method: 'delete'
 				})
 				.then(response => response.json())
@@ -39,8 +37,9 @@ function properties(state = [], action) {
 			return newState;
 
 		case 'SAVE_PROPERTY':
-			var id = action.property._id;
+			var propertyId = action.property._id;
 			var propertyEdits = action.property;
+			var accountId = action.accountId;
 
 			//serialize data to send to Mongo 
 			function serialize(obj) {
@@ -52,7 +51,7 @@ function properties(state = [], action) {
 			  return str.join("&");
 			}
 
-			fetch('http://localhost:7770/api/properties/' + id, {
+			fetch(`http://localhost:7770/api/accounts/${accountId}/properties/${propertyId}`, {
 				method: 'put',
 				headers: {  
 				  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
@@ -64,6 +63,7 @@ function properties(state = [], action) {
 
 		case 'ADD_PROPERTY':
 			var newPropertyFields = action.formData;
+			var accountId = action.accountId;
 			var timestamp = (new Date()).getTime().toString();
 			var newState = Object.assign({}, state);
 
@@ -89,7 +89,7 @@ function properties(state = [], action) {
 			  return str.join("&");
 			}
 
-			fetch(`http://localhost:7770/api/properties`, {
+			fetch(`http://localhost:7770/api/accounts/${accountId}/properties`, {
 					method: 'post',  
 					headers: {  
 					  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  

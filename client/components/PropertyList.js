@@ -4,16 +4,11 @@ import Property from './Property';
 const PropertyList = React.createClass({
 
 	renderPropertyField(key) {
-		return <Property key={key[0]} index={key[0]} details={this.props.properties[key[0]]} properties={this.props.propertyFields} editProperty={this.props.editProperty} deleteProperty={this.props.deleteProperty} saveProperty={this.props.saveProperty} />
+		return <Property key={key[0]} index={key[0]} details={this.props.properties[key[0]]} properties={this.props.propertyFields} accountId={this.props.account._id} editProperty={this.props.editProperty} deleteProperty={this.props.deleteProperty} saveProperty={this.props.saveProperty} />
 	},
 
 	renderPropertyHeader(key){
 		return <li key={key}>{key}</li>
-	},
-
-	test(key){
-		console.log(key[1]);
-		return <p>hello</p>
 	},
 
 	render() {
