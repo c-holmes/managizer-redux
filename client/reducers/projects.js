@@ -96,16 +96,19 @@ function projects(state = [], action) {
 
 		case 'ADD_PROPERTY':
 			//When property is added, project panel needs to be updated with the new property
-			var newPropertyFields = action.formData;
-			var slug = newPropertyFields.slug;
-			var newState = Object.assign({}, state);
-			var newStateArray = Object.keys(newState);
+			if(state.length > 0 ){
+				var newState = Object.assign({}, state);
+				var newPropertyFields = action.formData;
+				var slug = newPropertyFields.slug;
+				var newStateArray = Object.keys(newState);
 
-			for(var i = 0; i < newStateArray.length; i++ ){
-				newState[newStateArray[i]][slug] = "";
-			} 
-
-			return newState;
+				for(var i = 0; i < newStateArray.length; i++ ){
+					newState[newStateArray[i]][slug] = "";
+				} 
+				return newState;
+			} else {
+				return state;
+			}
 
 		case 'RECEIVE_DATA':
 			if(action.route == 'projects'){

@@ -5,20 +5,8 @@ function accounts(state = [], action) {
 		case 'CREATE_ACCOUNT':
 			console.log('account created');
 			var newAccount = action.formData;
-			var timestamp = (new Date()).getTime();
 			var newState = Object.assign({}, state);
 
-			console.log(newAccount);
-
-			function slugify(name){
-				var slug = name;
-				//replace1 removes special chars, replace2 removes front and back "-", todo understand regex
-				slug = slug.replace(/[^a-zA-Z0-9]+/ig, "-").replace(/^-+|-+$/g,'').toLowerCase();
-				return slug; 
-			}
-
-			newAccount['_id'] = timestamp.toString();
-			newAccount['slug'] = slugify(newAccount.name);
 			newState[newAccount.name] = newAccount;
 
 			//serialize data to send to Mongo 

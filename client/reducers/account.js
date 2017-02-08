@@ -6,6 +6,8 @@ function account(state = [], action) {
 			}
 
 			return state;
+		case 'CREATE_ACCOUNT':
+			return action.formData;
 	}
 	return state;
 }

@@ -110,13 +110,18 @@ router.route('/accounts/:account_id/projects')
         res.send(err);
 
       var project = new Project(req.body);
-      account.projects.push(project);
+
+      if(account.projects == ""){
+        account.projects = [project];
+      } else {
+        account.projects.push(project);  
+      }
 
       account.save(function(err) {
         if(err)
           res.send(err);
 
-        res.json({message: 'Project Updated'});
+        res.json({message: 'Project Created'});
       });
     })
   });
@@ -150,7 +155,12 @@ router.route('/accounts/:account_id/projects/:project_id')
       if (err)
         res.send(err);
 
+      console.log(req.body);
+      console.log(account.projects.id(req.params.project_id));
+
       Object.assign(account.projects.id(req.params.project_id),req.body);
+
+      console.log(account.projects);
 
       account.save(function(err) {
         if(err)
@@ -215,13 +225,18 @@ router.route('/accounts/:account_id/properties')
       if (err)
         res.send(err);
       var property = new Property(req.body);
-      account.properties.push(property);
+
+      if(account.properties == ""){
+        account.properties = [property]
+      } else {
+        account.properties.push(property);
+      }
 
       account.save(function(err) {
         if (err)
           res.send(err);
 
-        res.json({ property: 'Property Created'});
+        res.json({ property: 'Property Created!'});
       });
     })
   });

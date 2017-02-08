@@ -89,6 +89,8 @@ function properties(state = [], action) {
 			  return str.join("&");
 			}
 
+			console.log(newPropertyFields);
+
 			fetch(`http://localhost:7770/api/accounts/${accountId}/properties`, {
 					method: 'post',  
 					headers: {  

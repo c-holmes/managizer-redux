@@ -6,6 +6,7 @@ const Login = React.createClass({
 	createAccount(event){
 		event.preventDefault();
 		var newAccountFields = {};
+		var timestamp = (new Date()).getTime();
 
 		function slugify(name){
 			var slug = name;
@@ -14,7 +15,10 @@ const Login = React.createClass({
 			return slug; 
 		}
 
-		const accountSlug = slugify(this.refs.name.value);
+		newAccountFields['_id'] = timestamp.toString();
+		newAccountFields['slug'] = slugify(this.refs.name.value);;
+		newAccountFields['projects'] = [];
+		newAccountFields['properties'] = [];
 
 		Object.keys(this.props.accountFields).map(function(key){
 			newAccountFields[key] = this.refs[key].value;
@@ -22,7 +26,7 @@ const Login = React.createClass({
 
 		this.props.createAccount(newAccountFields);
 
-		const path = `/account/${accountSlug}`
+		const path = `/account/${newAccountFields['slug']}`
 		browserHistory.push(path)
 
 	},
@@ -36,8 +40,6 @@ const Login = React.createClass({
 		var currAccount = accountsArray.filter(function(obj){
 			return obj.email == loginEmail;
 		});
-
-		console.log(this.props);
 
 		this.props.fetchAccountData('account', currAccount[0]._id);
 		this.props.fetchAccountData('projects', currAccount[0]._id);
