@@ -7,7 +7,8 @@ var PropertySchema = new Schema({
 	name: String,
 	type: String,
 	placeholder: String,
-	order: Number
+	order: Number,
+	test: String,
 }, { strict: false })
 
 module.exports = mongoose.model('Property', PropertySchema);

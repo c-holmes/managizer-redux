@@ -141,7 +141,9 @@ router.route('/accounts/:account_id/projects/:project_id')
     Account.findById(req.params.account_id, function(err,account){
       if (err)
         res.send(err);
+
       account.projects.id(req.params.project_id).remove();
+
       account.save(function(err) {
         if(err)
           res.send(err);
@@ -151,24 +153,51 @@ router.route('/accounts/:account_id/projects/:project_id')
   })
 
   .put(function(req, res){
-    Account.findById(req.params.account_id, function(err,account){
-      if (err)
-        res.send(err);
-
-      console.log(req.body);
-      console.log(account.projects.id(req.params.project_id));
-
-      Object.assign(account.projects.id(req.params.project_id),req.body);
-
-      console.log(account.projects);
-
-      account.save(function(err) {
+    Account.update(
+      {_id:req.params.account_id, "projects._id":req.params.project_id},
+      {
+        $set: {
+          "projects.$": req.body
+        }
+      },
+      function(err, account, numAffected) {
         if(err)
-          res.send(err);
+          return res.send(err);
         res.json({message: 'Project Updated'});
-      });
-    })
+      }
+    )
   });
+
+  // .put(function(req, res){
+  //   Account.findById(req.params.account_id, function(err,account){
+  //     if (err)
+  //       res.send(err);
+
+  //     var updatedProject = Project(req.body);
+  //     updatedProject.isNew = false;
+
+  //     var project = account.projects.id( req.params.project_id ),
+  //         index = account.projects.indexOf( project );
+
+  //     // console.log(Object.assign( account.projects.id(req.params.project_id), updatedProject));
+  //     Object.assign( account.projects.id(req.params.project_id), updatedProject);
+  //     // account.projects.isNew = false;
+  //     // console.log(Object.assign(account.projects.id(req.params.project_id).toObject(), req.body));
+  //     // Object.assign(account.projects.id(req.params.project_id).toObject(), req.body);
+
+  //     account.markModified('account.projects[index]');
+
+  //     account.save(function(err, account, numAffected) {
+  //       if(err)
+  //         console.log(err);
+  //         // return res.send(err);
+  //       res.json({message: 'Project Updated'});
+  //       console.log(err);
+  //       console.log(account);
+  //       console.log(numAffected);
+  //     });
+  //   })
+  // });
 
 // ----------------------------------------------------
 router.route('/accounts/:account_id/properties/:property_id')
@@ -227,7 +256,7 @@ router.route('/accounts/:account_id/properties')
       var property = new Property(req.body);
 
       if(account.properties == ""){
-        account.properties = [property]
+        account.properties = [property];
       } else {
         account.properties.push(property);
       }
@@ -236,7 +265,7 @@ router.route('/accounts/:account_id/properties')
         if (err)
           res.send(err);
 
-        res.json({ property: 'Property Created!'});
+        res.json({ message: 'Property Created!'});
       });
     })
   });

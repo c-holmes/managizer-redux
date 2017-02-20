@@ -1,13 +1,6 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
-var ProjectSchema = new Schema({
-	_id: String,
-	name: String,
-	developer: String,
-	// dateStart: String
-}, { strict: false })
-
 var PropertySchema = new Schema({
 	_id: String,
 	slug: String,
@@ -17,13 +10,17 @@ var PropertySchema = new Schema({
 	order: Number
 }, { strict: false })
 
+var ProjectSchema = new Schema({
+	_id: String,
+}, { strict: false })
+
 var AccountSchema = new Schema({
 	_id: String,
 	name: String,
 	slug: String,
 	email: String,
-	projects: [ProjectSchema],
 	properties: [PropertySchema],
+	projects: [ProjectSchema],
 }, { strict: false })
 
 module.exports = mongoose.model('Account', AccountSchema);

@@ -3,8 +3,8 @@ var Schema = mongoose.Schema;
 
 var ProjectSchema = new Schema({
 	_id: String,
-	name: String,
-	developer: String,
+	// name: String,
+	// developer: String,
 	// dateStart: String
 }, { strict: false })
 
