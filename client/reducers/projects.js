@@ -102,6 +102,8 @@ function projects(state = [], action) {
 				var slug = newPropertyFields.slug;
 				var newStateArray = Object.keys(newState);
 
+				console.log(newStateArray);
+
 				for(var i = 0; i < newStateArray.length; i++ ){
 					newState[newStateArray[i]][slug] = "";
 				} 

@@ -45,9 +45,22 @@ const Login = React.createClass({
 		this.props.fetchAccountData('projects', currAccount[0]._id);
 		this.props.fetchAccountData('properties',currAccount[0]._id);
 
-		let accountSlug = currAccount[0].slug;
 
+		let accountSlug = currAccount[0].slug;
 		const path = `/account/${accountSlug}`;
+
+		//Browser Local Storage
+		if (typeof(Storage) !== "undefined") {
+		    var saveData = JSON.parse(localStorage[accountSlug] || null) || {};
+		    saveData.accountId = currAccount[0]._id;
+		    saveData.accountSlug = accountSlug;
+		    saveData.accountEmail = loginEmail;
+		    saveData.loginTimestamp = new Date().getTime();
+		    localStorage[accountSlug] = JSON.stringify(saveData);
+		} else {
+		    // Sorry! No Web Storage support..
+		}
+
 		browserHistory.push(path)
 	},
 

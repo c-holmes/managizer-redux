@@ -168,37 +168,6 @@ router.route('/accounts/:account_id/projects/:project_id')
     )
   });
 
-  // .put(function(req, res){
-  //   Account.findById(req.params.account_id, function(err,account){
-  //     if (err)
-  //       res.send(err);
-
-  //     var updatedProject = Project(req.body);
-  //     updatedProject.isNew = false;
-
-  //     var project = account.projects.id( req.params.project_id ),
-  //         index = account.projects.indexOf( project );
-
-  //     // console.log(Object.assign( account.projects.id(req.params.project_id), updatedProject));
-  //     Object.assign( account.projects.id(req.params.project_id), updatedProject);
-  //     // account.projects.isNew = false;
-  //     // console.log(Object.assign(account.projects.id(req.params.project_id).toObject(), req.body));
-  //     // Object.assign(account.projects.id(req.params.project_id).toObject(), req.body);
-
-  //     account.markModified('account.projects[index]');
-
-  //     account.save(function(err, account, numAffected) {
-  //       if(err)
-  //         console.log(err);
-  //         // return res.send(err);
-  //       res.json({message: 'Project Updated'});
-  //       console.log(err);
-  //       console.log(account);
-  //       console.log(numAffected);
-  //     });
-  //   })
-  // });
-
 // ----------------------------------------------------
 router.route('/accounts/:account_id/properties/:property_id')
 
@@ -224,18 +193,19 @@ router.route('/accounts/:account_id/properties/:property_id')
   })
 
   .put(function(req, res){
-    Account.findById(req.params.account_id, function(err, account) {
-      if (err)
-        res.send(err);
-
-      Object.assign(account.properties.id(req.params.property_id), req.body);
-
-      account.save(function(err) {
+    Account.update(
+      {_id:req.params.account_id, "properties._id":req.params.property_id},
+      {
+        $set: {
+          "properties.$": req.body
+        }
+      },
+      function(err, account, numAffected) {
         if(err)
-          res.send(err);
+          return res.send(err);
         res.json({message: 'Property Updated'});
-      })
-    })
+      }
+    )
   });
 
 // ----------------------------------------------------
