@@ -14,9 +14,11 @@ const Login = React.createClass({
 			slug = slug.replace(/[^a-zA-Z0-9]+/ig, "-").replace(/^-+|-+$/g,'').toLowerCase();
 			return slug; 
 		}
+		var id = timestamp.toString();
+		var slug = slugify(this.refs.name.value);
 
-		newAccountFields['_id'] = timestamp.toString();
-		newAccountFields['slug'] = slugify(this.refs.name.value);;
+		newAccountFields['_id'] = id;
+		newAccountFields['slug'] = slug;
 		newAccountFields['projects'] = [];
 		newAccountFields['properties'] = [];
 
@@ -26,7 +28,19 @@ const Login = React.createClass({
 
 		this.props.createAccount(newAccountFields);
 
-		const path = `/account/${newAccountFields['slug']}`
+		//Browser Local Storage
+		if (typeof(Storage) !== "undefined") {
+		    var saveData = JSON.parse(localStorage[slug] || null) || {};
+			console.log(newAccountFields.slug );
+		    saveData.accountId = id;
+		    saveData.accountSlug = slug;
+		    saveData.loginTimestamp = new Date().getTime();
+		    localStorage[slug] = JSON.stringify(saveData);
+		} else {
+		    // Sorry! No Web Storage support..
+		}
+
+		const path = `/account/${slug}`
 		browserHistory.push(path)
 
 	},
@@ -44,7 +58,6 @@ const Login = React.createClass({
 		this.props.fetchAccountData('account', currAccount[0]._id);
 		this.props.fetchAccountData('projects', currAccount[0]._id);
 		this.props.fetchAccountData('properties',currAccount[0]._id);
-
 
 		let accountSlug = currAccount[0].slug;
 		const path = `/account/${accountSlug}`;
