@@ -10,7 +10,8 @@ var Account = require('./client/models/account');
 var Project = require('./client/models/project');
 var Property = require('./client/models/property');
 
-mongoose.connect('mongodb://localhost/managizer'); 
+//mongoose.connect('mongodb://localhost/managizer'); 
+mongoose.connect("mongodb://mongo:27017");
 
 app.use('/', express.static(path.join(__dirname, 'client')));
 app.use(bodyParser.json());
