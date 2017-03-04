@@ -8,7 +8,11 @@ services:
       - mongo
   mongo:
     image: mongo
-    volumes:
-      - /Users/chrisholmes/data/mongodb/db:/data/db
     ports:
       - "27017:27017"
+    volumes_from:
+      - mongodata
+  mongodata:
+    image: tianon/true
+    volumes:
+      - /data/db
