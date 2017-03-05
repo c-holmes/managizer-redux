@@ -24,7 +24,7 @@ var router = express.Router();              // get an instance of the express Ro
 // middleware to use for all requests
 router.use(function(req, res, next) {
     // do logging
-    console.log('Something is happening.');
+    console.log('Something is happening2.');
     next(); // make sure we go to the next routes and don't stop here
 });
 
@@ -266,3 +266,4 @@ app.listen(7770, function(err) {
 
   console.log('Listening at http://localhost:7770');
 });
+
