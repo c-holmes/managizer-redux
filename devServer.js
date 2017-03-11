@@ -9,7 +9,7 @@ var compiler = webpack(config);
 var Account = require('./client/models/account');
 var Project = require('./client/models/project');
 var Property = require('./client/models/property');
-
+ 
 mongoose.connect('mongodb://localhost/managizr'); 
 // mongoose.connect("mongodb://mongo:27017");
 
