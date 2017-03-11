@@ -1,6 +1,10 @@
 import fetch from 'isomorphic-fetch';
 
 function projects(state = [], action) {
+	if (!window.location.origin) {
+	    window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+	}
+	var origin = window.location.origin;
 	
 	switch(action.type){
 		case 'DELETE_PROJECT':
@@ -9,7 +13,7 @@ function projects(state = [], action) {
 				var projId = action.id;
 				var accountId = action.accountId;
 				
-				fetch(`http://localhost:7770/api/accounts/${accountId}/projects/${projId}`, {
+				fetch(`${origin}/api/accounts/${accountId}/projects/${projId}`, {
 					method: 'delete'
 				})
 				.then(response => response.json())
@@ -49,7 +53,7 @@ function projects(state = [], action) {
 			  return str.join("&");
 			}
 
-			fetch(`http://localhost:7770/api/accounts/${accountId}/projects/${projId}`, {
+			fetch(`${origin}/api/accounts/${accountId}/projects/${projId}`, {
 				method: 'put',
 				headers: {  
 				  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
@@ -78,7 +82,7 @@ function projects(state = [], action) {
 			  return str.join("&");
 			}
 
-			fetch(`http://localhost:7770/api/accounts/${accountId}/projects`, {
+			fetch(`${origin}/api/accounts/${accountId}/projects`, {
 					method: 'post',  
 					headers: {  
 					  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  

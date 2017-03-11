@@ -10,8 +10,8 @@ var Account = require('./client/models/account');
 var Project = require('./client/models/project');
 var Property = require('./client/models/property');
 
-// mongoose.connect('mongodb://localhost/managizer'); 
-mongoose.connect("mongodb://mongo:27017");
+mongoose.connect('mongodb://localhost/managizr'); 
+// mongoose.connect("mongodb://mongo:27017");
 
 app.use('/', express.static(path.join(__dirname, 'client')));
 app.use(bodyParser.json());
@@ -266,10 +266,3 @@ app.listen(7770, function(err) {
 
   console.log('Listening at http://localhost:7770');
 });
-
-// var http = require('http');
-// http.createServer(function (req, res) {
-//   res.writeHead(200, {'Content-Type': 'text/plain'});
-//   res.end('Hello World\n');
-// }).listen(7770);
-// console.log('Server running at http://127.0.0.1:8080/');

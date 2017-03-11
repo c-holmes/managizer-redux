@@ -75,8 +75,12 @@ export function receiveData(json,apiRoute) {
 export function fetchAccounts() {
   return function (dispatch) {
     dispatch(requestData('accounts'))
+    if (!window.location.origin) {
+        window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+    }
+    var origin = window.location.origin;
 
-    return fetch(`http://localhost:7770/api/accounts`)
+    return fetch(`${origin}/api/accounts`)
       .then(response => response.json())
       .then(json => dispatch(receiveData(json,'accounts')))
   }
@@ -85,12 +89,17 @@ export function fetchAccounts() {
 //thunk - load project & property state based on account id
 export function fetchAccountData(apiRoute,id) {
 	return function (dispatch) {
+		if (!window.location.origin) {
+		    window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+		}
+		var origin = window.location.origin;
+
 		if(apiRoute == 'account'){
-			return fetch(`http://localhost:7770/api/accounts/${id}/`)
+			return fetch(`${origin}/api/accounts/${id}/`)
 			  .then(response => response.json())
 			  .then(json => dispatch(receiveData(json,apiRoute)))
 		} else {
-			return fetch(`http://localhost:7770/api/accounts/${id}/${apiRoute}/`)
+			return fetch(`${origin}/api/accounts/${id}/${apiRoute}/`)
 			  .then(response => response.json())
 			  .then(json => dispatch(receiveData(json,apiRoute)))
 		}

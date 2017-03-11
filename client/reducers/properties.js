@@ -1,6 +1,10 @@
 import fetch from 'isomorphic-fetch';
 
 function properties(state = [], action) {
+	if (!window.location.origin) {
+	    window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+	}
+	var origin = window.location.origin;
 
 	switch(action.type){
 		case 'DELETE_PROPERTY':
@@ -9,7 +13,7 @@ function properties(state = [], action) {
 				var propertyId = action.id;
 				var accountId = action.accountId;
 				
-				fetch(`http://localhost:7770/api/accounts/${accountId}/properties/${propertyId}`, {
+				fetch(`${origin}/api/accounts/${accountId}/properties/${propertyId}`, {
 					method: 'delete'
 				})
 				.then(response => response.json())
@@ -51,7 +55,7 @@ function properties(state = [], action) {
 			  return str.join("&");
 			}
 
-			fetch(`http://localhost:7770/api/accounts/${accountId}/properties/${propertyId}`, {
+			fetch(`${origin}/api/accounts/${accountId}/properties/${propertyId}`, {
 				method: 'put',
 				headers: {  
 				  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
@@ -91,7 +95,7 @@ function properties(state = [], action) {
 
 			console.log(newPropertyFields);
 
-			fetch(`http://localhost:7770/api/accounts/${accountId}/properties`, {
+			fetch(`${origin}/api/accounts/${accountId}/properties`, {
 					method: 'post',  
 					headers: {  
 					  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  

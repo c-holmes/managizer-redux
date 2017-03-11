@@ -8,28 +8,13 @@ import { browserHistory } from 'react-router';
 //import the root reducer
 import rootReducer from './reducers/index'
 
-//import test data
-//import projects from './data/projects';
-//import properties from './data/properties';
 import accountFields from './data/accountFields';
 import propertyFields from './data/propertyFields';
 
 const loggerMiddleware = createLogger()
 
-// fetch('http://localhost:7770/api/projects').then(function(response) { 
-// 	// Convert to JSON
-// 	return projects = response.json();
-// }).then(function(j) {
-// 	// Yay, `j` is a JavaScript object
-// 	console.log(j); 
-// });
-
-//fetchProjects('test');
-
 //create obj for default state
 const defaultState = {
-	//projects,
-	//properties,
 	accountFields,
 	propertyFields
 };

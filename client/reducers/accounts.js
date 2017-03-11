@@ -1,6 +1,11 @@
 import fetch from 'isomorphic-fetch';
 
 function accounts(state = [], action) {
+	if (!window.location.origin) {
+	    window.location.origin = window.location.protocol + "//" + window.location.hostname + (window.location.port ? ':' + window.location.port: '');
+	}
+	var origin = window.location.origin;
+
 	switch(action.type){
 		case 'CREATE_ACCOUNT':
 			console.log('account created');
@@ -19,7 +24,7 @@ function accounts(state = [], action) {
 			  return str.join("&");
 			}
 
-			fetch(`http://localhost:7770/api/accounts`, {
+			fetch(`${origin}/api/accounts`, {
 					method: 'post',  
 					headers: {  
 					  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
