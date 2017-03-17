@@ -1,6 +1,7 @@
 import React from 'react';
 import ProjectPanel from './ProjectPanel';
 import AdminPanel from './AdminPanel';
+import classNames from 'classnames/bind';
 
 const Main = React.createClass({
 	sortProjectProperties(propertyOrderArray){
@@ -38,12 +39,33 @@ const Main = React.createClass({
 		}
 	},
 
+	getInitialState () {
+		return { isPressed : false };
+	},
+
+	togglePanel(event){
+		event.preventDefault();
+		if(this.state.isPressed == true){
+			this.state.isPressed = false;
+		} else {
+			this.state.isPressed = true;
+		}
+		this.setState({
+			isPressed : this.state.isPressed
+		})
+	},
+
 	render() {
+		var appUiState = classNames({
+			'app':true,
+		  	'admin-open': this.state.isPressed
+		});
+
 		return (
-			<div className="app">
+			<div className={appUiState} >
 				{this.loadStateFromStorage()}
 				<ProjectPanel {...this.props} sortProjectProperties={this.sortProjectProperties} />
-				<AdminPanel {...this.props} sortProjectProperties={this.sortProjectProperties} />
+				<AdminPanel {...this.props} togglePanel={this.togglePanel} sortProjectProperties={this.sortProjectProperties} />
 			</div>
 		)
 	}

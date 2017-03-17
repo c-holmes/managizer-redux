@@ -3,7 +3,11 @@ import React from 'react';
 const ProjectForm = React.createClass({
 	renderField(key) {
 		if(this.props.properties[key] !== null ){
-			return <input className="test" key={key} type={this.props.properties[key].type} ref={this.props.properties[key].slug} placeholder={this.props.properties[key].placeholder}  />			
+			return(
+				<div key={key} className="input-holder">
+					<input key={key} type={this.props.properties[key].type} ref={this.props.properties[key].slug} placeholder={this.props.properties[key].placeholder}  />			
+				</div>
+			)
 		} else {
 			return null
 		}
@@ -35,11 +39,13 @@ const ProjectForm = React.createClass({
 
 	render(){
 		return(
-			<div>
+			<div className="sect">
 				<h3>Add a Project</h3>
-				<form ref="projectForm" onSubmit={this.createNewProjectObj} >
+				<form className="type1" ref="projectForm" onSubmit={this.createNewProjectObj} >
 					{Object.keys(this.props.properties).map(this.renderField)}
-					<button type="submit">Submit</button>
+					<div className="submit-holder">
+						<button type="submit">Submit</button>
+					</div>
 				</form>
 			</div>
 		)

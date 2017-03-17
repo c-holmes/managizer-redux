@@ -12,8 +12,9 @@ const ProjectPanel = React.createClass({
 		//
 		return(
 			<div className="sect project-panel">
-				<h2>Project Panel</h2>
-				<ProjectList {...this.props}  />
+				<div className="container">
+					<ProjectList {...this.props}  />
+				</div>
 			</div>
 		)
 	}

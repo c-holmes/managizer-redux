@@ -79,18 +79,27 @@ const Login = React.createClass({
 
 	render() {
 		return(
-			<div className="user-panel">
-				<h2>Create New Account</h2>
-				<form ref="accountForm" className="login-panel" onSubmit={this.createAccount} >
-					<input type="text" ref="name" placeholder="Enter Account Name" />
-					<input type="text" ref="email" placeholder="Enter Email" />
-					<button type="submit">Submit</button>
-				</form>
-				<h2>Login</h2>
-				<form ref="loginForm" className="login-panel" onSubmit={this.loginAccount} >
-					<input type="text" ref="loginEmail" placeholder="Enter Email" />
-					<button type="submit">Submit</button>
-				</form>
+			<div className="login">
+				<div className="container">
+					<img className="logo" src="../styles/images/managizr-logo.png" alt="logo" title="logo" />
+					<div className="box split">
+						<div className="container">
+							<h2>Create New Account</h2>
+							<form ref="accountForm" className="login-panel" onSubmit={this.createAccount} >
+								<input type="text" ref="name" placeholder="Enter Account Name" />
+								<input type="text" ref="email" placeholder="Enter Email" />
+								<button type="submit">Submit</button>
+							</form>
+						</div>
+						<div className="container">
+							<h2>Login</h2>
+							<form ref="loginForm" className="login-panel" onSubmit={this.loginAccount} >
+								<input type="text" ref="loginEmail" placeholder="Enter Email" />
+								<button type="submit">Submit</button>
+							</form>
+						</div>
+					</div>
+				</div>
 			</div>
 		)
 	}

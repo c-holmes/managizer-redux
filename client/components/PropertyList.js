@@ -14,15 +14,17 @@ const PropertyList = React.createClass({
 	render() {
 		var propertyOrderArray = [];
 		return(
-			<div className="grid-list">
-				<div className="head-group">
-					<ul className="head">
-						<li className="options-head"></li>
-						{Object.keys(this.props.propertyFields).map(this.renderPropertyHeader)}
-					</ul>
+			<div className="sect">
+				<div className="grid-list">
+					<div className="head-group">
+						<ul className="head">
+							<li className="options-head"></li>
+							{Object.keys(this.props.propertyFields).map(this.renderPropertyHeader)}
+						</ul>
+					</div>
+					{this.props.sortProjectProperties(propertyOrderArray)}
+					{propertyOrderArray.map(this.renderPropertyField)}
 				</div>
-				{this.props.sortProjectProperties(propertyOrderArray)}
-				{propertyOrderArray.map(this.renderPropertyField)}
 			</div>
 		)
 	}

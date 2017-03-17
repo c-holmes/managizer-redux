@@ -1,0 +1,28 @@
+form.type1{
+	.input-holder{
+	    width: 50%;
+	    display: inline-block;
+	    padding: 5px;
+
+	    &:nth-child(odd){
+	    	padding-left:0;
+	    }
+	}
+
+	.submit-holder{
+		margin-top:5px;
+	}
+
+	input{
+		line-height: normal;
+	    width: 100%;
+	    padding: 7px;
+	    border-radius: 3px;
+	    border: 1px solid darken(#f7f7f7, 5%);
+
+	    &:focus{
+	    	outline:0;
+	    	border:1px solid darken(#f7f7f7, 20%);
+	    }
+	}
+}

@@ -1,4 +1,9 @@
+$grid-border-color: #f7f7f7;
+
 .grid-list{
+	display:inline-block;
+	border:1px solid $grid-border-color;
+
 	.head-group{
 		display:table-header-group;
 	}
@@ -25,7 +30,10 @@
 
 	.head{
 		li{
-		    background: #eee;
+		    background: #f7f7f7;
+		    border-left: 1px solid #eee;
+		    border-right: 1px solid #eee;
+		    border-bottom:1px solid #eee;
 		    font-weight: 600;
 		    padding-top: 5px;
 		    padding-bottom: 5px;
@@ -34,8 +42,9 @@
 
 	.item{
 		li, .cell{
-			background:#f7f7f7;
-			border:1px solid #eee;
+			background:#fff;
+			border:1px solid $grid-border-color;
+			border-collapse: collapse;
 		}
 
 		.options-block{
@@ -64,6 +73,22 @@
 
 		&.btn-pressed{
 			display:table-row;
+		}
+	}
+}
+
+.admin-panel .grid-list{
+	border:1px solid darken($grid-border-color, 5%);
+
+	.head{
+		li{
+		    background: #F9F9F9;
+		}
+	}
+
+	.item{
+		li, .cell{
+			border:1px solid darken($grid-border-color, 5%);
 		}
 	}
 }

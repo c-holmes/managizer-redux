@@ -7,10 +7,17 @@ const AdminPanel = React.createClass({
 	render() {
 		return(
 			<div className="sect admin-panel">
-				<h2>Admin Panel</h2>
-				<PropertyList {...this.props} />
-				<PropertyForm {...this.props} />
-				<ProjectForm {...this.props} />
+				<ul className="toolbar">
+					<li>
+						<button className="open" onClick={this.props.togglePanel}>Open</button>
+						<button className="close" onClick={this.props.togglePanel}>Close</button>
+					</li>
+				</ul>
+				<div className="properties container">
+					<PropertyList {...this.props} />
+					<PropertyForm {...this.props} />
+					<ProjectForm {...this.props} />
+				</div>
 			</div>
 		)
 	}

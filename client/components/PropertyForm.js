@@ -19,14 +19,24 @@ const PropertyForm = React.createClass({
 
 	render() {
 		return(
-			<div>
+			<div className="sect">
 				<h3>Add a Property</h3>
-				<form ref="propertyForm" onSubmit={this.createNewPropertyObj}>
-					<input type="text" ref="name" placeholder="Name of Field" />
-					<input type="text" ref="type" placeholder="Type of Field" />
-					<input type="text" ref="placeholder" placeholder="Field Placeholder"/>
-					<input type="number" ref="order" placeholder="Order"/>
-					<button type="submit">Submit </button>
+				<form className="type1" ref="propertyForm" onSubmit={this.createNewPropertyObj}>
+					<div className="input-holder">
+						<input type="text" ref="name" placeholder="Name of Field" />
+					</div>
+					<div className="input-holder">
+						<input type="text" ref="type" placeholder="Type of Field" />
+					</div>
+					<div className="input-holder">
+						<input type="text" ref="placeholder" placeholder="Field Placeholder"/>
+					</div>
+					<div className="input-holder">
+						<input type="number" ref="order" placeholder="Order"/>
+					</div>
+					<div className="submit-holder">
+						<button type="submit">Submit </button>
+					</div>
 				</form>
 			</div>	
 		)
