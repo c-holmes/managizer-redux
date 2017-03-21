@@ -17,6 +17,12 @@ const PropertyForm = React.createClass({
 		this.refs.propertyForm.reset();
 	},
 
+	renderOptions(key){
+		return(
+			<option key={key} value={key} >{key}</option>
+		)
+	},
+
 	render() {
 		return(
 			<div className="sect">
@@ -26,7 +32,9 @@ const PropertyForm = React.createClass({
 						<input type="text" ref="name" placeholder="Name of Field" />
 					</div>
 					<div className="input-holder">
-						<input type="text" ref="type" placeholder="Type of Field" />
+						<select ref="type">
+							{this.props.propertyFields.type.map(this.renderOptions)}
+						</select>
 					</div>
 					<div className="input-holder">
 						<input type="text" ref="placeholder" placeholder="Field Placeholder"/>

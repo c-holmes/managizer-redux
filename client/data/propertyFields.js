@@ -2,9 +2,7 @@ const propertyFields = {
 	name : {
 		type : "text"
 	},
-	type : {
-		type : "text"
-	},
+	type : ["text", "select", "date"],
 	placeholder : {
 		type : "text"
 	},

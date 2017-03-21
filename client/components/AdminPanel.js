@@ -1,6 +1,7 @@
 import React from 'react';
 import PropertyList from './PropertyList';
 import PropertyForm from './PropertyForm';
+import PropertySelectTypeForm from './PropertySelectTypeForm';
 import ProjectForm from './ProjectForm';
 
 const AdminPanel = React.createClass({
@@ -16,6 +17,7 @@ const AdminPanel = React.createClass({
 				<div className="properties container">
 					<PropertyList {...this.props} />
 					<PropertyForm {...this.props} />
+					<PropertySelectTypeForm {...this.props} />
 					<ProjectForm {...this.props} />
 				</div>
 			</div>

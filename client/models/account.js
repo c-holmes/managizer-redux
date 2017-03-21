@@ -7,7 +7,8 @@ var PropertySchema = new Schema({
 	name: String,
 	type: String,
 	placeholder: String,
-	order: Number
+	order: Number,
+	selectOptions: Array
 }, { strict: false })
 
 var ProjectSchema = new Schema({

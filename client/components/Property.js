@@ -24,15 +24,31 @@ const Property = React.createClass({
 		)
 	},
 
+	renderOptions(key){
+		return(
+			<option key={key} value={key} >{key}</option>
+		)
+	},
+
 	renderEditField(key){
 		var propertyValue = this.props.index;
 		var fieldValue = key;
 
-		return(
-			<span key={key} className="cell">
-				<input type="text" value={this.props.details[fieldValue]} onChange={this.props.editProperty.bind(this, propertyValue, fieldValue)} />
-			</span>
-		)
+		if(this.props.properties.type.includes(this.props.details[fieldValue])){
+			return(
+				<span key={key} className="cell">
+					<select ref="type" defaultValue={this.props.details[fieldValue]} onChange={this.props.editProperty.bind(this, propertyValue, fieldValue)}>
+						{this.props.properties.type.map(this.renderOptions)}
+					</select>
+				</span>
+			)
+		} else {
+			return(
+				<span key={key} className="cell">
+					<input type="text" value={this.props.details[fieldValue]} onChange={this.props.editProperty.bind(this, propertyValue, fieldValue)} />
+				</span>
+			)
+		}
 	},
 
 	savePropertyObj(event){
