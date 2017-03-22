@@ -71,9 +71,11 @@ function properties(state = [], action) {
 			var timestamp = (new Date()).getTime().toString();
 			var newState = Object.assign({}, state);
 
+			console.log(newPropertyFields);
+
 			if(newPropertyFields.type == 'select'){
 				//if a select type property, create empty array for select options
-				newPropertyFields['selectOptions'] = [];
+				newPropertyFields['selectOptions'] = ['empty'];
 			}
 
 			function slugify(name){
@@ -98,8 +100,6 @@ function properties(state = [], action) {
 			  return str.join("&");
 			}
 
-			console.log(newPropertyFields);
-
 			fetch(`${origin}/api/accounts/${accountId}/properties`, {
 					method: 'post',  
 					headers: {  
@@ -114,6 +114,7 @@ function properties(state = [], action) {
 				.catch(function (error) {
 					console.log('Request failed', error);
 				});
+			console.log(newState);
 			return newState;
 
 		case 'RECEIVE_DATA':
@@ -124,13 +125,17 @@ function properties(state = [], action) {
 			return state;
 
 		case 'ADD_SELECT_OPTION':
-			var option = action.option;
+			var propertyKey = action.propertyKey;
 			var propertyObj = action.propertyObj;
 			var accountId = action.accountId;
 			var newState = Object.assign({},state);
 
-			newState[propertyObj.key].selectOptions.push({name:option});
+			console.log('yaa');
+			console.log(newState[propertyKey]);
+			console.log(propertyObj);
 
+			newState[propertyKey] = propertyObj;
+			
 			function serialize(obj) {
 			  var str = [];
 			  for(var p in obj)
@@ -140,18 +145,13 @@ function properties(state = [], action) {
 			  return str.join("&");
 			}
 
-			console.log(propertyObj.id);
-			console.log(accountId);
-
-			// fetch(`${origin}/api/accounts/${accountId}/properties/${propertyObj.id}`, {
-			// 	method: 'put',
-			// 	headers: {  
-			// 	  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
-			// 	},  
-			// 	body: serialize(propertyEdits) 
-			// })
-
-			console.log(newState);
+			fetch(`${origin}/api/accounts/${accountId}/properties/${propertyObj.id}`, {
+				method: 'put',
+				headers: {  
+				  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
+				},  
+				body: serialize(propertyObj) 
+			})
 
 			return newState;
 

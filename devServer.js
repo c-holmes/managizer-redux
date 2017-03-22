@@ -194,6 +194,7 @@ router.route('/accounts/:account_id/properties/:property_id')
   })
 
   .put(function(req, res){
+    console.log(req.body);
     Account.update(
       {_id:req.params.account_id, "properties._id":req.params.property_id},
       {
