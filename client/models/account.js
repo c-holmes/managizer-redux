@@ -1,6 +1,12 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var SelectOptionSchema = new Schema({
+	_id: String,
+	name: String,
+	order: Number
+}, {strict: false })
+
 var PropertySchema = new Schema({
 	_id: String,
 	slug: String,
@@ -8,7 +14,7 @@ var PropertySchema = new Schema({
 	type: String,
 	placeholder: String,
 	order: Number,
-	selectOptions: Array
+	selectOptions: [SelectOptionSchema]
 }, { strict: false })
 
 var ProjectSchema = new Schema({

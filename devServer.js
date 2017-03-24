@@ -9,6 +9,7 @@ var compiler = webpack(config);
 var Account = require('./client/models/account');
 var Project = require('./client/models/project');
 var Property = require('./client/models/property');
+var SelectOption = require('./client/models/SelectOption');
  
 mongoose.connect('mongodb://localhost/managizr'); 
 // mongoose.connect("mongodb://mongo:27017");
@@ -209,6 +210,78 @@ router.route('/accounts/:account_id/properties/:property_id')
       }
     )
   });
+
+// ----------------------------------------------------
+router.route('/accounts/:account_id/properties/:property_id/selectOptions')
+  .get(function(req, res){
+    Property.findById(req.params.property_id, function(err, property){
+      if(err)
+        res.send(err);
+      res.json(property.selectOptions);
+    });
+  });
+
+  .post(function(req, res){
+    Property.findById(req.params.property_id, function(err, property){
+      if (err)
+        res.send(err);
+      var selectOption = new SelectOption(req.body);
+
+      if(properties.selectOption == ""){
+        properties.selectOption = [selectOption];
+      } else {
+        properties.selectOption.push(selectOption);
+      }
+
+      account.save(function(err) {
+        if (err)
+          res.send(err);
+
+        res.json({ message: 'Select Option Created!'});
+      });
+    })
+  });
+
+// ----------------------------------------------------
+router.route('/accounts/:account_id/properties/:property_id/selectOptions/:option_id')
+  .get(function(req, res) {
+    SelectOption.findById(req.params.option_id, function(err, selectOption){
+      if(err)
+        res.send(err);
+      res.json(selectOption);
+    });
+  })
+
+  .delete(function(req, res){
+    Account.findById(req.params.account_id, function(err, account){
+      if (err)
+        res.send(err);
+      account.properties.id(req.params.property_id).remove();
+      account.save(function(err){
+        if(err)
+          res.send(err);
+        res.json({ message: 'Successfully Deleted' });
+      })
+    })
+  })
+
+  .put(function(req, res){
+    console.log(req.body);
+    Account.update(
+      {_id:req.params.account_id, "properties._id":req.params.property_id},
+      {
+        $set: {
+          "properties.$": req.body
+        }
+      },
+      function(err, account, numAffected) {
+        if(err)
+          return res.send(err);
+        res.json({message: 'Property Updated'});
+      }
+    )
+  });
+
 
 // ----------------------------------------------------
 router.route('/accounts/:account_id/properties')

@@ -75,7 +75,7 @@ function properties(state = [], action) {
 
 			if(newPropertyFields.type == 'select'){
 				//if a select type property, create empty array for select options
-				newPropertyFields['selectOptions'] = ['empty'];
+				newPropertyFields['selectOptions'] = [];
 			}
 
 			function slugify(name){
@@ -125,14 +125,11 @@ function properties(state = [], action) {
 			return state;
 
 		case 'ADD_SELECT_OPTION':
+			//Get Select Option Key
 			var propertyKey = action.propertyKey;
 			var propertyObj = action.propertyObj;
 			var accountId = action.accountId;
 			var newState = Object.assign({},state);
-
-			console.log('yaa');
-			console.log(newState[propertyKey]);
-			console.log(propertyObj);
 
 			newState[propertyKey] = propertyObj;
 			
@@ -145,8 +142,11 @@ function properties(state = [], action) {
 			  return str.join("&");
 			}
 
-			fetch(`${origin}/api/accounts/${accountId}/properties/${propertyObj.id}`, {
-				method: 'put',
+			console.log('yaa');
+			console.log(serialize(propertyObj.selectOptions));
+
+			fetch(`${origin}/api/accounts/${accountId}/properties/${propertyObj.id}/selectOptions`, {
+				method: 'post',
 				headers: {  
 				  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
 				},  
