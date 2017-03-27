@@ -2,10 +2,23 @@ form.type1{
 	.input-holder{
 	    width: 50%;
 	    display: inline-block;
+	    vertical-align: middle;
 	    padding: 5px;
 
 	    &:nth-child(odd){
 	    	padding-left:0;
+	    }
+
+	    &.num-sml-side{
+	    	input{
+	    		vertical-align: middle;
+	    	}
+	    	input[type="text"]{
+	    		width: 75%;
+	    	}
+	    	input[type="number"]{
+	    		width: 25%;
+	    	}
 	    }
 	}
 

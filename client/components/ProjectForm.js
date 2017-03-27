@@ -3,14 +3,31 @@ import React from 'react';
 const ProjectForm = React.createClass({
 	renderField(key) {
 		if(this.props.properties[key] !== null ){
-			return(
-				<div key={key} className="input-holder">
-					<input key={key} type={this.props.properties[key].type} ref={this.props.properties[key].slug} placeholder={this.props.properties[key].placeholder}  />			
-				</div>
-			)
+			if(this.props.properties[key].type == 'select'){
+				console.log(this.props.properties[key]);
+				return(
+					<div key={key} className="input-holder">
+						<select ref={this.props.properties[key].slug}>
+							{this.props.properties[key].selectOptions.map(this.renderOptions)}
+						</select>
+					</div>
+				)
+			} else {
+				return(
+					<div key={key} className="input-holder">
+						<input key={key} type={this.props.properties[key].type} ref={this.props.properties[key].slug} placeholder={this.props.properties[key].placeholder}  />			
+					</div>
+				)
+			}
 		} else {
 			return null
 		}
+	},
+
+	renderOptions(option){
+		return(
+			<option key={option.order} value={option.name} >{option.name}</option>
+		)
 	},
 
 	createNewProjectObj(event) {

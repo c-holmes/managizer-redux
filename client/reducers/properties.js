@@ -127,11 +127,12 @@ function properties(state = [], action) {
 		case 'ADD_SELECT_OPTION':
 			//Get Select Option Key
 			var propertyKey = action.propertyKey;
-			var propertyObj = action.propertyObj;
+			var propertyId = action.propertyId;
+			var newOptionObj = action.newOptionObj;
 			var accountId = action.accountId;
 			var newState = Object.assign({},state);
 
-			newState[propertyKey] = propertyObj;
+			newState[propertyKey]['selectOptions'].push(newOptionObj);
 			
 			function serialize(obj) {
 			  var str = [];
@@ -142,15 +143,12 @@ function properties(state = [], action) {
 			  return str.join("&");
 			}
 
-			console.log('yaa');
-			console.log(serialize(propertyObj.selectOptions));
-
-			fetch(`${origin}/api/accounts/${accountId}/properties/${propertyObj.id}/selectOptions`, {
+			fetch(`${origin}/api/accounts/${accountId}/properties/${propertyId}/selectOptions`, {
 				method: 'post',
 				headers: {  
 				  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
 				},  
-				body: serialize(propertyObj) 
+				body: serialize(newOptionObj) 
 			})
 
 			return newState;

@@ -145,11 +145,12 @@ export function deleteProperty(index, id, accountId) {
 }
 
 //add a Select Option on a Property
-export function addSelectOption(propertyKey, propertyObj, accountId){
+export function addSelectOption(propertyKey, propertyId, newOptionObj, accountId){
 	return {
 		type: 'ADD_SELECT_OPTION',
 		propertyKey,
-		propertyObj,
+		propertyId,
+		newOptionObj,
 		accountId
 	}
 }

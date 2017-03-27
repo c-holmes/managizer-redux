@@ -46,6 +46,24 @@
 				border-bottom:1px solid darken(#f7f7f7, 10%);
 				padding:20px;
 				width:100%;
+
+				&.split{
+					padding:0;
+
+					.left,.right{
+						width:50%;
+						float:left;
+						padding:20px;
+					}
+
+					.left{
+						border-right:1px solid darken(#f7f7f7, 5%);
+					}
+
+					.input-holder{
+						width:100%;
+					}
+				}
 			}
 
 			h3{
@@ -103,3 +121,8 @@
 	}
 }
 
+.clearfix, .cf {
+  zoom: 1;
+    &:before, &:after { content: ""; display: table; }
+    &:after { clear: both; }
+}

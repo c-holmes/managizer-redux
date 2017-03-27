@@ -9,7 +9,7 @@ var compiler = webpack(config);
 var Account = require('./client/models/account');
 var Project = require('./client/models/project');
 var Property = require('./client/models/property');
-var SelectOption = require('./client/models/SelectOption');
+var SelectOption = require('./client/models/selectOption');
  
 mongoose.connect('mongodb://localhost/managizr'); 
 // mongoose.connect("mongodb://mongo:27017");
@@ -219,18 +219,19 @@ router.route('/accounts/:account_id/properties/:property_id/selectOptions')
         res.send(err);
       res.json(property.selectOptions);
     });
-  });
+  })
 
   .post(function(req, res){
-    Property.findById(req.params.property_id, function(err, property){
+    Account.findById(req.params.account_id, function(err, account){
       if (err)
         res.send(err);
       var selectOption = new SelectOption(req.body);
+      var propertyId = req.params.property_id;
 
-      if(properties.selectOption == ""){
-        properties.selectOption = [selectOption];
+      if(account.properties.id(propertyId).selectOptions == ""){
+        account.properties.id(propertyId).selectOptions = [selectOption];
       } else {
-        properties.selectOption.push(selectOption);
+        account.properties.id(propertyId).selectOptions.push(selectOption);
       }
 
       account.save(function(err) {
