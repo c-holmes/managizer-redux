@@ -10,6 +10,7 @@ function mapStateToProps(state) {
 		projects: state.projects,
 		properties: state.properties,
 		propertyFields: state.propertyFields,
+		selectOptionFields: state.selectOptionFields,
 	}
 }
 

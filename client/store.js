@@ -10,13 +10,15 @@ import rootReducer from './reducers/index'
 
 import accountFields from './data/accountFields';
 import propertyFields from './data/propertyFields';
+import selectOptionFields from './data/selectOptionFields';
 
 const loggerMiddleware = createLogger()
 
 //create obj for default state
 const defaultState = {
 	accountFields,
-	propertyFields
+	propertyFields,
+	selectOptionFields
 };
 
 const store = createStore(
