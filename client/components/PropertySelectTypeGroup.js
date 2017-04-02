@@ -3,23 +3,6 @@ import PropertySelectTypeList from './PropertySelectTypeList';
 import PropertySelectTypeForm from './PropertySelectTypeForm';
 
 const PropertySelectTypeGroup = React.createClass({
-
-	sortSelectOptions(selectOptionOrderArray,propertyKey){
-		console.log(this.props.properties[propertyKey].selectOptions);
-		//iterate through properties
-		Object.keys(this.props.properties[propertyKey].selectOptions).map(function(key){
-			if(this.props.properties[propertyKey].selectOptions !== null){
-				//push name & order to array
-				selectOptionOrderArray.push([key, this.props.properties[propertyKey].selectOptions.order])
-			}
-		}, this)
-
-		//sort array by order
-		selectOptionOrderArray.sort(function(a,b){
-			return a[1] - b[1]
-		});
-	},
-
 	render(){
 		return(
 			<div  className="sect split cf">
@@ -29,7 +12,7 @@ const PropertySelectTypeGroup = React.createClass({
 				</div>
 				<div className="right">
 					<h3>{this.props.properties[this.props.index].name} List</h3>
-					<PropertySelectTypeList property={this.props.properties[this.props.index]} propertyKey={this.props.index} sortSelectOptions={this.sortSelectOptions} />
+					<PropertySelectTypeList property={this.props.properties[this.props.index]} propertyKey={this.props.index} properties={this.props.properties} selectOptionFields={this.props.selectOptionFields}/>
 				</div>
 			</div>
 		) 

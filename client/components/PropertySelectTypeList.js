@@ -4,11 +4,25 @@ import PropertySelectType from './PropertySelectType';
 const PropertySelectTypeList = React.createClass({
 	
 	renderSelectOptionField(key){
-		return <PropertySelectType details={this.props.property.selectOptions[key[0]]} propertyKey={this.props.propertyKey} key={key[0]} index={key[0]} />
+		return <PropertySelectType details={this.props.property.selectOptions[key[0]]} selectOptionFields={this.props.selectOptionFields} key={key[0]} />
 	},
 
 	renderSelectOptionHeader(key){
 		return <li key={key}>{key}</li>
+	},
+
+	sortSelectOptions(selectOptionsOrderArray,selectOptionArray){
+		selectOptionArray.map(function(selectOption,key){
+			if(key !== null){
+				//original key, order, name
+				selectOptionsOrderArray.push([key,selectOption.order,selectOption.name]);
+			}
+		}, this)
+
+		//sort array by order
+		selectOptionsOrderArray.sort(function(a,b){
+			return a[1] - b[1]
+		});
 	},
 
 	render(){
@@ -18,11 +32,10 @@ const PropertySelectTypeList = React.createClass({
 				<div className="head-group">
 					<ul className="head">
 						<li className="options-head"></li>
-						<li>Name</li>
-						<li>Order</li>
+						{Object.keys(this.props.selectOptionFields).map(this.renderSelectOptionHeader)}
 					</ul>
 				</div>
-				{this.props.sortSelectOptions(selectOptionsOrderArray,this.props.propertyKey)}
+				{this.sortSelectOptions(selectOptionsOrderArray,this.props.property.selectOptions)}
 				{selectOptionsOrderArray.map(this.renderSelectOptionField)}
 			</div>
 		)

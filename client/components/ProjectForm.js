@@ -1,14 +1,29 @@
 import React from 'react';
 
 const ProjectForm = React.createClass({
+	sortSelectOptions(selectOptionsOrderArray,selectOptionArray){
+		selectOptionArray.map(function(selectOption,key){
+			if(key !== null){
+				//original key, order, name
+				selectOptionsOrderArray.push([key,selectOption.order,selectOption.name]);
+			}
+		}, this)
+
+		//sort array by order
+		selectOptionsOrderArray.sort(function(a,b){
+			return a[1] - b[1]
+		});
+	},
+
 	renderField(key) {
 		if(this.props.properties[key] !== null ){
 			if(this.props.properties[key].type == 'select'){
-				console.log(this.props.properties[key]);
+				var selectOptionsOrderArray = [];
 				return(
 					<div key={key} className="input-holder">
 						<select ref={this.props.properties[key].slug}>
-							{this.props.properties[key].selectOptions.map(this.renderOptions)}
+							{this.sortSelectOptions(selectOptionsOrderArray,this.props.properties[key].selectOptions)}
+							{selectOptionsOrderArray.map(this.renderOptions)}
 						</select>
 					</div>
 				)
@@ -26,7 +41,7 @@ const ProjectForm = React.createClass({
 
 	renderOptions(option){
 		return(
-			<option key={option.order} value={option.name} >{option.name}</option>
+			<option key={option[1]} value={option[2]} >{option[2]}</option>
 		)
 	},
 

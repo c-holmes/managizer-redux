@@ -4,8 +4,8 @@ import PropertyForm from './PropertyForm';
 import PropertySelectTypeGroup from './PropertySelectTypeGroup';
 import ProjectForm from './ProjectForm';
 
-//move Sort Option Objects into SelectOptions List
-//get selectOption header's rendering correctly - pull in headers dynamically
+//combine sort and return functions
+//update sort function to an associative array instead of plain array 
 //add edit/delete to select options
 
 const AdminPanel = React.createClass({

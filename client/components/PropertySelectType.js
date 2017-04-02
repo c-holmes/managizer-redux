@@ -32,25 +32,27 @@ const PropertySelectType = React.createClass({
 			'hide':true,
 		  	'btn-pressed': this.state.isPressed
 		});
-		return(
-			<div className="item-group">
-				<ul className='item'>
-					<li className="options-block">
-						<ul>
-							<button className="delete" ref="delete" >Delete</button>
-							<button className="edit-btn" onClick={this.toggleButton}>Edit</button>
-							<button className="back-btn" onClick={this.toggleButton}>Back</button>
-						</ul>
-					</li>
-					{Object.keys(this.props.details).map(this.renderSelectOptionFields)}
-				</ul>
-				<form ref="propertyForm" className={btnClass} onSubmit={this.savePropertyObj}>
-					<span className="cell">
-						<button type="submit" className="save-btn">Save</button>
-					</span>
-				</form>
-			</div>	
-		)
+		if(this.props.details !== null){
+			return(
+				<div className="item-group">
+					<ul className='item'>
+						<li className="options-block">
+							<ul>
+								<button className="delete" ref="delete" >Delete</button>
+								<button className="edit-btn" onClick={this.toggleButton}>Edit</button>
+								<button className="back-btn" onClick={this.toggleButton}>Back</button>
+							</ul>
+						</li>
+						{Object.keys(this.props.selectOptionFields).map(this.renderSelectOptionFields)}
+					</ul>
+					<form ref="propertyForm" className={btnClass} onSubmit={this.savePropertyObj}>
+						<span className="cell">
+							<button type="submit" className="save-btn">Save</button>
+						</span>
+					</form>
+				</div>	
+			)
+		}
 	}
 })
 
