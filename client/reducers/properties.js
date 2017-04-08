@@ -71,8 +71,6 @@ function properties(state = [], action) {
 			var timestamp = (new Date()).getTime().toString();
 			var newState = Object.assign({}, state);
 
-			console.log(newPropertyFields);
-
 			if(newPropertyFields.type == 'select'){
 				//if a select type property, create empty array for select options
 				newPropertyFields['selectOptions'] = [];
@@ -128,10 +126,12 @@ function properties(state = [], action) {
 			//Get Select Option Key
 			var propertyKey = action.propertyKey;
 			var propertyId = action.propertyId;
+			var timestamp = (new Date()).getTime().toString();
 			var newOptionObj = action.newOptionObj;
 			var accountId = action.accountId;
 			var newState = Object.assign({},state);
 
+			newOptionObj._id = timestamp;
 			newState[propertyKey]['selectOptions'].push(newOptionObj);
 			
 			function serialize(obj) {
@@ -152,6 +152,32 @@ function properties(state = [], action) {
 			})
 
 			return newState;
+
+		case 'DELETE_SELECT_OPTION':
+			var selectOptionName = action.selectOption.name;
+
+			if(confirm("Are You Sure You Want To Remove " + selectOptionName + "?")){
+				var accountId = action.accountId;
+				var propertyId = action.propertyId;
+				var propertyIndex = action.propertyIndex;
+				var selectOptionId = action.selectOption._id;
+				var index = action.index;
+				
+				fetch(`${origin}/api/accounts/${accountId}/properties/${propertyId}/selectOptions/${selectOptionId}`, {
+					method: 'delete'
+				})
+				.then(response => response.json())
+				.then(function(data) {
+					console.log(data);
+				})
+
+				//remove property from state
+				return {
+					...state,
+					...state[propertyIndex].selectOptions[index] = null
+				}
+			}
+			return state;
 
 		default:
 			return state;

@@ -9,17 +9,17 @@ const PropertySelectTypeForm = React.createClass({
 			order:this.refs.order.value
 		};
 
-		var accountId = this.props.account._id;
+		var accountId = this.props.accountId;
 		var propertyKey = this.props.index;
-		var propertyId = this.props.properties[propertyKey]._id;
+		var propertyId = this.props.property._id;
 
 		this.props.addSelectOption(propertyKey,propertyId,newOptionObj,accountId);
-		this.refs[this.props.properties[propertyKey].slug].reset();
+		this.refs[this.props.property.slug].reset();
 	},
 	
 	render(){
 		return(
-			<form className="type1" ref={this.props.properties[this.props.index].slug} onSubmit={this.addToSelectOptions}>
+			<form className="type1" ref={this.props.property.slug} onSubmit={this.addToSelectOptions}>
 				<div className="input-holder num-sml-side">
 					<input type="text" ref="name" placeholder="Name of Field" />
 					<input type="number" ref="order" placeholder="Order" />

@@ -155,4 +155,16 @@ export function addSelectOption(propertyKey, propertyId, newOptionObj, accountId
 	}
 }
 
+//delete Property
+export function deleteSelectOption(index, accountId, propertyId, propertyIndex, selectOption) {
+	return {
+		type: 'DELETE_SELECT_OPTION',
+		index,
+		accountId,
+		propertyId,
+		propertyIndex,
+		selectOption
+	}
+}
+
 //load Sample Properties

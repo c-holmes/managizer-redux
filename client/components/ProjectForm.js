@@ -3,7 +3,7 @@ import React from 'react';
 const ProjectForm = React.createClass({
 	sortSelectOptions(selectOptionsOrderArray,selectOptionArray){
 		selectOptionArray.map(function(selectOption,key){
-			if(key !== null){
+			if(selectOption !== null){
 				//original key, order, name
 				selectOptionsOrderArray.push([key,selectOption.order,selectOption.name]);
 			}

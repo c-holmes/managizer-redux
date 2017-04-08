@@ -38,7 +38,7 @@ const PropertySelectType = React.createClass({
 					<ul className='item'>
 						<li className="options-block">
 							<ul>
-								<button className="delete" ref="delete" >Delete</button>
+								<button className="delete" ref="delete" onClick={this.props.deleteSelectOption.bind(null, this.props.index, this.props.accountId, this.props.propertyId, this.props.propertyIndex, this.props.details)} >Delete</button>
 								<button className="edit-btn" onClick={this.toggleButton}>Edit</button>
 								<button className="back-btn" onClick={this.toggleButton}>Back</button>
 							</ul>

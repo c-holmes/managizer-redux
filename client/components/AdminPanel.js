@@ -4,9 +4,13 @@ import PropertyForm from './PropertyForm';
 import PropertySelectTypeGroup from './PropertySelectTypeGroup';
 import ProjectForm from './ProjectForm';
 
-//combine sort and return functions
-//update sort function to an associative array instead of plain array 
 //add edit/delete to select options
+// -> Add _id to select Option so we can delete
+//auto add order
+//add react date picker
+// -> https://hacker0x01.github.io/react-datepicker/
+//add icon set
+//update other sort options to sort and render out same as select Option (use obj instead of array)
 
 const AdminPanel = React.createClass({
 	renderSelectOptionGroups(key){

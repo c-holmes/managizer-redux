@@ -244,9 +244,9 @@ router.route('/accounts/:account_id/properties/:property_id/selectOptions')
   });
 
 // ----------------------------------------------------
-router.route('/accounts/:account_id/properties/:property_id/selectOptions/:option_id')
+router.route('/accounts/:account_id/properties/:property_id/selectOptions/:selectOption_id')
   .get(function(req, res) {
-    SelectOption.findById(req.params.option_id, function(err, selectOption){
+    SelectOption.findById(req.params.selecOption_id, function(err, selectOption){
       if(err)
         res.send(err);
       res.json(selectOption);
@@ -257,7 +257,8 @@ router.route('/accounts/:account_id/properties/:property_id/selectOptions/:optio
     Account.findById(req.params.account_id, function(err, account){
       if (err)
         res.send(err);
-      account.properties.id(req.params.property_id).remove();
+      console.log(account.properties.id(req.params.property_id).selectOptions.id(req.params.selectOption_id));
+      account.properties.id(req.params.property_id).selectOptions.id(req.params.selectOption_id).remove();
       account.save(function(err){
         if(err)
           res.send(err);

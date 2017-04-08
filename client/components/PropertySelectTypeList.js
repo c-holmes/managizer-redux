@@ -2,31 +2,35 @@ import React from 'react';
 import PropertySelectType from './PropertySelectType';
 
 const PropertySelectTypeList = React.createClass({
-	
-	renderSelectOptionField(key){
-		return <PropertySelectType details={this.props.property.selectOptions[key[0]]} selectOptionFields={this.props.selectOptionFields} key={key[0]} />
-	},
 
 	renderSelectOptionHeader(key){
 		return <li key={key}>{key}</li>
 	},
+	
+	renderSelectOptionField(selectOption){
+		return <PropertySelectType details={this.props.property.selectOptions[selectOption.key]} selectOptionFields={this.props.selectOptionFields} key={selectOption.key} index={selectOption.key} propertyIndex={this.props.propertyIndex} propertyId={this.props.property._id} accountId={this.props.accountId} deleteSelectOption={this.props.deleteSelectOption} />
+	},
 
-	sortSelectOptions(selectOptionsOrderArray,selectOptionArray){
+	sortSelectOptions(selectOptionArray){
+		var selectOptionsOrderArray = [];
+
 		selectOptionArray.map(function(selectOption,key){
-			if(key !== null){
+			if(selectOption !== null){
 				//original key, order, name
-				selectOptionsOrderArray.push([key,selectOption.order,selectOption.name]);
+				selectOptionsOrderArray.push({key:key, order:selectOption.order, name:selectOption.name});
 			}
 		}, this)
 
 		//sort array by order
 		selectOptionsOrderArray.sort(function(a,b){
-			return a[1] - b[1]
+			return a.order - b.order
 		});
+
+		//render out select options
+		return selectOptionsOrderArray.map(this.renderSelectOptionField);
 	},
 
 	render(){
-		var selectOptionsOrderArray = [];
 		return(
 			<div className="grid-list">
 				<div className="head-group">
@@ -35,8 +39,7 @@ const PropertySelectTypeList = React.createClass({
 						{Object.keys(this.props.selectOptionFields).map(this.renderSelectOptionHeader)}
 					</ul>
 				</div>
-				{this.sortSelectOptions(selectOptionsOrderArray,this.props.property.selectOptions)}
-				{selectOptionsOrderArray.map(this.renderSelectOptionField)}
+				{this.sortSelectOptions(this.props.property.selectOptions)}
 			</div>
 		)
 	}
