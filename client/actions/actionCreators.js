@@ -155,7 +155,7 @@ export function addSelectOption(propertyKey, propertyId, newOptionObj, accountId
 	}
 }
 
-//delete Property
+//delete Select Option on a Property
 export function deleteSelectOption(index, accountId, propertyId, propertyIndex, selectOption) {
 	return {
 		type: 'DELETE_SELECT_OPTION',
@@ -166,5 +166,28 @@ export function deleteSelectOption(index, accountId, propertyId, propertyIndex, 
 		selectOption
 	}
 }
+
+//edit Select Option on a Property
+export function editSelectOption( index, fieldValue, propertyIndex, event ) {
+	return {
+		type: 'EDIT_SELECT_OPTION',
+		index,
+		fieldValue,
+		propertyIndex,
+		event
+	}
+}
+
+//save Property
+export function saveSelectOption(selectOption, propertyId, accountId){
+	return {
+		type: 'SAVE_SELECT_OPTION',
+		selectOption,
+		propertyId,
+		accountId
+	}
+}
+
+
 
 //load Sample Properties

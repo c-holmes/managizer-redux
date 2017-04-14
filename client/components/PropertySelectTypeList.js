@@ -8,7 +8,7 @@ const PropertySelectTypeList = React.createClass({
 	},
 	
 	renderSelectOptionField(selectOption){
-		return <PropertySelectType details={this.props.property.selectOptions[selectOption.key]} selectOptionFields={this.props.selectOptionFields} key={selectOption.key} index={selectOption.key} propertyIndex={this.props.propertyIndex} propertyId={this.props.property._id} accountId={this.props.accountId} deleteSelectOption={this.props.deleteSelectOption} />
+		return <PropertySelectType details={this.props.property.selectOptions[selectOption.key]} selectOptionFields={this.props.selectOptionFields} key={selectOption.key} index={selectOption.key} propertyIndex={this.props.propertyIndex} propertyId={this.props.property._id} accountId={this.props.accountId} editSelectOption={this.props.editSelectOption} saveSelectOption={this.props.saveSelectOption} deleteSelectOption={this.props.deleteSelectOption} />
 	},
 
 	sortSelectOptions(selectOptionArray){

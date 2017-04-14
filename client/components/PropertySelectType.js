@@ -1,8 +1,6 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 
-//add SelectOptionFields same as propertyFields
-
 const PropertySelectType = React.createClass({
 	getInitialState () {
 		return { isPressed : false };
@@ -26,6 +24,23 @@ const PropertySelectType = React.createClass({
 		)
 	},
 
+	renderEditField(key){
+		var index = this.props.index;
+		var fieldValue = key;
+		var propertyIndex = this.props.propertyIndex;
+		return(
+			<span key={key} className="cell">
+				<input type="text" value={this.props.details[fieldValue]} onChange={this.props.editSelectOption.bind(this, index, fieldValue, propertyIndex)} />
+			</span>
+		)
+	},
+
+	saveSelectOptionObj(event){
+		event.preventDefault();
+		this.props.saveSelectOption(this.props.details, this.props.propertyId, this.props.accountId);
+		this.toggleButton(event);
+	},
+
 	render(){
 		var btnClass = classNames({
 			'item':true,
@@ -45,10 +60,11 @@ const PropertySelectType = React.createClass({
 						</li>
 						{Object.keys(this.props.selectOptionFields).map(this.renderSelectOptionFields)}
 					</ul>
-					<form ref="propertyForm" className={btnClass} onSubmit={this.savePropertyObj}>
+					<form ref="propertyForm" className={btnClass} onSubmit={this.saveSelectOptionObj}>
 						<span className="cell">
 							<button type="submit" className="save-btn">Save</button>
 						</span>
+						{Object.keys(this.props.selectOptionFields).map(this.renderEditField)}
 					</form>
 				</div>	
 			)

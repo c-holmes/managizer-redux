@@ -12,7 +12,7 @@ const PropertySelectTypeGroup = React.createClass({
 				</div>
 				<div className="right">
 					<h3>{this.props.properties[this.props.index].name} List</h3>
-					<PropertySelectTypeList property={this.props.properties[this.props.index]} propertyIndex={this.props.index} accountId={this.props.account._id} selectOptionFields={this.props.selectOptionFields} deleteSelectOption={this.props.deleteSelectOption}/>
+					<PropertySelectTypeList property={this.props.properties[this.props.index]} propertyIndex={this.props.index} accountId={this.props.account._id} selectOptionFields={this.props.selectOptionFields} editSelectOption={this.props.editSelectOption} saveSelectOption={this.props.saveSelectOption} deleteSelectOption={this.props.deleteSelectOption}/>
 				</div>
 			</div>
 		) 

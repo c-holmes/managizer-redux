@@ -55,6 +55,8 @@ function properties(state = [], action) {
 			  return str.join("&");
 			}
 
+			//console.log(serialize(propertyEdits));
+
 			fetch(`${origin}/api/accounts/${accountId}/properties/${propertyId}`, {
 				method: 'put',
 				headers: {  
@@ -177,6 +179,43 @@ function properties(state = [], action) {
 					...state[propertyIndex].selectOptions[index] = null
 				}
 			}
+			return state;
+
+		case 'EDIT_SELECT_OPTION':
+			var e = action.event;
+			var index = action.index;
+			var fieldValue = action.fieldValue;
+			var propertyIndex = action.propertyIndex;
+			var newState = Object.assign({}, state);
+
+			newState[propertyIndex].selectOptions[index][fieldValue] = e.target.value;
+
+			return newState;
+
+		case 'SAVE_SELECT_OPTION':
+			var selectOptionEdits = action.selectOption;
+			var selectOptionId = action.selectOption._id;
+			var propertyId = action.propertyId;
+			var accountId = action.accountId;
+
+			//serialize data to send to Mongo 
+			function serialize(obj) {
+			  var str = [];
+			  for(var p in obj)
+			    if (obj.hasOwnProperty(p)) {
+			      str.push(encodeURIComponent(p) + "=" + encodeURIComponent(obj[p]));
+			    }
+			  return str.join("&");
+			}
+
+			fetch(`${origin}/api/accounts/${accountId}/properties/${propertyId}/selectOptions/${selectOptionId}`, {
+				method: 'put',
+				headers: {  
+				  "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"  
+				},  
+				body: serialize(selectOptionEdits) 
+			})
+
 			return state;
 
 		default:

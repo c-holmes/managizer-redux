@@ -257,7 +257,6 @@ router.route('/accounts/:account_id/properties/:property_id/selectOptions/:selec
     Account.findById(req.params.account_id, function(err, account){
       if (err)
         res.send(err);
-      console.log(account.properties.id(req.params.property_id).selectOptions.id(req.params.selectOption_id));
       account.properties.id(req.params.property_id).selectOptions.id(req.params.selectOption_id).remove();
       account.save(function(err){
         if(err)
@@ -268,20 +267,24 @@ router.route('/accounts/:account_id/properties/:property_id/selectOptions/:selec
   })
 
   .put(function(req, res){
-    console.log(req.body);
-    Account.update(
-      {_id:req.params.account_id, "properties._id":req.params.property_id},
-      {
-        $set: {
-          "properties.$": req.body
-        }
-      },
-      function(err, account, numAffected) {
+    var accountId = req.params.account_id;
+    var propertyId = req.params.property_id;
+    var selectOptionId = req.params.selectOption_id;
+
+    Account.findById(accountId, function(err, account) {
+
+      if (err)
+        res.send(err);
+
+      Object.assign(account.properties.id(propertyId).selectOptions.id(selectOptionId),req.body);
+
+      account.save(function(err) {
         if(err)
-          return res.send(err);
-        res.json({message: 'Property Updated'});
-      }
-    )
+          res.send(err);
+
+        res.json({message: 'Select Option Updated'});
+      });
+    })
   });
 
 
