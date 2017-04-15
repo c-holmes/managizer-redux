@@ -8,8 +8,7 @@ const ProjectPanel = React.createClass({
 		for (var i = 0, len = this.props.accounts.length; i < len; i++) {
 		    lookup[this.props.accounts[i].name] = this.props.accounts[i];
 		}
-		console.log(lookup);
-		//
+
 		return(
 			<div className="sect project-panel">
 				<div className="container">

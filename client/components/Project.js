@@ -18,7 +18,34 @@ const Project = React.createClass({
 		})
 	},
 
-	sortProjectProperties(propertyOrderArray, propertyOrderObject){
+	// sortProjectProperties(propertyArray){
+	// 	var propertyOrderArray = [];
+	// 	console.log(propertyArray);
+	// 	propertyArray.map(function(property, key){
+	// 		if(property !== null){
+	// 			propertyOrderArray.push({key:key, order:property.order, name:property.name});
+	// 		}
+	// 	}, this)
+
+	// 	propertyOrderArray.sort(function(a,b){
+	// 		return a.order - b.order
+	// 	});
+
+	// 	return propertyOrderArray.map(this.renderProjectField);
+	// },
+
+	// renderProjectField(property){
+
+	// 	//set sorted property slug
+	// 	var propertyValue = this.props.properties[property.key].slug;
+
+	// 	//output project's property based on sort order
+	// 	return(
+	// 		<li className="cell" key={property.key}>{this.props.details[propertyValue]}</li>
+	// 	)
+	// },
+
+	sortProjectProperties(propertyOrderArray,propertyOrderObject){
 		//iterate through properties
 		Object.keys(this.props.properties).map(function(key){
 			if(this.props.properties[key] !== null){
@@ -47,18 +74,36 @@ const Project = React.createClass({
 		)
 	},
 
+	renderOptions(option){
+		return(
+			<option key={option._id} value={option.name}>{option.name}</option>
+		)
+	},
+
 	renderEditField(key){
 		//set the edited property slug to variable (variable to be passed to editProject func)
 		var propertyValue = this.props.properties[key].slug;
 		//set the edited project to variable (variable to be passed to editProject func)
 		var projectValue = this.props.index;
 		var projectId = this.props.details._id;
+		
+		if(this.props.properties[key].type == 'select'){
+			var selected = this.props.details[this.props.properties[key].slug];
 
-		return(
-			<span key={key} className="cell">
-				<input type="text" value={this.props.details[propertyValue]} onChange={this.props.editProject.bind(this, projectValue, propertyValue, projectId)} />
-			</span>
-		)
+			return(
+				<span key={key} className="cell">
+					<select ref="type" defaultValue={selected} onChange={this.props.editProject.bind(this, projectValue, propertyValue, projectId)}>
+						{this.props.properties[key].selectOptions.map(this.renderOptions)}
+					</select>
+				</span>
+			)
+		} else {
+			return(
+				<span key={key} className="cell">
+					<input type="text" value={this.props.details[propertyValue]} onChange={this.props.editProject.bind(this, projectValue, propertyValue, projectId)} />
+				</span>
+			)
+		}
 	},
 
 	saveProjectObj(event){
@@ -79,6 +124,8 @@ const Project = React.createClass({
 			'options-block':true,
 		  	'edit-active': this.state.isPressed
 		});
+
+		console.log(propertyOrderArray);
 
 		if(this.props.details !== null){
 			return(

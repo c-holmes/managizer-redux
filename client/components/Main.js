@@ -24,7 +24,6 @@ const Main = React.createClass({
 		var accountSlug = url.replace('/account/', '');
 
 		if(this.props.account.length == 0){
-			console.log('empty');
 			//Browser Local Storage
 			if (typeof(Storage) !== "undefined") {
 				var localData = JSON.parse(localStorage.getItem(accountSlug));
