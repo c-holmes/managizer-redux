@@ -18,88 +18,66 @@ const Project = React.createClass({
 		})
 	},
 
-	// sortProjectProperties(propertyArray){
-	// 	var propertyOrderArray = [];
-	// 	console.log(propertyArray);
-	// 	propertyArray.map(function(property, key){
-	// 		if(property !== null){
-	// 			propertyOrderArray.push({key:key, order:property.order, name:property.name});
-	// 		}
-	// 	}, this)
+	sortProjectProperties(propertyArray, type){
+		var propertyOrderArray = [];
 
-	// 	propertyOrderArray.sort(function(a,b){
-	// 		return a.order - b.order
-	// 	});
+		console.log(propertyArray);
 
-	// 	return propertyOrderArray.map(this.renderProjectField);
-	// },
-
-	// renderProjectField(property){
-
-	// 	//set sorted property slug
-	// 	var propertyValue = this.props.properties[property.key].slug;
-
-	// 	//output project's property based on sort order
-	// 	return(
-	// 		<li className="cell" key={property.key}>{this.props.details[propertyValue]}</li>
-	// 	)
-	// },
-
-	sortProjectProperties(propertyOrderArray,propertyOrderObject){
-		//iterate through properties
-		Object.keys(this.props.properties).map(function(key){
-			if(this.props.properties[key] !== null){
-				//push name & order to array
-				propertyOrderArray.push([key, this.props.properties[key].order])
-				//sort array by order
-				propertyOrderArray.sort(function(a,b){
-					return a[1] - b[1]
-				});
+		propertyArray.map(function(property, key){
+			if(property !== null){
+				propertyOrderArray.push({key:key, order:property.order, name:property.name});
 			}
 		}, this)
 
-		//push sorted array values to obj
-		for(var i = 0; i < propertyOrderArray.length; i++){
-			propertyOrderObject[propertyOrderArray[i][0]] = propertyOrderArray[i][1]							
+		propertyOrderArray.sort(function(a,b){
+			return a.order - b.order
+		});
+
+		if(type == 'edit-field'){
+			return propertyOrderArray.map(this.renderEditField);
+		}else{
+			return propertyOrderArray.map(this.renderProjectField);
 		}
 	},
 
-	renderProjectField(key){
+	renderProjectField(property){
 		//set sorted property slug
-		var propertyValue = this.props.properties[key].slug;
+		var propertyValue = this.props.properties[property.key].slug;
 
 		//output project's property based on sort order
 		return(
-			<li className="cell" key={key}>{this.props.details[propertyValue]}</li>
+			<li className="cell" key={property.key}>{this.props.details[propertyValue]}</li>
 		)
 	},
 
 	renderOptions(option){
-		return(
-			<option key={option._id} value={option.name}>{option.name}</option>
-		)
+		if(option !== null){
+			return(
+				<option key={option._id} value={option.name}>{option.name}</option>
+			)
+		}
 	},
 
-	renderEditField(key){
+	renderEditField(property){
 		//set the edited property slug to variable (variable to be passed to editProject func)
-		var propertyValue = this.props.properties[key].slug;
+		var propertyValue = this.props.properties[property.key].slug;
 		//set the edited project to variable (variable to be passed to editProject func)
 		var projectValue = this.props.index;
 		var projectId = this.props.details._id;
 		
-		if(this.props.properties[key].type == 'select'){
-			var selected = this.props.details[this.props.properties[key].slug];
+		if(this.props.properties[property.key].type == 'select'){
+			var selected = this.props.details[this.props.properties[property.key].slug];
 
 			return(
-				<span key={key} className="cell">
+				<span key={property.key} className="cell">
 					<select ref="type" defaultValue={selected} onChange={this.props.editProject.bind(this, projectValue, propertyValue, projectId)}>
-						{this.props.properties[key].selectOptions.map(this.renderOptions)}
+						{this.props.properties[property.key].selectOptions.map(this.renderOptions)}
 					</select>
 				</span>
 			)
 		} else {
 			return(
-				<span key={key} className="cell">
+				<span key={property.key} className="cell">
 					<input type="text" value={this.props.details[propertyValue]} onChange={this.props.editProject.bind(this, projectValue, propertyValue, projectId)} />
 				</span>
 			)
@@ -125,8 +103,6 @@ const Project = React.createClass({
 		  	'edit-active': this.state.isPressed
 		});
 
-		console.log(propertyOrderArray);
-
 		if(this.props.details !== null){
 			return(
 				<div className="item-group">
@@ -136,14 +112,13 @@ const Project = React.createClass({
 							<button className="edit-btn" onClick={this.toggleButton}>Edit</button>
 							<button className="back-btn" onClick={this.toggleButton}>Back</button>
 						</li>
-						{this.sortProjectProperties(propertyOrderArray,propertyOrderObject)}
-						{Object.keys(propertyOrderObject).map(this.renderProjectField)}
+						{this.sortProjectProperties(this.props.properties, 'static-field')}
 					</ul>
 					<form ref="projectForm" className={btnClass} onSubmit={this.saveProjectObj}>
 						<span className="cell">
 							<button type="submit" className="save-btn">Save</button>
 						</span>
-						{Object.keys(propertyOrderObject).map(this.renderEditField)}
+						{this.sortProjectProperties(this.props.properties, 'edit-field')}
 					</form>
 				</div>	
 			)

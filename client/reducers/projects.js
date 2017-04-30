@@ -12,6 +12,7 @@ function projects(state = [], action) {
 				var index = action.index;
 				var projId = action.id;
 				var accountId = action.accountId;
+				var newState = state.slice(0);
 				
 				fetch(`${origin}/api/accounts/${accountId}/projects/${projId}`, {
 					method: 'delete'
@@ -22,17 +23,17 @@ function projects(state = [], action) {
 				})
 
 				//remove project from state
-				return {
-					...state,
-					...state[index] = null
-				}
+				newState[index] = null;
+				newState = newState.filter(function(n){ return n != undefined }); 
+				return newState;
 			}
 		case 'EDIT_PROJECT':
 			var e = action.event;
 			var id = action.projectId;
 			var projectValue = action.projectValue;
 			var propertyValue = action.propertyValue;
-			var newState = Object.assign({}, state);
+			// var newState = Object.assign({}, state);
+			var newState = state.slice(0);
 			
 			newState[projectValue][propertyValue] = e.target.value;
 
@@ -67,7 +68,8 @@ function projects(state = [], action) {
 			var newProjectProperties = action.formData;
 			var accountId = action.accountId;
 			var timestamp = (new Date()).getTime();
-			var newState = Object.assign({}, state);
+			// var newState = Object.assign({}, state);
+			var newState = state.slice(0);
 			//add publish date
 			newProjectProperties['_id'] = timestamp.toString();
 			newState[timestamp] = newProjectProperties;
@@ -101,12 +103,11 @@ function projects(state = [], action) {
 		case 'ADD_PROPERTY':
 			//When property is added, project panel needs to be updated with the new property
 			if(state.length > 0 ){
-				var newState = Object.assign({}, state);
+				// var newState = Object.assign({}, state);
+				var newState = state.slice(0);
 				var newPropertyFields = action.formData;
 				var slug = newPropertyFields.slug;
 				var newStateArray = Object.keys(newState);
-
-				console.log(newStateArray);
 
 				for(var i = 0; i < newStateArray.length; i++ ){
 					newState[newStateArray[i]][slug] = "";

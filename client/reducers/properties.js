@@ -12,6 +12,7 @@ function properties(state = [], action) {
 				var index = action.index;
 				var propertyId = action.id;
 				var accountId = action.accountId;
+				var newState = state.slice(0);
 				
 				fetch(`${origin}/api/accounts/${accountId}/properties/${propertyId}`, {
 					method: 'delete'
@@ -22,10 +23,9 @@ function properties(state = [], action) {
 				})
 
 				//remove property from state
-				return {
-					...state,
-					...state[index] = null
-				}
+				newState[index] = null;
+				newState = newState.filter(function(n){ return n != undefined }); 
+				return newState;
 			}
 			return state;
 
@@ -34,7 +34,8 @@ function properties(state = [], action) {
 			var id = action.projectId;
 			var propertyValue = action.propertyValue;
 			var fieldValue = action.fieldValue;
-			var newState = Object.assign({}, state);
+			//use slice to clone an array (object.assign was used before)
+			var newState = state.slice(0);
 
 			newState[propertyValue][fieldValue] = e.target.value;
 
@@ -71,12 +72,10 @@ function properties(state = [], action) {
 			var newPropertyFields = action.formData;
 			var accountId = action.accountId;
 			var timestamp = (new Date()).getTime().toString();
-			var newState = Object.assign({}, state);
-
-			if(newPropertyFields.type == 'select'){
-				//if a select type property, create empty array for select options
-				newPropertyFields['selectOptions'] = [];
-			}
+			// var newState = Object.assign({}, state);
+			var newState = state.slice(0);
+			
+			newPropertyFields['selectOptions'] = [];
 
 			function slugify(name){
 				var slug = name;
@@ -88,7 +87,8 @@ function properties(state = [], action) {
 			//add publish date
 			newPropertyFields._id = timestamp;
 			newPropertyFields.slug = slugify(newPropertyFields.name);
-			newState[timestamp] = newPropertyFields;
+			//newState[timestamp] = newPropertyFields;
+			newState.push(newPropertyFields);
 
 			//serialize data to send to Mongo 
 			function serialize(obj) {
@@ -114,7 +114,6 @@ function properties(state = [], action) {
 				.catch(function (error) {
 					console.log('Request failed', error);
 				});
-			console.log(newState);
 			return newState;
 
 		case 'RECEIVE_DATA':
@@ -131,7 +130,11 @@ function properties(state = [], action) {
 			var timestamp = (new Date()).getTime().toString();
 			var newOptionObj = action.newOptionObj;
 			var accountId = action.accountId;
-			var newState = Object.assign({},state);
+			// var newState = Object.assign({},state);
+			var newState = state.slice(0);
+
+			console.log(newState);
+			console.log(propertyKey);
 
 			newOptionObj._id = timestamp;
 			newState[propertyKey]['selectOptions'].push(newOptionObj);
@@ -164,6 +167,7 @@ function properties(state = [], action) {
 				var propertyIndex = action.propertyIndex;
 				var selectOptionId = action.selectOption._id;
 				var index = action.index;
+				var newState = state.slice(0);
 				
 				fetch(`${origin}/api/accounts/${accountId}/properties/${propertyId}/selectOptions/${selectOptionId}`, {
 					method: 'delete'
@@ -174,10 +178,9 @@ function properties(state = [], action) {
 				})
 
 				//remove property from state
-				return {
-					...state,
-					...state[propertyIndex].selectOptions[index] = null
-				}
+				newState[propertyIndex].selectOptions[index] = null;
+				newState[propertyIndex].selectOptions = newState[propertyIndex].selectOptions.filter(function(n){ return n != undefined }); 
+				return newState;
 			}
 			return state;
 
@@ -186,7 +189,8 @@ function properties(state = [], action) {
 			var index = action.index;
 			var fieldValue = action.fieldValue;
 			var propertyIndex = action.propertyIndex;
-			var newState = Object.assign({}, state);
+			// var newState = Object.assign({}, state);
+			var newState = state.slice(0);
 
 			newState[propertyIndex].selectOptions[index][fieldValue] = e.target.value;
 

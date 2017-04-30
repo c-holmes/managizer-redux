@@ -52,6 +52,7 @@ const ProjectForm = React.createClass({
 
 		//create array of all property slugs
 		var propertyArray = Object.keys(this.props.properties).map(function(key){
+			console.log(key);
 			if(this.props.properties[key].slug !== null) {
 				return this.props.properties[key].slug;
 			}
