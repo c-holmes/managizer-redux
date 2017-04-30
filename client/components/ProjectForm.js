@@ -1,4 +1,5 @@
 import React from 'react';
+import PropertyDateType from './PropertyDateType';
 
 const ProjectForm = React.createClass({
 	sortSelectOptions(selectOptionsOrderArray,selectOptionArray){
@@ -27,7 +28,13 @@ const ProjectForm = React.createClass({
 						</select>
 					</div>
 				)
-			} else {
+			} else if(this.props.properties[key].type == 'date'){
+				return(
+					<div key={key} className="input-holder">
+						<PropertyDateType />
+					</div>
+				)
+			}else {
 				return(
 					<div key={key} className="input-holder">
 						<input key={key} type={this.props.properties[key].type} ref={this.props.properties[key].slug} placeholder={this.props.properties[key].placeholder}  />			

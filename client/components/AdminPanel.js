@@ -4,9 +4,6 @@ import PropertyForm from './PropertyForm';
 import PropertySelectTypeGroup from './PropertySelectTypeGroup';
 import ProjectForm from './ProjectForm';
 
-//Update Serilization Function so that it can serilize nested arrays of objs
-//add edit/delete to select options
-// -> Add _id to select Option so we can delete
 //auto add order
 //add react date picker
 // -> https://hacker0x01.github.io/react-datepicker/

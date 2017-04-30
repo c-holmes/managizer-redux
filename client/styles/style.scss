@@ -7,6 +7,14 @@ $color1:#f5b068;
 @import "forms-base";
 @import "login";
 
+//datepicker
+:global {
+	@import "datepicker/variables";
+	@import "datepicker/mixins";
+	@import "datepicker/datepicker";
+}
+
+
 html, body,#root{
 	height:100%;
 }
