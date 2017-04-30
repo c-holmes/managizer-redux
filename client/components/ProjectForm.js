@@ -1,7 +1,22 @@
 import React from 'react';
-import PropertyDateType from './PropertyDateType';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
 
-const ProjectForm = React.createClass({
+class ProjectForm extends React.Component{
+	constructor (props) {
+	  super(props)
+	  this.state = {
+	    startDate: moment()
+	  };
+	  this.handleChange = this.handleChange.bind(this);
+	}
+
+	handleChange(date) {
+	  this.setState({
+	    startDate: date
+	  });
+	}
+
 	sortSelectOptions(selectOptionsOrderArray,selectOptionArray){
 		selectOptionArray.map(function(selectOption,key){
 			if(selectOption !== null){
@@ -14,7 +29,7 @@ const ProjectForm = React.createClass({
 		selectOptionsOrderArray.sort(function(a,b){
 			return a[1] - b[1]
 		});
-	},
+	}
 
 	renderField(key) {
 		if(this.props.properties[key] !== null ){
@@ -31,7 +46,7 @@ const ProjectForm = React.createClass({
 			} else if(this.props.properties[key].type == 'date'){
 				return(
 					<div key={key} className="input-holder">
-						<PropertyDateType />
+						<DatePicker selected={this.state.startDate} onChange={this.handleChange} />
 					</div>
 				)
 			}else {
@@ -44,13 +59,13 @@ const ProjectForm = React.createClass({
 		} else {
 			return null
 		}
-	},
+	}
 
 	renderOptions(option){
 		return(
 			<option key={option[1]} value={option[2]} >{option[2]}</option>
 		)
-	},
+	}
 
 	createNewProjectObj(event) {
 		event.preventDefault();
@@ -75,14 +90,14 @@ const ProjectForm = React.createClass({
 
 		//reset form
 		this.refs.projectForm.reset();
-	},
+	}
 
 	render(){
 		return(
 			<div className="sect">
 				<h3>Add a Project</h3>
-				<form className="type1" ref="projectForm" onSubmit={this.createNewProjectObj} >
-					{Object.keys(this.props.properties).map(this.renderField)}
+				<form className="type1" ref="projectForm" onSubmit={this.createNewProjectObj.bind(this)} >
+					{Object.keys(this.props.properties).map(this.renderField.bind(this))}
 					<div className="submit-holder">
 						<button type="submit">Submit</button>
 					</div>
@@ -90,6 +105,6 @@ const ProjectForm = React.createClass({
 			</div>
 		)
 	}
-})
+}
 
 export default ProjectForm;

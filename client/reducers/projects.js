@@ -34,6 +34,8 @@ function projects(state = [], action) {
 			var propertyValue = action.propertyValue;
 			// var newState = Object.assign({}, state);
 			var newState = state.slice(0);
+
+			console.log(e.target.value);
 			
 			newState[projectValue][propertyValue] = e.target.value;
 

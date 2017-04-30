@@ -1,10 +1,24 @@
 import React from 'react';
 import classNames from 'classnames/bind';
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import PropertyDateType from './PropertyDateType';
 
-const Project = React.createClass({
-	getInitialState () {
-		return { isPressed : false };
-	},
+class Project extends React.Component {
+	constructor (props) {
+	  super(props)
+	  this.state = {
+	    startDate: moment(),
+	    isPressed: false 
+	  };
+	  this.handleChange = this.handleChange.bind(this);
+	}
+
+	handleChange(date) {
+	  this.setState({
+	    startDate: date
+	  });
+	}
 
 	toggleButton(event){
 		event.preventDefault();
@@ -16,12 +30,10 @@ const Project = React.createClass({
 		this.setState({
 			isPressed : this.state.isPressed
 		})
-	},
+	}
 
 	sortProjectProperties(propertyArray, type){
 		var propertyOrderArray = [];
-
-		console.log(propertyArray);
 
 		propertyArray.map(function(property, key){
 			if(property !== null){
@@ -34,11 +46,11 @@ const Project = React.createClass({
 		});
 
 		if(type == 'edit-field'){
-			return propertyOrderArray.map(this.renderEditField);
+			return propertyOrderArray.map(this.renderEditField.bind(this));
 		}else{
-			return propertyOrderArray.map(this.renderProjectField);
+			return propertyOrderArray.map(this.renderProjectField.bind(this));
 		}
-	},
+	}
 
 	renderProjectField(property){
 		//set sorted property slug
@@ -48,7 +60,7 @@ const Project = React.createClass({
 		return(
 			<li className="cell" key={property.key}>{this.props.details[propertyValue]}</li>
 		)
-	},
+	}
 
 	renderOptions(option){
 		if(option !== null){
@@ -56,7 +68,7 @@ const Project = React.createClass({
 				<option key={option._id} value={option.name}>{option.name}</option>
 			)
 		}
-	},
+	}
 
 	renderEditField(property){
 		//set the edited property slug to variable (variable to be passed to editProject func)
@@ -67,12 +79,21 @@ const Project = React.createClass({
 		
 		if(this.props.properties[property.key].type == 'select'){
 			var selected = this.props.details[this.props.properties[property.key].slug];
-
 			return(
 				<span key={property.key} className="cell">
 					<select ref="type" defaultValue={selected} onChange={this.props.editProject.bind(this, projectValue, propertyValue, projectId)}>
 						{this.props.properties[property.key].selectOptions.map(this.renderOptions)}
 					</select>
+				</span>
+			)
+		} else if(this.props.properties[property.key].type == 'date'){
+			return(
+				<span key={property.key} className="cell">
+					<DatePicker
+					    selected={this.state.startDate}
+					    onChange={this.handleChange}
+					    onBlur={this.props.editProject.bind(this, projectValue, propertyValue, projectId)}
+					/>
 				</span>
 			)
 		} else {
@@ -82,17 +103,15 @@ const Project = React.createClass({
 				</span>
 			)
 		}
-	},
+	}
 
 	saveProjectObj(event){
 		event.preventDefault();
 		this.props.saveProject(this.props.details, this.props.accountId);
 		this.toggleButton(event);
-	},
+	}
 
 	render(){
-		var propertyOrderArray = [];
-		var propertyOrderObject = {};
 		var btnClass = classNames({
 			'item':true,
 			'hide':true,
@@ -109,12 +128,12 @@ const Project = React.createClass({
 					<ul className="item">
 						<li className={editMode}>
 							<button onClick={this.props.deleteProject.bind(null, this.props.index, this.props.details._id, this.props.accountId)} className="delete" ref="delete">Delete</button>
-							<button className="edit-btn" onClick={this.toggleButton}>Edit</button>
-							<button className="back-btn" onClick={this.toggleButton}>Back</button>
+							<button className="edit-btn" onClick={this.toggleButton.bind(this)}>Edit</button>
+							<button className="back-btn" onClick={this.toggleButton.bind(this)}>Back</button>
 						</li>
 						{this.sortProjectProperties(this.props.properties, 'static-field')}
 					</ul>
-					<form ref="projectForm" className={btnClass} onSubmit={this.saveProjectObj}>
+					<form ref="projectForm" className={btnClass} onSubmit={this.saveProjectObj.bind(this)}>
 						<span className="cell">
 							<button type="submit" className="save-btn">Save</button>
 						</span>
@@ -126,6 +145,6 @@ const Project = React.createClass({
 			return (null)
 		}
 	}
-});
+}
 
 export default Project;
