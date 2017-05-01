@@ -5,10 +5,27 @@ import PropertySelectTypeGroup from './PropertySelectTypeGroup';
 import ProjectForm from './ProjectForm';
 
 //auto add order
-//add react date picker
-// -> https://hacker0x01.github.io/react-datepicker/
 //add icon set
 //update other sort options to sort and render out same as select Option (use obj instead of array)
+//make columns draggable
+	//http://react-dnd.github.io/react-dnd/examples-sortable-simple.html
+//create admin toolbar
+	//filter buttons on the left
+		//Show all
+		//Add Project
+		//Show Statuses
+	//acount settings on the left
+	//full width
+	//analytics
+		//per property (ie sites in PRJDEV)
+//edit styling
+	//hide duplication (grey out the other stuff)
+//Active Project, Complete Project List, TBD Project List
+//ES6 itize
+
+//download before trip
+	//icon set
+	//react dnd
 
 const AdminPanel = React.createClass({
 	renderSelectOptionGroups(key){
