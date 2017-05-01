@@ -1,8 +1,7 @@
 import React from 'react';
 import { browserHistory } from 'react-router'
 
-
-const Login = React.createClass({
+class Login extends React.Component{
 	createAccount(event){
 		event.preventDefault();
 		var newAccountFields = {};
@@ -43,7 +42,7 @@ const Login = React.createClass({
 		const path = `/account/${slug}`
 		browserHistory.push(path)
 
-	},
+	}
 
 	loginAccount(event){
 		event.preventDefault();
@@ -75,7 +74,7 @@ const Login = React.createClass({
 		}
 
 		browserHistory.push(path)
-	},
+	}
 
 	render() {
 		return(
@@ -85,7 +84,7 @@ const Login = React.createClass({
 					<div className="box split">
 						<div className="container">
 							<h2>Create New Account</h2>
-							<form ref="accountForm" className="login-panel" onSubmit={this.createAccount} >
+							<form ref="accountForm" className="login-panel" onSubmit={this.createAccount.bind(this)} >
 								<input type="text" ref="name" placeholder="Enter Account Name" />
 								<input type="text" ref="email" placeholder="Enter Email" />
 								<button type="submit">Submit</button>
@@ -93,7 +92,7 @@ const Login = React.createClass({
 						</div>
 						<div className="container">
 							<h2>Login</h2>
-							<form ref="loginForm" className="login-panel" onSubmit={this.loginAccount} >
+							<form ref="loginForm" className="login-panel" onSubmit={this.loginAccount.bind(this)} >
 								<input type="text" ref="loginEmail" placeholder="Enter Email" />
 								<button type="submit">Submit</button>
 							</form>
@@ -103,6 +102,6 @@ const Login = React.createClass({
 			</div>
 		)
 	}
-})
+}
 
 export default Login;

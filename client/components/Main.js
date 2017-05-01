@@ -3,7 +3,14 @@ import ProjectPanel from './ProjectPanel';
 import AdminPanel from './AdminPanel';
 import classNames from 'classnames/bind';
 
-const Main = React.createClass({
+class Main extends React.Component{
+	constructor (props) {
+	  super(props)
+	  this.state = {
+	    isPressed: false 
+	  };
+	}
+
 	sortProjectProperties(propertyOrderArray){
 		//iterate through properties
 		Object.keys(this.props.properties).map(function(key){
@@ -17,7 +24,7 @@ const Main = React.createClass({
 		propertyOrderArray.sort(function(a,b){
 			return a[1] - b[1]
 		});
-	},
+	}
 
 	loadStateFromStorage(){
 		var url = window.location.pathname;
@@ -36,11 +43,7 @@ const Main = React.createClass({
 			    console.log('Sorry! No Web Storage support..');
 			}
 		}
-	},
-
-	getInitialState () {
-		return { isPressed : false };
-	},
+	}
 
 	togglePanel(event){
 		event.preventDefault();
@@ -52,7 +55,7 @@ const Main = React.createClass({
 		this.setState({
 			isPressed : this.state.isPressed
 		})
-	},
+	}
 
 	render() {
 		var appUiState = classNames({
@@ -63,11 +66,11 @@ const Main = React.createClass({
 		return (
 			<div className={appUiState} >
 				{this.loadStateFromStorage()}
-				<ProjectPanel {...this.props} sortProjectProperties={this.sortProjectProperties} />
-				<AdminPanel {...this.props} togglePanel={this.togglePanel} sortProjectProperties={this.sortProjectProperties} />
+				<ProjectPanel {...this.props} sortProjectProperties={this.sortProjectProperties.bind(this)} />
+				<AdminPanel {...this.props} togglePanel={this.togglePanel.bind(this)} sortProjectProperties={this.sortProjectProperties.bind(this)} />
 			</div>
 		)
 	}
-})
+}
 
 export default Main;

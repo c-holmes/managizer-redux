@@ -1,7 +1,7 @@
 import React from 'react';
 import ProjectList from './ProjectList';
 
-const ProjectPanel = React.createClass({
+class ProjectPanel extends React.Component{
 	render(){
 		// create a lookup object
 		var lookup = {};
@@ -17,6 +17,6 @@ const ProjectPanel = React.createClass({
 			</div>
 		)
 	}
-})
+}
 
 export default ProjectPanel;

@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProjectHeader = React.createClass({
+class ProjectHeader extends React.Component {
 	render(){
 		if(this.props.details !== null){
 			return (
@@ -10,6 +10,6 @@ const ProjectHeader = React.createClass({
 			return ( null )
 		}
 	}
-});
+}
 
 export default ProjectHeader;

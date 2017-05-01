@@ -27,14 +27,14 @@ import ProjectForm from './ProjectForm';
 	//icon set
 	//react dnd
 
-const AdminPanel = React.createClass({
+class AdminPanel extends React.Component{
 	renderSelectOptionGroups(key){
 		if(this.props.properties[key] !== null){
 			if(this.props.properties[key].type == 'select'){
 				return <PropertySelectTypeGroup key={key} index={key} {...this.props} />
 			}
 		}
-	},
+	}
 
 	render() {
 		return(
@@ -48,12 +48,12 @@ const AdminPanel = React.createClass({
 				<div className="properties container">
 					<PropertyList {...this.props} />
 					<PropertyForm {...this.props} />
-					{Object.keys(this.props.properties).map(this.renderSelectOptionGroups)}
+					{Object.keys(this.props.properties).map(this.renderSelectOptionGroups.bind(this))}
 					<ProjectForm {...this.props} />
 				</div>
 			</div>
 		)
 	}
-})
+}
 
 export default AdminPanel;
