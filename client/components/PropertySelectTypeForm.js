@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PropertySelectTypeForm = React.createClass({
+class PropertySelectTypeForm extends React.Component {
 
 	addToSelectOptions(event){
 		event.preventDefault();
@@ -15,11 +15,11 @@ const PropertySelectTypeForm = React.createClass({
 
 		this.props.addSelectOption(propertyKey,propertyId,newOptionObj,accountId);
 		this.refs[this.props.property.slug].reset();
-	},
+	}
 	
 	render(){
 		return(
-			<form className="type1" ref={this.props.property.slug} onSubmit={this.addToSelectOptions}>
+			<form className="type1" ref={this.props.property.slug} onSubmit={this.addToSelectOptions.bind(this)}>
 				<div className="input-holder num-sml-side">
 					<input type="text" ref="name" placeholder="Name of Field" />
 					<input type="number" ref="order" placeholder="Order" />
@@ -31,6 +31,6 @@ const PropertySelectTypeForm = React.createClass({
 			</form>
 		)
 	}
-}) 
+}
 
 export default PropertySelectTypeForm;

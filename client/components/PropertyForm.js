@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PropertyForm = React.createClass({
+class PropertyForm extends React.Component {
 	createNewPropertyObj(event) {
 		event.preventDefault();
 		var newPropertyFields = {};
@@ -15,25 +15,25 @@ const PropertyForm = React.createClass({
 
 		//reset form
 		this.refs.propertyForm.reset();
-	},
+	}
 
 	renderOptions(key){
 		return(
 			<option key={key} value={key} >{key}</option>
 		)
-	},
+	}
 
 	render() {
 		return(
 			<div className="sect">
 				<h3>Add a Property</h3>
-				<form className="type1" ref="propertyForm" onSubmit={this.createNewPropertyObj}>
+				<form className="type1" ref="propertyForm" onSubmit={this.createNewPropertyObj.bind(this)}>
 					<div className="input-holder">
 						<input type="text" ref="name" placeholder="Name of Field" />
 					</div>
 					<div className="input-holder">
 						<select ref="type">
-							{this.props.propertyFields.type.map(this.renderOptions)}
+							{this.props.propertyFields.type.map(this.renderOptions.bind(this))}
 						</select>
 					</div>
 					<div className="input-holder">
@@ -49,6 +49,6 @@ const PropertyForm = React.createClass({
 			</div>	
 		)
 	}
-})
+}
 
 export default PropertyForm;

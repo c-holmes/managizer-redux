@@ -2,7 +2,6 @@ import React from 'react';
 import classNames from 'classnames/bind';
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
-import PropertyDateType from './PropertyDateType';
 
 class Project extends React.Component {
 	constructor (props) {

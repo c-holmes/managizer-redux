@@ -1,10 +1,13 @@
 import React from 'react';
 import classNames from 'classnames/bind';
 
-const Property = React.createClass({
-	getInitialState () {
-		return { isPressed : false };
-	},
+class Property extends React.Component {
+	constructor (props) {
+	  super(props)
+	  this.state = {
+	    isPressed: false 
+	  };
+	}
 
 	toggleButton(event){
 		event.preventDefault();
@@ -16,19 +19,19 @@ const Property = React.createClass({
 		this.setState({
 			isPressed : this.state.isPressed
 		})
-	},
+	}
 
 	renderPropertyField(key){
 		return(
 			<li key={key}>{this.props.details[key]}</li>
 		)
-	},
+	}
 
 	renderOptions(key){
 		return(
 			<option key={key} value={key} >{key}</option>
 		)
-	},
+	}
 
 	renderEditField(key){
 		var propertyValue = this.props.index;
@@ -49,13 +52,13 @@ const Property = React.createClass({
 				</span>
 			)
 		}
-	},
+	}
 
 	savePropertyObj(event){
 		event.preventDefault();
 		this.props.saveProperty(this.props.details, this.props.accountId);
 		this.toggleButton(event);
-	},
+	}
 
 	render(){
 		if(this.props.details !== null){ 
@@ -71,17 +74,17 @@ const Property = React.createClass({
 						<li className="options-block">
 							<ul>
 								<button className="delete" ref="delete" onClick={this.props.deleteProperty.bind(null, this.props.index, this.props.details._id, this.props.accountId)}>Delete</button>
-								<button className="edit-btn" onClick={this.toggleButton}>Edit</button>
-								<button className="back-btn" onClick={this.toggleButton}>Back</button>
+								<button className="edit-btn" onClick={this.toggleButton.bind(this)}>Edit</button>
+								<button className="back-btn" onClick={this.toggleButton.bind(this)}>Back</button>
 							</ul>
 						</li>
-						{Object.keys(this.props.properties).map(this.renderPropertyField)}
+						{Object.keys(this.props.properties).map(this.renderPropertyField.bind(this))}
 					</ul>
-					<form ref="propertyForm" className={btnClass} onSubmit={this.savePropertyObj}>
+					<form ref="propertyForm" className={btnClass} onSubmit={this.savePropertyObj.bind(this)}>
 						<span className="cell">
 							<button type="submit" className="save-btn">Save</button>
 						</span>
-						{Object.keys(this.props.properties).map(this.renderEditField)}
+						{Object.keys(this.props.properties).map(this.renderEditField.bind(this))}
 					</form>
 				</div>	
 			)
@@ -89,6 +92,6 @@ const Property = React.createClass({
 			return( null )
 		}
 	}
-});
+}
 
 export default Property;

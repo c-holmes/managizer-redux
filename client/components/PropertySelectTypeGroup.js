@@ -2,7 +2,7 @@ import React from 'react';
 import PropertySelectTypeList from './PropertySelectTypeList';
 import PropertySelectTypeForm from './PropertySelectTypeForm';
 
-const PropertySelectTypeGroup = React.createClass({
+class PropertySelectTypeGroup extends React.Component{
 	render(){
 		return(
 			<div  className="sect split cf">
@@ -17,6 +17,6 @@ const PropertySelectTypeGroup = React.createClass({
 			</div>
 		) 
 	}
-})
+}
 
 export default PropertySelectTypeGroup;
