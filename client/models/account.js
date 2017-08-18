@@ -14,7 +14,8 @@ var PropertySchema = new Schema({
 	type: String,
 	placeholder: String,
 	order: Number,
-	selectOptions: [SelectOptionSchema]
+	selectOptions: [SelectOptionSchema],
+	dateType:Object,
 }, { strict: false })
 
 var ProjectSchema = new Schema({

@@ -3,6 +3,7 @@ import PropertyList from './PropertyList';
 import PropertyForm from './PropertyForm';
 import PropertySelectTypeGroup from './PropertySelectTypeGroup';
 import ProjectForm from './ProjectForm';
+import PropertyDateType from './PropertyDateType';
 
 //auto add order
 //add icon set
@@ -36,6 +37,14 @@ class AdminPanel extends React.Component{
 		}
 	}
 
+	renderDateTypes(key){
+		if(this.props.properties[key] !== null){
+			if(this.props.properties[key].type == 'date'){
+				return <PropertyDateType key={key} index={key} {...this.props} />
+			}
+		}
+	}
+
 	render() {
 		return(
 			<div className="sect admin-panel">
@@ -49,6 +58,7 @@ class AdminPanel extends React.Component{
 					<PropertyList {...this.props} />
 					<PropertyForm {...this.props} />
 					{Object.keys(this.props.properties).map(this.renderSelectOptionGroups.bind(this))}
+					{Object.keys(this.props.properties).map(this.renderDateTypes.bind(this))}
 					<ProjectForm {...this.props} />
 				</div>
 			</div>

@@ -70,12 +70,18 @@ function properties(state = [], action) {
 
 		case 'ADD_PROPERTY':
 			var newPropertyFields = action.formData;
+			console.log(newPropertyFields);
 			var accountId = action.accountId;
 			var timestamp = (new Date()).getTime().toString();
 			// var newState = Object.assign({}, state);
 			var newState = state.slice(0);
 			
 			newPropertyFields['selectOptions'] = [];
+			if(newPropertyFields.type == 'date'){
+				newPropertyFields['dateType'] = {
+					type: 'parentDate',
+				};
+			}
 
 			function slugify(name){
 				var slug = name;
