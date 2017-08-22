@@ -1,330 +1,332 @@
-var path = require('path');
-var express = require('express');
-var webpack = require('webpack');
-var config = require('./webpack.config.dev');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
-var app = express();
-var compiler = webpack(config);
-var Account = require('./client/models/account');
-var Project = require('./client/models/project');
-var Property = require('./client/models/property');
-var SelectOption = require('./client/models/selectOption');
- 
-mongoose.connect('mongodb://localhost/managizr'); 
+const path = require('path');
+const express = require('express');
+const webpack = require('webpack');
+const config = require('./webpack.config.dev');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const Account = require('./client/models/account');
+const Project = require('./client/models/project');
+const Property = require('./client/models/property');
+const SelectOption = require('./client/models/selectOption');
+
+const app = express();
+const compiler = webpack(config);
+
+mongoose.connect('mongodb://localhost/managizr');
 // mongoose.connect("mongodb://mongo:27017");
 
 app.use('/', express.static(path.join(__dirname, 'client')));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 
-// ROUTES FOR OUR API
-// =============================================================================
-var router = express.Router();              // get an instance of the express Router
+// routes
+const router = express.Router();
 
 // middleware to use for all requests
-router.use(function(req, res, next) {
-    // do logging
-    console.log('Something is happening2.');
-    next(); // make sure we go to the next routes and don't stop here
+router.use((req, res, next) => {
+  next();
 });
 
-// test route to make sure everything is working (accessed at GET http://localhost:3000/api)
-router.get('/', function(req, res) {
-    res.json({ message: 'hooray! welcome to our api!' });   
-});
-
-// ----------------------------------------------------
 router.route('/accounts')
-
-  .get(function(req, res) {
-    Account.find(function(err, accounts) {
-      if (err)
-        res.send(err);
-
-      res.json(accounts);
-    });
-  })
-  
-  .post(function(req, res){
-    var account = new Account(req.body);
-
-    account.save(function(err) {
-      if (err)
-        res.send(err);
-
-      res.json({ account: 'Account Created' });
-    });
-  })
-
-//-----------------------------------------------------
-router.route('/accounts/:account_id')
-
-  .get(function(req, res) {
-    Account.findById(req.params.account_id, function(err, account){
-      if (err) 
-        res.send(err);
-      res.json(account);
-    });
-  })
-
-  .delete(function(req, res){
-    Account.remove({
-      _id: req.params.account_id
-    }, function(err, account) {
-      if (err)
-        res.send(err);
-        res.json({ message: 'Successfully Deleted' });
-    });
-  })
-
-  .put(function(req, res){
-    Account.findById(req.params.account_id, function(err, account) {
-
-      if (err)
-        res.send(err);
-
-      Object.assign(account,req.body);
-
-      account.save(function(err) {
-        if(err)
-          res.send(err);
-
-        res.json({message: 'Account Updated'});
-      });
-    })
-  });
-
-// ----------------------------------------------------
-router.route('/accounts/:account_id/projects')
-
-  .get(function(req, res) {
-    Account.findById(req.params.account_id, function(err, account){
-      if (err) 
-        res.send(err);
-      res.json(account.projects);
-    });
-  })
-  
-  .post(function(req, res){
-    Account.findById(req.params.account_id, function(err, account) {
-      if (err)
-        res.send(err);
-
-      var project = new Project(req.body);
-
-      if(account.projects == ""){
-        account.projects = [project];
-      } else {
-        account.projects.push(project);  
+  .get((req, res) => {
+    Account.find((err, accounts) => {
+      if (err) {
+        return res.send(err);
       }
 
-      account.save(function(err) {
-        if(err)
-          res.send(err);
-
-        res.json({message: 'Project Created'});
-      });
-    })
-  });
-
-// ----------------------------------------------------
-router.route('/accounts/:account_id/projects/:project_id')
-
-  .get(function(req, res) {
-    Project.findById(req.params.project_id, function(err, project){
-      if (err) 
-        res.send(err);
-      res.json(project);
+      return res.json(accounts);
     });
   })
+  .post((req, res) => {
+    const account = new Account(req.body);
 
-  .delete(function(req, res){
-    Account.findById(req.params.account_id, function(err,account){
-      if (err)
+    console.log(account);
+
+    account.save((err) => {
+      if (err) {
+        return res.send(err);
+      }
+
+      return res.json({ account: 'Account Created' });
+    });
+  });
+
+
+router.route('/accounts/:account_id')
+  .get((req, res) => {
+    Account.findById(req.params.account_id, (err, account) => {
+      if (err) {
+        return res.send(err);
+      }
+      return res.json(account);
+    });
+  })
+  .delete((req, res) => {
+    Account.remove({
+      _id: req.params.account_id
+    }, (err, account) => {
+      if (err) {
+        return res.send(err);
+      }
+      return res.json({ message: 'Successfully Deleted' });
+    });
+  })
+  .put((req, res) => {
+    Account.findById(req.params.account_id, (err, account) => {
+      if (err) {
+        return res.send(err);
+      }
+      Object.assign(account, req.body);
+      return account.save((err) => {
+        if (err) {
+          return res.send(err);
+        }
+
+        return res.json({ message: 'Account Updated' });
+      });
+    });
+  });
+
+
+router.route('/accounts/:account_id/projects')
+  .get((req, res) => {
+    Account.findById(req.params.account_id, (err, account) => {
+      if (err) {
+        return res.send(err);
+      }
+      return res.json(account.projects);
+    });
+  })
+  .post((req, res) => {
+    Account.findById(req.params.account_id, (err, account) => {
+      if (err) {
+        return res.send(err);
+      }
+
+      const project = new Project(req.body);
+
+      if (account.projects === '') {
+        account.projects = [project];
+      } else {
+        account.projects.push(project);
+      }
+
+      return account.save((err) => {
+        if (err) {
+          return res.send(err);
+        }
+        return res.json({ message: 'Project Created' });
+      });
+    });
+  });
+
+
+router.route('/accounts/:account_id/projects/:project_id')
+  .get((req, res) => {
+    Project.findById(req.params.project_id, (err, project) => {
+      if (err) {
+        return res.send(err);
+      }
+      return res.json(project);
+    });
+  })
+  .delete((req, res) => {
+    Account.findById(req.params.account_id, (err, account) => {
+      if (err) {
         res.send(err);
+      }
 
       account.projects.id(req.params.project_id).remove();
 
-      account.save(function(err) {
-        if(err)
-          res.send(err);
-        res.json({message: 'Project Deleted'});
+      return account.save((err) => {
+        if (err) {
+          return res.send(err);
+        }
+        return res.json({ message: 'Project Deleted' });
       });
-    })
-  })
-
-  .put(function(req, res){
-    Account.update(
-      {_id:req.params.account_id, "projects._id":req.params.project_id},
-      {
-        $set: {
-          "projects.$": req.body
-        }
-      },
-      function(err, account, numAffected) {
-        if(err)
-          return res.send(err);
-        res.json({message: 'Project Updated'});
-      }
-    )
-  });
-
-// ----------------------------------------------------
-router.route('/accounts/:account_id/properties/:property_id')
-
-  .get(function(req, res) {
-    Property.findById(req.params.property_id, function(err, property){
-      if(err)
-        res.send(err);
-      res.json(property);
     });
   })
-
-  .delete(function(req, res){
-    Account.findById(req.params.account_id, function(err, account){
-      if (err)
-        res.send(err);
-      account.properties.id(req.params.property_id).remove();
-      account.save(function(err){
-        if(err)
-          res.send(err);
-        res.json({ message: 'Successfully Deleted' });
-      })
-    })
-  })
-
-  .put(function(req, res){
+  .put((req, res) => {
     console.log(req.body);
+    console.log(req.params);
     Account.update(
-      {_id:req.params.account_id, "properties._id":req.params.property_id},
+      {
+        _id: req.params.account_id,
+        'projects._id': req.params.project_id
+      },
       {
         $set: {
-          "properties.$": req.body
+          'projects.$': req.body
         }
       },
-      function(err, account, numAffected) {
-        if(err)
+      (err, account, numAffected) => {
+        if (err) {
           return res.send(err);
-        res.json({message: 'Property Updated'});
+        }
+        return res.json({ message: 'Project Updated' });
       }
-    )
+    );
   });
 
-// ----------------------------------------------------
-router.route('/accounts/:account_id/properties/:property_id/selectOptions')
-  .get(function(req, res){
-    Property.findById(req.params.property_id, function(err, property){
-      if(err)
-        res.send(err);
-      res.json(property.selectOptions);
+
+router.route('/accounts/:account_id/properties/:property_id')
+  .get((req, res) => {
+    Property.findById(req.params.property_id, (err, property) => {
+      if (err) {
+        return res.send(err);
+      }
+      return res.json(property);
     });
   })
+  .delete((req, res) => {
+    Account.findById(req.params.account_id, (err, account) => {
+      if (err) {
+        return res.send(err);
+      }
+      account.properties.id(req.params.property_id).remove();
+      return account.save((err) => {
+        if (err) {
+          return res.send(err);
+        }
+        return res.json({ message: 'Successfully Deleted' });
+      });
+    });
+  })
+  .put((req, res) => {
+    Account.update(
+      {
+        _id: req.params.account_id,
+        'properties._id': req.params.property_id
+      },
+      {
+        $set: {
+          'properties.$': req.body
+        }
+      },
+      (err, account, numAffected) => {
+        if (err) {
+          return res.send(err);
+        }
+        return res.json({ message: 'Property Updated' });
+      }
+    );
+  });
 
-  .post(function(req, res){
-    Account.findById(req.params.account_id, function(err, account){
-      if (err)
-        res.send(err);
-      var selectOption = new SelectOption(req.body);
-      var propertyId = req.params.property_id;
 
-      if(account.properties.id(propertyId).selectOptions == ""){
+router.route('/accounts/:account_id/properties/:property_id/selectOptions')
+  .get((req, res) => {
+    Property.findById(req.params.property_id, (err, property) => {
+      if (err) {
+        return res.send(err);
+      }
+      return res.json(property.selectOptions);
+    });
+  })
+  .post((req, res) => {
+    Account.findById(req.params.account_id, (err, account) => {
+      if (err) {
+        return res.send(err);
+      }
+      const selectOption = new SelectOption(req.body);
+      const propertyId = req.params.property_id;
+
+      if (account.properties.id(propertyId).selectOptions === '') {
         account.properties.id(propertyId).selectOptions = [selectOption];
       } else {
         account.properties.id(propertyId).selectOptions.push(selectOption);
       }
 
-      account.save(function(err) {
-        if (err)
-          res.send(err);
-
-        res.json({ message: 'Select Option Created!'});
+      return account.save((err) => {
+        if (err) {
+          return res.send(err);
+        }
+        return res.json({ message: 'Select Option Created!' });
       });
-    })
+    });
   });
 
-// ----------------------------------------------------
+
 router.route('/accounts/:account_id/properties/:property_id/selectOptions/:selectOption_id')
-  .get(function(req, res) {
-    SelectOption.findById(req.params.selecOption_id, function(err, selectOption){
-      if(err)
-        res.send(err);
-      res.json(selectOption);
+  .get((req, res) => {
+    SelectOption.findById(req.params.selecOption_id, (err, selectOption) => {
+      if (err) {
+        return res.send(err);
+      }
+      return res.json(selectOption);
     });
   })
-
-  .delete(function(req, res){
-    Account.findById(req.params.account_id, function(err, account){
-      if (err)
-        res.send(err);
-      account.properties.id(req.params.property_id).selectOptions.id(req.params.selectOption_id).remove();
-      account.save(function(err){
-        if(err)
-          res.send(err);
-        res.json({ message: 'Successfully Deleted' });
-      })
-    })
-  })
-
-  .put(function(req, res){
-    var accountId = req.params.account_id;
-    var propertyId = req.params.property_id;
-    var selectOptionId = req.params.selectOption_id;
-
-    Account.findById(accountId, function(err, account) {
-
-      if (err)
-        res.send(err);
-
-      Object.assign(account.properties.id(propertyId).selectOptions.id(selectOptionId),req.body);
-
-      account.save(function(err) {
-        if(err)
-          res.send(err);
-
-        res.json({message: 'Select Option Updated'});
+  .delete((req, res) => {
+    Account.findById(req.params.account_id, (err, account) => {
+      if (err) {
+        return res.send(err);
+      }
+      account.properties.id(req.params.property_id).selectOptions.id(req.params.selectOption_id)
+        .remove();
+      return account.save((err) => {
+        if (err) {
+          return res.send(err);
+        }
+        return res.json({ message: 'Successfully Deleted' });
       });
-    })
+    });
+  })
+  .put((req, res) => {
+    const accountId = req.params.account_id;
+    const propertyId = req.params.property_id;
+    const selectOptionId = req.params.selectOption_id;
+
+    Account.findById(accountId, (err, account) => {
+      if (err) {
+        return res.send(err);
+      }
+
+      Object.assign(account.properties.id(propertyId).selectOptions.id(selectOptionId), req.body);
+
+      return account.save((err) => {
+        if (err) {
+          return res.send(err);
+        }
+        return res.json({ message: 'Select Option Updated' });
+      });
+    });
   });
 
 
-// ----------------------------------------------------
 router.route('/accounts/:account_id/properties')
-  
-  .get(function(req, res) {
-    Account.findById(req.params.account_id, function(err, account){
-      if (err) 
-        res.send(err);
-      res.json(account.properties);
+  .get((req, res) => {
+    Account.findById(req.params.account_id, (err, account) => {
+      if (err) {
+        return res.send(err);
+      }
+      return res.json(account.properties);
     });
   })
+  .post((req, res) => {
+    Account.findById(req.params.account_id, (err, account) => {
+      if (err) {
+        return res.send(err);
+      }
+      const property = new Property(req.body);
 
-  .post(function(req, res){
-    Account.findById(req.params.account_id, function(err, account){
-      if (err)
-        res.send(err);
-      var property = new Property(req.body);
-
-      if(account.properties == ""){
+      if (account.properties === '') {
         account.properties = [property];
       } else {
         account.properties.push(property);
       }
 
-      account.save(function(err) {
-        if (err)
-          res.send(err);
+      return account.save((err) => {
+        if (err) {
+          return res.send(err);
+        }
 
-        res.json({ message: 'Property Created!'});
+        return res.json({ message: 'Property Created!' });
       });
-    })
+    });
   });
 
-// REGISTER OUR ROUTES -------------------------------
+
 // all of our routes will be prefixed with /api
 app.use('/api', router);
-
-// =============================================================================
 
 app.use(require('webpack-dev-middleware')(compiler, {
   noInfo: true,
@@ -333,11 +335,11 @@ app.use(require('webpack-dev-middleware')(compiler, {
 
 app.use(require('webpack-hot-middleware')(compiler));
 
-app.get('*', function(req, res) {
+app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-app.listen(7770, function(err) {
+app.listen(7770, (err) => {
   if (err) {
     console.log(err);
     return;

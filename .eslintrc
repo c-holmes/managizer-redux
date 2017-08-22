@@ -1,27 +1,21 @@
 {
-  "ecmaFeatures": {
-    "jsx": true,
-    "modules": true
-  },
   "env": {
+    "es6": true,
     "browser": true,
-    "node": true
+    "node": true,
+    "jquery": true
   },
-  "parser": "babel-eslint",
+  "extends": "airbnb",
   "rules": {
-    "quotes": [2, "single"],
-    "strict": [2, "never"],
-    "babel/generator-star-spacing": 1,
-    "babel/new-cap": 1,
-    "babel/object-shorthand": 1,
-    "babel/arrow-parens": 1,
-    "babel/no-await-in-loop": 1,
-    "react/jsx-uses-react": 2,
-    "react/jsx-uses-vars": 2,
-    "react/react-in-jsx-scope": 2
-  },
-  "plugins": [
-    "babel",
-    "react"
-  ]
+    "no-console": 0,
+    "no-unused-vars": 1,
+    "comma-dangle": 0,
+    "no-shadow": 0,
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "prefer-template": 1,
+    "react/prop-types": 0,
+    "react/jsx-no-bind": 1,
+    "no-underscore-dangle": 0,
+    "max-len": 1
+  }
 }

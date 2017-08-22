@@ -1,25 +1,25 @@
 import React from 'react';
-
 import { render } from 'react-dom';
-
-// Import css
-import css from './styles/style.scss';
+// Import react router deps
+import { Router, Route, IndexRoute, browserHistory } from 'react-router';
+import { Provider } from 'react-redux';
 
 // Import components
 import App from './components/App';
 import Account from './components/Account';
 
-// Import react router deps
-import { Router, Route, IndexRoute, browserHistory} from 'react-router';
-import { Provider } from 'react-redux';
+// Import css
+import css from './styles/style.scss';
+
 import store, { history } from './store';
 
 const router = (
-	<Provider store={store}>
-		<Router history={history}>
-			<Route path="/" component={Account}></Route>
-			<Route path="/account/:accountId" component={App}></Route>
-		</Router>
-	</Provider>	
-)
+  <Provider store={store}>
+    <Router history={history}>
+      <Route path="/" component={Account} />
+      <Route path="/account/:accountId" component={App} />
+    </Router>
+  </Provider>
+);
+
 render(router, document.getElementById('root'));

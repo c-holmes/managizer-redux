@@ -1,107 +1,102 @@
 import React from 'react';
-import { browserHistory } from 'react-router'
+import { browserHistory } from 'react-router';
 
-class Login extends React.Component{
-	createAccount(event){
-		event.preventDefault();
-		var newAccountFields = {};
-		var timestamp = (new Date()).getTime();
+class Login extends React.Component {
+  createAccount(event) {
+    event.preventDefault();
+    const newAccountFields = {};
+    const timestamp = (new Date()).getTime();
 
-		function slugify(name){
-			var slug = name;
-			//replace1 removes special chars, replace2 removes front and back "-", todo understand regex
-			slug = slug.replace(/[^a-zA-Z0-9]+/ig, "-").replace(/^-+|-+$/g,'').toLowerCase();
-			return slug; 
-		}
-		var id = timestamp.toString();
-		var slug = slugify(this.refs.name.value);
+    function slugify(name) {
+      // remove special chars, then remove front and back "-", 
+      return name.replace(/[^a-zA-Z0-9]+/ig, '-').replace(/^-+|-+$/g, '').toLowerCase();
+    }
 
-		newAccountFields['_id'] = id;
-		newAccountFields['slug'] = slug;
-		newAccountFields['projects'] = [];
-		newAccountFields['properties'] = [];
+    const id = timestamp.toString();
+    const slug = slugify(this.refs.name.value);
 
-		Object.keys(this.props.accountFields).map(function(key){
-			newAccountFields[key] = this.refs[key].value;
-		}.bind( this ))
+    newAccountFields._id = id;
+    newAccountFields.slug = slug;
+    newAccountFields.projects = [];
+    newAccountFields.properties = [];
 
-		this.props.createAccount(newAccountFields);
+    Object.keys(this.props.accountFields).map(function(key) {
+      newAccountFields[key] = this.refs[key].value;
+    }.bind(this));
 
-		//Browser Local Storage
-		if (typeof(Storage) !== "undefined") {
-		    var saveData = JSON.parse(localStorage[slug] || null) || {};
-			console.log(newAccountFields.slug );
-		    saveData.accountId = id;
-		    saveData.accountSlug = slug;
-		    saveData.loginTimestamp = new Date().getTime();
-		    localStorage[slug] = JSON.stringify(saveData);
-		} else {
-		    // Sorry! No Web Storage support..
-		}
+    this.props.createAccount(newAccountFields);
 
-		const path = `/account/${slug}`
-		browserHistory.push(path)
+    // Browser Local Storage
+    if (typeof (Storage) !== 'undefined') {
+      const saveData = JSON.parse(localStorage[slug] || null) || {};
+      saveData.accountId = id;
+      saveData.accountSlug = slug;
+      saveData.loginTimestamp = new Date().getTime();
+      localStorage[slug] = JSON.stringify(saveData);
+    } else {
+      // Sorry! No Web Storage support..
+    }
 
-	}
+    const path = `/account/${slug}`;
+    browserHistory.push(path);
+  }
 
-	loginAccount(event){
-		event.preventDefault();
-		const loginEmail = this.refs.loginEmail.value;
-		const accountsArray = this.props.accounts;
+  loginAccount(event) {
+    event.preventDefault();
+    const loginEmail = this.refs.loginEmail.value;
+    const accountsArray = this.props.accounts;
 
-		//find account based off email provided
-		var currAccount = accountsArray.filter(function(obj){
-			return obj.email == loginEmail;
-		});
+    // find account based off email provided
+    const currAccount = accountsArray.filter(obj => obj.email === loginEmail);
 
-		this.props.fetchAccountData('account', currAccount[0]._id);
-		this.props.fetchAccountData('projects', currAccount[0]._id);
-		this.props.fetchAccountData('properties',currAccount[0]._id);
+    this.props.fetchAccountData('account', currAccount[0]._id);
+    this.props.fetchAccountData('projects', currAccount[0]._id);
+    this.props.fetchAccountData('properties', currAccount[0]._id);
 
-		let accountSlug = currAccount[0].slug;
-		const path = `/account/${accountSlug}`;
+    const accountSlug = currAccount[0].slug;
+    const path = `/account/${accountSlug}`;
 
-		//Browser Local Storage
-		if (typeof(Storage) !== "undefined") {
-		    var saveData = JSON.parse(localStorage[accountSlug] || null) || {};
-		    saveData.accountId = currAccount[0]._id;
-		    saveData.accountSlug = accountSlug;
-		    saveData.accountEmail = loginEmail;
-		    saveData.loginTimestamp = new Date().getTime();
-		    localStorage[accountSlug] = JSON.stringify(saveData);
-		} else {
-		    // Sorry! No Web Storage support..
-		}
+    // Browser Local Storage
+    if (typeof (Storage) !== 'undefined') {
+      const saveData = JSON.parse(localStorage[accountSlug] || null) || {};
+      saveData.accountId = currAccount[0]._id;
+      saveData.accountSlug = accountSlug;
+      saveData.accountEmail = loginEmail;
+      saveData.loginTimestamp = new Date().getTime();
+      localStorage[accountSlug] = JSON.stringify(saveData);
+    } else {
+      // Sorry! No Web Storage support..
+    }
 
-		browserHistory.push(path)
-	}
+    browserHistory.push(path);
+  }
 
-	render() {
-		return(
-			<div className="login">
-				<div className="container">
-					<img className="logo" src="../styles/images/managizr-logo.png" alt="logo" title="logo" />
-					<div className="box split">
-						<div className="container">
-							<h2>Create New Account</h2>
-							<form ref="accountForm" className="login-panel" onSubmit={this.createAccount.bind(this)} >
-								<input type="text" ref="name" placeholder="Enter Account Name" />
-								<input type="text" ref="email" placeholder="Enter Email" />
-								<button type="submit">Submit</button>
-							</form>
-						</div>
-						<div className="container">
-							<h2>Login</h2>
-							<form ref="loginForm" className="login-panel" onSubmit={this.loginAccount.bind(this)} >
-								<input type="text" ref="loginEmail" placeholder="Enter Email" />
-								<button type="submit">Submit</button>
-							</form>
-						</div>
-					</div>
-				</div>
-			</div>
-		)
-	}
+  render() {
+    return (
+      <div className="login">
+        <div className="container">
+          <img className="logo" src="../styles/images/managizr-logo.png" alt="logo" title="logo" />
+          <div className="box split">
+            <div className="container">
+              <h2>Create New Account</h2>
+              <form ref="accountForm" className="login-panel" onSubmit={this.createAccount.bind(this)} >
+                <input type="text" ref="name" placeholder="Enter Account Name" />
+                <input type="text" ref="email" placeholder="Enter Email" />
+                <button type="submit">Submit</button>
+              </form>
+            </div>
+            <div className="container">
+              <h2>Login</h2>
+              <form ref="loginForm" className="login-panel" onSubmit={this.loginAccount.bind(this)} >
+                <input type="text" ref="loginEmail" placeholder="Enter Email" />
+                <button type="submit">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 }
 
 export default Login;
